@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
@@ -157,12 +158,9 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
             if ("福利".equals(object.get(0).getType())) {
                 binding.tvOnePhotoTitle.setVisibility(View.GONE);
                 binding.ivOnePhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                //                ImageLoadUtil.displayEspImage(object.get(0).getUrl(), binding.ivOnePhoto, 1);
                 Glide.with(binding.ivOnePhoto.getContext())
                     .load(object.get(0).getUrl())
-                    .crossFade(1500)
-                    .placeholder(R.drawable.img_two_bi_one)
-                    .error(R.drawable.img_two_bi_one)
+                    .apply(new RequestOptions().placeholder(R.drawable.img_two_bi_one).error(R.drawable.img_two_bi_one))
                     .into(binding.ivOnePhoto);
             } else {
                 binding.tvOnePhotoTitle.setVisibility(View.VISIBLE);

@@ -53,10 +53,6 @@
 			android:screenOrientation="portrait"
 			android:theme="@style/MyScrollPage"/>
 		<activity
-			android:name=".view.viewbigimage.ViewBigImageActivity"
-			android:screenOrientation="portrait"
-			android:theme="@style/ViewBigPicTheme"/>
-		<activity
 			android:name=".view.webview.WebViewActivity"
 			android:configChanges="orientation|screenSize"
 			android:hardwareAccelerated="true"

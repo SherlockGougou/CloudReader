@@ -56,11 +56,6 @@ public class GankAndroidAdapter extends BaseRecyclerViewAdapter<GankIoDataBean.R
                 object.getImages().get(0))) {
                 binding.ivAndroidPic.setVisibility(View.VISIBLE);
                 ImageLoadUtil.displayGif(object.getImages().get(0), binding.ivAndroidPic);
-                //                Glide.with(context).load(object.getImages().get(0))
-                //                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                //                        .placeholder(R.drawable.img_one_bi_one)
-                //                        .error(R.drawable.img_one_bi_one)
-                //                        .into(binding.ivAndroidPic);
             } else {
                 binding.ivAndroidPic.setVisibility(View.GONE);
             }

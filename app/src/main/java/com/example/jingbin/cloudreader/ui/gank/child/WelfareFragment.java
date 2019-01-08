@@ -4,12 +4,12 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import cc.shinichi.library.ImagePreview;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.WelfareAdapter;
 import com.example.jingbin.cloudreader.base.BaseFragment;
 import com.example.jingbin.cloudreader.bean.GankIoDataBean;
 import com.example.jingbin.cloudreader.databinding.FragmentWelfareBinding;
-import com.example.jingbin.cloudreader.view.viewbigimage.ViewBigImageActivity;
 import com.example.jingbin.cloudreader.viewmodel.gank.WelfareViewModel;
 import com.example.xrecyclerview.XRecyclerView;
 import java.util.ArrayList;
@@ -67,7 +67,16 @@ public class WelfareFragment extends BaseFragment<WelfareViewModel, FragmentWelf
             }
         });
         mWelfareAdapter.setOnItemClickListener((resultsBean, position) -> {
-            ViewBigImageActivity.startImageList(getContext(), position, imgList, imgTitleList);
+            ImagePreview.getInstance()
+                .setContext(getContext())
+                .setImageList(imgList)
+                .setIndex(position)
+                .setEnableDragClose(true)
+                .setEnableClickClose(true)
+                .setShowCloseButton(false)
+                .setShowDownButton(true)
+                .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysOrigin)
+                .start();
         });
         viewModel.getImageAndTitle().observe(this, new Observer<ArrayList<ArrayList<String>>>() {
             @Override public void onChanged(@Nullable ArrayList<ArrayList<String>> arrayLists) {

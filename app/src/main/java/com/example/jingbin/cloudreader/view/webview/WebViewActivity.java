@@ -24,6 +24,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import cc.shinichi.library.ImagePreview;
 import com.example.http.utils.CheckNetwork;
 import com.example.jingbin.cloudreader.MainActivity;
 import com.example.jingbin.cloudreader.R;
@@ -39,7 +40,6 @@ import com.example.jingbin.cloudreader.utils.SPUtils;
 import com.example.jingbin.cloudreader.utils.ShareUtils;
 import com.example.jingbin.cloudreader.utils.ToastUtil;
 import com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil;
-import com.example.jingbin.cloudreader.view.viewbigimage.ViewBigImageActivity;
 import com.example.jingbin.cloudreader.view.webview.config.FullscreenHolder;
 import com.example.jingbin.cloudreader.view.webview.config.IWebPageView;
 import com.example.jingbin.cloudreader.view.webview.config.ImageClickInterface;
@@ -357,8 +357,6 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
                 String scheme = data.getScheme();
                 String host = data.getHost();
                 String path = data.getPath();
-                //                String text = "Scheme: " + scheme + "\n" + "host: " + host + "\n" + "path: " + path;
-                //                Log.e("data", text);
                 String url = scheme + "://" + host + path;
                 webView.loadUrl(url);
             } catch (Exception e) {
@@ -381,10 +379,18 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
                     @Override public void onClick(DialogInterface dialog, int which) {
                         String picUrl = hitTestResult.getExtra();
                         //获取图片
-                        //                            Log.e("picUrl", picUrl);
                         switch (which) {
                             case 0:
-                                ViewBigImageActivity.start(WebViewActivity.this, picUrl, picUrl);
+                                ImagePreview.getInstance()
+                                    .setContext(WebViewActivity.this)
+                                    .setImage(picUrl)
+                                    .setIndex(0)
+                                    .setEnableDragClose(true)
+                                    .setEnableClickClose(true)
+                                    .setShowCloseButton(false)
+                                    .setShowDownButton(true)
+                                    .setLoadStrategy(ImagePreview.LoadStrategy.AlwaysOrigin)
+                                    .start();
                                 break;
                             case 1:
                                 if (!PermissionHandler.isHandlePermission(WebViewActivity.this,

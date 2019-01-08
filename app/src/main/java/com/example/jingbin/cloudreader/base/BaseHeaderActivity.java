@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,10 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.databinding.BaseHeaderTitleBarBinding;
@@ -317,17 +320,17 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
             // 高斯模糊背景 原来 参数：12,5  23,4
             Glide.with(this)
                 .load(imgUrl)
-                .error(R.drawable.stackblur_default)
-                .bitmapTransform(new BlurTransformation(this, 23, 4))
-                .listener(new RequestListener<String, GlideDrawable>() {
-                    @Override public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+                .apply(new RequestOptions().error(R.drawable.stackblur_default))
+                .apply(new RequestOptions().transform(new BlurTransformation(this, 23, 4)))
+                .addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,
                         boolean isFirstResource) {
                         return false;
                     }
 
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target,
-                        boolean isFromMemoryCache, boolean isFirstResource) {
+                    @Override public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                        DataSource dataSource, boolean isFirstResource) {
                         bindingTitleView.tbBaseTitle.setBackgroundColor(Color.TRANSPARENT);
                         bindingTitleView.ivBaseTitlebarBg.setImageAlpha(0);
                         bindingTitleView.ivBaseTitlebarBg.setVisibility(View.VISIBLE);
