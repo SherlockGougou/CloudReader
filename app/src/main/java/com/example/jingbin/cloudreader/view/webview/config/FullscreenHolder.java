@@ -15,8 +15,7 @@ public class FullscreenHolder extends FrameLayout {
         setBackgroundColor(ctx.getResources().getColor(android.R.color.black));
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    @Override public boolean onTouchEvent(MotionEvent event) {
         return true;
     }
 }

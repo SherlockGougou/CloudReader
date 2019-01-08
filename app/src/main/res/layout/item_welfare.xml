@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+	<data>
 
-        <import type="android.view.View" />
+		<import type="android.view.View"/>
 
-        <variable
-            name="bean"
-            type="com.example.jingbin.cloudreader.bean.GankIoDataBean.ResultBean" />
+		<variable
+			name="bean"
+			type="com.example.jingbin.cloudreader.bean.GankIoDataBean.ResultBean"
+			/>
 
-    </data>
+	</data>
 
-    <ImageView
-        android:id="@+id/iv_welfare"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:defaultPicType="@{1}"
-        android:displayFadeImage="@{bean.url}"
-        android:scaleType="centerCrop" />
+	<ImageView
+		android:id="@+id/iv_welfare"
+		android:layout_width="match_parent"
+		android:layout_height="250dp"
+		android:defaultPicType="@{1}"
+		android:displayFadeImage="@{bean.url}"
+		android:scaleType="centerCrop"
+		/>
 </layout>

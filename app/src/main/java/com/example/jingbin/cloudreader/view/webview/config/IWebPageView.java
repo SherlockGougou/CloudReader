@@ -34,6 +34,4 @@ public interface IWebPageView {
     void showVideoFullView();
 
     void hindVideoFullView();
-
-
 }

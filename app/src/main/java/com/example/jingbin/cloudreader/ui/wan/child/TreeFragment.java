@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.TreeAdapter;
 import com.example.jingbin.cloudreader.base.BaseFragment;
@@ -22,30 +21,27 @@ import com.example.jingbin.cloudreader.viewmodel.wan.TreeViewModel;
  * @date 2018/09/15.
  * @description 知识体系
  */
-public class TreeFragment extends BaseFragment<TreeViewModel,FragmentWanAndroidBinding> {
+public class TreeFragment extends BaseFragment<TreeViewModel, FragmentWanAndroidBinding> {
 
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
     private TreeAdapter mTreeAdapter;
     private FragmentActivity activity;
 
-    @Override
-    public int setContent() {
-        return R.layout.fragment_wan_android;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = getActivity();
-    }
-
     public static TreeFragment newInstance() {
         return new TreeFragment();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public int setContent() {
+        return R.layout.fragment_wan_android;
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+    }
+
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showContentView();
         initRefreshView();
@@ -71,13 +67,14 @@ public class TreeFragment extends BaseFragment<TreeViewModel,FragmentWanAndroidB
         bindingView.xrvWan.clearHeader();
         mTreeAdapter = new TreeAdapter();
         bindingView.xrvWan.setAdapter(mTreeAdapter);
-        HeaderItemTreeBinding oneBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_item_tree, null, false);
+        HeaderItemTreeBinding oneBinding =
+            DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_item_tree, null, false);
         bindingView.xrvWan.addHeaderView(oneBinding.getRoot());
-        oneBinding.tvPosition.setOnClickListener(v -> layoutManager.scrollToPositionWithOffset(mTreeAdapter.mProjectPosition + 2, 0));
+        oneBinding.tvPosition.setOnClickListener(
+            v -> layoutManager.scrollToPositionWithOffset(mTreeAdapter.mProjectPosition + 2, 0));
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         DebugUtil.error("-----loadData");
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
@@ -90,15 +87,12 @@ public class TreeFragment extends BaseFragment<TreeViewModel,FragmentWanAndroidB
 
     private void getTree() {
         viewModel.getTree().observe(this, new android.arch.lifecycle.Observer<TreeBean>() {
-            @Override
-            public void onChanged(@Nullable TreeBean treeBean) {
+            @Override public void onChanged(@Nullable TreeBean treeBean) {
                 showContentView();
                 if (bindingView.srlWan.isRefreshing()) {
                     bindingView.srlWan.setRefreshing(false);
                 }
-                if (treeBean != null
-                        && treeBean.getData() != null
-                        && treeBean.getData().size() > 0) {
+                if (treeBean != null && treeBean.getData() != null && treeBean.getData().size() > 0) {
 
                     mTreeAdapter.clear();
                     mTreeAdapter.addAll(treeBean.getData());
@@ -117,8 +111,7 @@ public class TreeFragment extends BaseFragment<TreeViewModel,FragmentWanAndroidB
         });
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         bindingView.srlWan.setRefreshing(true);
         getTree();
     }

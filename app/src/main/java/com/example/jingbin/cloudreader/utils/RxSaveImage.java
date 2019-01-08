@@ -21,24 +21,16 @@ package com.example.jingbin.cloudreader.utils;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.example.jingbin.cloudreader.R;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -54,8 +46,7 @@ public class RxSaveImage {
 
     private static Observable<String> saveImageAndGetPathObservable(Activity context, String url, String title) {
         return Observable.unsafeCreate(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
+            @Override public void call(Subscriber<? super String> subscriber) {
                 // 检查路径
                 if (TextUtils.isEmpty(url) || TextUtils.isEmpty(title)) {
                     subscriber.onError(new Exception("请检查图片路径"));
@@ -76,10 +67,8 @@ public class RxSaveImage {
 
                 try {
                     // 下载
-                    File fileDo = Glide.with(context)
-                            .load(url)
-                            .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                            .get();
+                    File fileDo =
+                        Glide.with(context).load(url).downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
                     if (fileDo != null) {
                         // 复制图片
                         copyFile(fileDo.getAbsolutePath(), file.getPath());
@@ -91,7 +80,6 @@ public class RxSaveImage {
                     } else {
                         subscriber.onError(new Exception("无法下载到图片"));
                     }
-
                 } catch (Exception e) {
                     subscriber.onError(e);
                 }
@@ -101,20 +89,19 @@ public class RxSaveImage {
         }).subscribeOn(Schedulers.io());
     }
 
-
     public static void saveImageToGallery(Activity context, String mImageUrl, String mImageTitle) {
         ToastUtil.showToast("开始下载图片");
         // @formatter:off
         Subscription s = RxSaveImage.saveImageAndGetPathObservable(context, mImageUrl, mImageTitle)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(uri -> {
-                    File appDir = new File(Environment.getExternalStorageDirectory(), "云阅相册");
-                    String msg = String.format(CommonUtils.getString(R.string.picture_has_save_to),
-                            appDir.getAbsolutePath());
-                    ToastUtil.showToastLong(msg);
-                }, error -> ToastUtil.showToastLong(error.getMessage()));
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(uri -> {
+                File appDir = new File(Environment.getExternalStorageDirectory(), "云阅相册");
+                String msg =
+                    String.format(CommonUtils.getString(R.string.picture_has_save_to), appDir.getAbsolutePath());
+                ToastUtil.showToastLong(msg);
+            }, error -> ToastUtil.showToastLong(error.getMessage()));
         // @formatter:on
-//        addSubscription(s);
+        //        addSubscription(s);
     }
 
     /**
@@ -145,15 +132,13 @@ public class RxSaveImage {
                 int length;
                 while ((byteread = inStream.read(buffer)) != -1) {
                     bytesum += byteread; //字节数 文件大小
-//                    System.out.println(bytesum);
+                    //                    System.out.println(bytesum);
                     fs.write(buffer, 0, byteread);
                 }
                 inStream.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
-
         }
-
     }
 }

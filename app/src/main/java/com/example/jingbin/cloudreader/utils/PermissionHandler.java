@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-
 import java.util.ArrayList;
 
 /**
@@ -72,7 +71,7 @@ public class PermissionHandler {
             int permissionCheck = ContextCompat.checkSelfPermission(activity, permission);
             // 没有授权
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, new String[]{permission}, PERMISSION_CODE_ONE);
+                ActivityCompat.requestPermissions(activity, new String[] { permission }, PERMISSION_CODE_ONE);
             }
             return false;
         }
@@ -94,21 +93,23 @@ public class PermissionHandler {
         int permissionCheck = ContextCompat.checkSelfPermission(activity, permission);
         int permissionCheck2 = ContextCompat.checkSelfPermission(activity, permission2);
         // 有一个没有授权就作为 没有权限处理
-        return permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED;
+        return permissionCheck == PackageManager.PERMISSION_GRANTED
+            && permissionCheck2 == PackageManager.PERMISSION_GRANTED;
     }
-
 
     /**
      * vivo不走回调
      */
-    public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults, OnHandlePermissionListener listener) {
+    public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults,
+        OnHandlePermissionListener listener) {
         onRequestPermissionsResult(null, null, requestCode, permissions, grantResults, listener);
     }
 
     /**
      * 两个权限时的提示
      */
-    public static void onRequestPermissionsResult(String toastTextTwo, int requestCode, String[] permissions, int[] grantResults, OnHandlePermissionListener listener) {
+    public static void onRequestPermissionsResult(String toastTextTwo, int requestCode, String[] permissions,
+        int[] grantResults, OnHandlePermissionListener listener) {
         onRequestPermissionsResult(toastTextTwo, null, requestCode, permissions, grantResults, listener);
     }
 
@@ -116,7 +117,8 @@ public class PermissionHandler {
      * @param toastTextTwo 两个权限时的提示
      * @param toastTextOne 一个权限时的提示
      */
-    public static void onRequestPermissionsResult(String toastTextTwo, String toastTextOne, int requestCode, String[] permissions, int[] grantResults, OnHandlePermissionListener listener) {
+    public static void onRequestPermissionsResult(String toastTextTwo, String toastTextOne, int requestCode,
+        String[] permissions, int[] grantResults, OnHandlePermissionListener listener) {
         if (grantResults != null) {
             DebugUtil.error("-----requestCode:" + requestCode);
             for (int i : grantResults) {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.BaseActivity;
 import com.example.jingbin.cloudreader.databinding.ActivityNavDownloadBinding;
@@ -15,8 +14,12 @@ import com.example.jingbin.cloudreader.viewmodel.menu.NoViewModel;
 
 public class NavDownloadActivity extends BaseActivity<NoViewModel, ActivityNavDownloadBinding> {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public static void start(Context mContext) {
+        Intent intent = new Intent(mContext, NavDownloadActivity.class);
+        mContext.startActivity(intent);
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_download);
         showContentView();
@@ -25,15 +28,9 @@ public class NavDownloadActivity extends BaseActivity<NoViewModel, ActivityNavDo
         String url = "https://fir.im/cloudreader";
         QRCodeUtil.showThreadImage(this, url, bindingView.ivErweima, R.drawable.ic_cloudreader_mip);
         bindingView.tvShare.setOnClickListener(new PerfectClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
+            @Override protected void onNoDoubleClick(View v) {
                 ShareUtils.share(v.getContext(), R.string.string_share_text);
             }
         });
-    }
-
-    public static void start(Context mContext) {
-        Intent intent = new Intent(mContext, NavDownloadActivity.class);
-        mContext.startActivity(intent);
     }
 }

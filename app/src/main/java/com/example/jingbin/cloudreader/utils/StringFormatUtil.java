@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.utils;
 
 import com.example.jingbin.cloudreader.bean.moviechild.PersonBean;
-
 import java.util.List;
 
 /**
@@ -24,7 +23,6 @@ public class StringFormatUtil {
                 }
             }
             return stringBuilder.toString();
-
         } else {
             return "佚名";
         }
@@ -44,7 +42,6 @@ public class StringFormatUtil {
                 }
             }
             return stringBuilder.toString();
-
         } else {
             return "不知名类型";
         }

@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.bean.wanandroid;
 
 import android.databinding.BaseObservable;
-
 import java.util.List;
 
 /**
@@ -11,7 +10,6 @@ import java.util.List;
  */
 
 public class QsbkListBean extends BaseObservable {
-
 
     private List<ItemsBean> items;
 
@@ -80,7 +78,6 @@ public class QsbkListBean extends BaseObservable {
         public long getPublished_at() {
             return published_at;
         }
-
 
         public HotCommentBean getHot_comment() {
             return hot_comment;
@@ -182,7 +179,6 @@ public class QsbkListBean extends BaseObservable {
             private String content;
             private UserBeanX user;
 
-
             public static class UserBeanX {
                 /**
                  * avatar_updated_at : 1516510007
@@ -206,9 +202,7 @@ public class QsbkListBean extends BaseObservable {
                 private String medium;
                 private String thumb;
                 private String login;
-
             }
         }
-
     }
 }

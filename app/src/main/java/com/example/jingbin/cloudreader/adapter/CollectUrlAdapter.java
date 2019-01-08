@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -30,10 +29,12 @@ public class CollectUrlAdapter extends BaseRecyclerViewAdapter<CollectUrlBean.Da
         this.activity = activity;
     }
 
-    @NonNull
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_collect_link);
+    }
+
+    public void openDetail(CollectUrlBean.DataBean bean) {
+        WebViewActivity.loadUrl(activity, bean.getLink(), bean.getName());
     }
 
     private class ViewHolder extends BaseRecyclerViewHolder<CollectUrlBean.DataBean, ItemCollectLinkBinding> {
@@ -42,46 +43,43 @@ public class CollectUrlAdapter extends BaseRecyclerViewAdapter<CollectUrlBean.Da
             super(context, layoutId);
         }
 
-        @Override
-        public void onBindViewHolder(final CollectUrlBean.DataBean bean, final int position) {
+        @Override public void onBindViewHolder(final CollectUrlBean.DataBean bean, final int position) {
             if (bean != null) {
                 binding.setBean(bean);
                 binding.setAdapter(CollectUrlAdapter.this);
                 binding.rlItemLink.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        String[] items = {"编辑", "删除"};
+                    @Override public boolean onLongClick(View v) {
+                        String[] items = { "编辑", "删除" };
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                         builder.setItems(items, (dialog, which) -> {
                             switch (which) {
                                 case 0:
-                                    DialogBuild.show(v, bean.getName(), bean.getLink(), (DialogBuild.OnEditClickListener) (name, link) -> {
-                                        if (model == null) {
-                                            model = new CollectModel();
-                                        }
-                                        model.updateUrl(bean.getId(), name, link, new WanNavigator.OnCollectNavigator() {
-                                            @Override
-                                            public void onSuccess() {
-                                                bean.setName(name);
-                                                bean.setLink(link);
-                                                notifyItemChanged(getAdapterPosition());
-                                                ToastUtil.showToastLong("编辑成功");
+                                    DialogBuild.show(v, bean.getName(), bean.getLink(),
+                                        (DialogBuild.OnEditClickListener) (name, link) -> {
+                                            if (model == null) {
+                                                model = new CollectModel();
                                             }
+                                            model.updateUrl(bean.getId(), name, link,
+                                                new WanNavigator.OnCollectNavigator() {
+                                                    @Override public void onSuccess() {
+                                                        bean.setName(name);
+                                                        bean.setLink(link);
+                                                        notifyItemChanged(getAdapterPosition());
+                                                        ToastUtil.showToastLong("编辑成功");
+                                                    }
 
-                                            @Override
-                                            public void onFailure() {
-                                                ToastUtil.showToastLong("编辑失败");
-                                            }
+                                                    @Override public void onFailure() {
+                                                        ToastUtil.showToastLong("编辑失败");
+                                                    }
+                                                });
                                         });
-                                    });
                                     break;
                                 case 1:
                                     if (model == null) {
                                         model = new CollectModel();
                                     }
                                     model.unCollectUrl(bean.getId(), new WanNavigator.OnCollectNavigator() {
-                                        @Override
-                                        public void onSuccess() {
+                                        @Override public void onSuccess() {
                                             int indexOf = getData().indexOf(bean);
                                             // 角标始终加一
                                             int adapterPosition = getAdapterPosition();
@@ -91,8 +89,7 @@ public class CollectUrlAdapter extends BaseRecyclerViewAdapter<CollectUrlBean.Da
                                             notifyItemRemoved(adapterPosition);
                                         }
 
-                                        @Override
-                                        public void onFailure() {
+                                        @Override public void onFailure() {
                                             ToastUtil.showToastLong("删除失败");
                                         }
                                     });
@@ -108,9 +105,4 @@ public class CollectUrlAdapter extends BaseRecyclerViewAdapter<CollectUrlBean.Da
             }
         }
     }
-
-    public void openDetail(CollectUrlBean.DataBean bean) {
-        WebViewActivity.loadUrl(activity, bean.getLink(), bean.getName());
-    }
-
 }

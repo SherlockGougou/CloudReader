@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.WanAndroidAdapter;
 import com.example.jingbin.cloudreader.base.BaseFragment;
@@ -28,28 +27,24 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
     private FragmentActivity activity;
     private WanAndroidAdapter mAdapter;
 
-    @Override
-    public int setContent() {
-        return R.layout.fragment_wan_android;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = getActivity();
-    }
-
     public static CollectArticleFragment newInstance() {
         return new CollectArticleFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public int setContent() {
+        return R.layout.fragment_wan_android;
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         showContentView();
@@ -59,7 +54,6 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
         mIsPrepared = true;
         loadData();
     }
-
 
     private void initRefreshView() {
         bindingView.srlWan.setColorSchemeColors(CommonUtils.getColor(R.color.colorTheme));
@@ -74,13 +68,11 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
             getCollectList();
         }, 300));
         bindingView.xrvWan.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
 
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 int page = viewModel.getPage();
                 viewModel.setPage(++page);
                 getCollectList();
@@ -88,8 +80,7 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
         });
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
@@ -100,8 +91,7 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
 
     private void getCollectList() {
         viewModel.getCollectList().observe(this, new Observer<HomeListBean>() {
-            @Override
-            public void onChanged(@Nullable HomeListBean homeListBean) {
+            @Override public void onChanged(@Nullable HomeListBean homeListBean) {
                 showContentView();
                 if (bindingView.srlWan.isRefreshing()) {
                     bindingView.srlWan.setRefreshing(false);
@@ -128,9 +118,7 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
         });
     }
 
-
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         bindingView.srlWan.setRefreshing(true);
         getCollectList();
     }

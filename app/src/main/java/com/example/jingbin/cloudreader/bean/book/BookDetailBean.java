@@ -2,11 +2,9 @@ package com.example.jingbin.cloudreader.bean.book;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.http.ParamNames;
 import com.example.jingbin.cloudreader.BR;
 import com.example.jingbin.cloudreader.bean.moviechild.ImagesBean;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * Created by jingbin on 2016/12/25.
  */
 
-public class BookDetailBean extends BaseObservable implements Serializable{
+public class BookDetailBean extends BaseObservable implements Serializable {
 
     /**
      * rating : {"max":10,"numRaters":72,"average":"7.3","min":0}
@@ -91,55 +89,31 @@ public class BookDetailBean extends BaseObservable implements Serializable{
      * 四十七创措新世界
      * price : 23.90元
      */
-    @ParamNames("rating")
-    private BooksBean.RatingBean rating;
-    @ParamNames("subtitle")
-    private String subtitle;
-    @ParamNames("pubdate")
-    private String pubdate;
-    @ParamNames("origin_title")
-    private String origin_title;
-    @ParamNames("image")
-    private String image;
-    @ParamNames("binding")
-    private String binding;
-    @ParamNames("catalog")
-    private String catalog;
-    @ParamNames("pages")
-    private String pages;
-    @ParamNames("images")
-    private ImagesBean images;
-    @ParamNames("alt")
-    private String alt;
-    @ParamNames("id")
-    private String id;
-    @ParamNames("publisher")
-    private String publisher;
-    @ParamNames("isbn10")
-    private String isbn10;
-    @ParamNames("isbn13")
-    private String isbn13;
-    @ParamNames("title")
-    private String title;
-    @ParamNames("url")
-    private String url;
-    @ParamNames("alt_title")
-    private String alt_title;
-    @ParamNames("author_intro")
-    private String author_intro;
-    @ParamNames("summary")
-    private String summary;
-    @ParamNames("price")
-    private String price;
-    @ParamNames("author")
-    private List<String> author;
-    @ParamNames("tags")
-    private List<BooksBean.TagsBean> tags;
-    @ParamNames("translator")
-    private List<String> translator;
+    @ParamNames("rating") private BooksBean.RatingBean rating;
+    @ParamNames("subtitle") private String subtitle;
+    @ParamNames("pubdate") private String pubdate;
+    @ParamNames("origin_title") private String origin_title;
+    @ParamNames("image") private String image;
+    @ParamNames("binding") private String binding;
+    @ParamNames("catalog") private String catalog;
+    @ParamNames("pages") private String pages;
+    @ParamNames("images") private ImagesBean images;
+    @ParamNames("alt") private String alt;
+    @ParamNames("id") private String id;
+    @ParamNames("publisher") private String publisher;
+    @ParamNames("isbn10") private String isbn10;
+    @ParamNames("isbn13") private String isbn13;
+    @ParamNames("title") private String title;
+    @ParamNames("url") private String url;
+    @ParamNames("alt_title") private String alt_title;
+    @ParamNames("author_intro") private String author_intro;
+    @ParamNames("summary") private String summary;
+    @ParamNames("price") private String price;
+    @ParamNames("author") private List<String> author;
+    @ParamNames("tags") private List<BooksBean.TagsBean> tags;
+    @ParamNames("translator") private List<String> translator;
 
-    @Bindable
-    public BooksBean.RatingBean getRating() {
+    @Bindable public BooksBean.RatingBean getRating() {
         return rating;
     }
 
@@ -148,8 +122,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.rating);
     }
 
-    @Bindable
-    public String getSubtitle() {
+    @Bindable public String getSubtitle() {
         return subtitle;
     }
 
@@ -158,8 +131,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.subtitle);
     }
 
-    @Bindable
-    public String getPubdate() {
+    @Bindable public String getPubdate() {
         return pubdate;
     }
 
@@ -168,8 +140,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.pubdate);
     }
 
-    @Bindable
-    public String getOrigin_title() {
+    @Bindable public String getOrigin_title() {
         return origin_title;
     }
 
@@ -178,8 +149,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.origin_title);
     }
 
-    @Bindable
-    public String getImage() {
+    @Bindable public String getImage() {
         return image;
     }
 
@@ -188,8 +158,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.image);
     }
 
-    @Bindable
-    public String getBinding() {
+    @Bindable public String getBinding() {
         return binding;
     }
 
@@ -198,8 +167,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.binding);
     }
 
-    @Bindable
-    public String getCatalog() {
+    @Bindable public String getCatalog() {
         return catalog;
     }
 
@@ -208,8 +176,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.catalog);
     }
 
-    @Bindable
-    public String getPages() {
+    @Bindable public String getPages() {
         return pages;
     }
 
@@ -218,8 +185,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.pages);
     }
 
-    @Bindable
-    public ImagesBean getImages() {
+    @Bindable public ImagesBean getImages() {
         return images;
     }
 
@@ -228,8 +194,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.images);
     }
 
-    @Bindable
-    public String getAlt() {
+    @Bindable public String getAlt() {
         return alt;
     }
 
@@ -238,8 +203,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.alt);
     }
 
-    @Bindable
-    public String getId() {
+    @Bindable public String getId() {
         return id;
     }
 
@@ -248,8 +212,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.id);
     }
 
-    @Bindable
-    public String getPublisher() {
+    @Bindable public String getPublisher() {
         return publisher;
     }
 
@@ -258,8 +221,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.publisher);
     }
 
-    @Bindable
-    public String getIsbn10() {
+    @Bindable public String getIsbn10() {
         return isbn10;
     }
 
@@ -268,8 +230,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.isbn10);
     }
 
-    @Bindable
-    public String getIsbn13() {
+    @Bindable public String getIsbn13() {
         return isbn13;
     }
 
@@ -278,8 +239,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.isbn13);
     }
 
-    @Bindable
-    public String getTitle() {
+    @Bindable public String getTitle() {
         return title;
     }
 
@@ -288,8 +248,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.title);
     }
 
-    @Bindable
-    public String getUrl() {
+    @Bindable public String getUrl() {
         return url;
     }
 
@@ -298,8 +257,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.url);
     }
 
-    @Bindable
-    public String getAlt_title() {
+    @Bindable public String getAlt_title() {
         return alt_title;
     }
 
@@ -308,8 +266,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.alt_title);
     }
 
-    @Bindable
-    public String getAuthor_intro() {
+    @Bindable public String getAuthor_intro() {
         return author_intro;
     }
 
@@ -318,8 +275,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.author_intro);
     }
 
-    @Bindable
-    public String getSummary() {
+    @Bindable public String getSummary() {
         return summary;
     }
 
@@ -328,8 +284,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.summary);
     }
 
-    @Bindable
-    public String getPrice() {
+    @Bindable public String getPrice() {
         return price;
     }
 
@@ -338,8 +293,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.price);
     }
 
-    @Bindable
-    public List<String> getAuthor() {
+    @Bindable public List<String> getAuthor() {
         return author;
     }
 
@@ -348,8 +302,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.author);
     }
 
-    @Bindable
-    public List<BooksBean.TagsBean> getTags() {
+    @Bindable public List<BooksBean.TagsBean> getTags() {
         return tags;
     }
 
@@ -358,8 +311,7 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.tags);
     }
 
-    @Bindable
-    public List<String> getTranslator() {
+    @Bindable public List<String> getTranslator() {
         return translator;
     }
 
@@ -367,5 +319,4 @@ public class BookDetailBean extends BaseObservable implements Serializable{
         this.translator = translator;
         notifyPropertyChanged(BR.translator);
     }
-
 }

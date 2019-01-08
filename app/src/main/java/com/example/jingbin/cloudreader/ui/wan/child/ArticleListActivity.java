@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.WanAndroidAdapter;
 import com.example.jingbin.cloudreader.base.BaseActivity;
@@ -24,8 +23,14 @@ public class ArticleListActivity extends BaseActivity<WanAndroidListViewModel, F
     private WanAndroidAdapter mAdapter;
     private int cid = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public static void start(Context mContext, int cid, String chapterName) {
+        Intent intent = new Intent(mContext, ArticleListActivity.class);
+        intent.putExtra("cid", cid);
+        intent.putExtra("chapterName", chapterName);
+        mContext.startActivity(intent);
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_wan_android);
         initRefreshView();
@@ -58,13 +63,11 @@ public class ArticleListActivity extends BaseActivity<WanAndroidListViewModel, F
             loadData();
         }, 500));
         bindingView.xrvWan.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
 
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 int page = viewModel.getPage();
                 viewModel.setPage(++page);
                 loadData();
@@ -86,7 +89,6 @@ public class ArticleListActivity extends BaseActivity<WanAndroidListViewModel, F
             mAdapter.addAll(homeListBean.getData().getDatas());
             mAdapter.notifyItemRangeChanged(positionStart, homeListBean.getData().getDatas().size());
             bindingView.xrvWan.refreshComplete();
-
         } else {
             if (viewModel.getPage() == 0) {
                 showError();
@@ -96,16 +98,8 @@ public class ArticleListActivity extends BaseActivity<WanAndroidListViewModel, F
         }
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         super.onRefresh();
         loadData();
-    }
-
-    public static void start(Context mContext, int cid, String chapterName) {
-        Intent intent = new Intent(mContext, ArticleListActivity.class);
-        intent.putExtra("cid", cid);
-        intent.putExtra("chapterName", chapterName);
-        mContext.startActivity(intent);
     }
 }

@@ -7,20 +7,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Environment;
 import android.widget.ImageView;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Created by jingbin on 16/9/20.
@@ -29,11 +26,11 @@ public class QRCodeUtil {
     /**
      * 生成二维码Bitmap
      *
-     * @param content   内容
-     * @param widthPix  图片宽度
+     * @param content 内容
+     * @param widthPix 图片宽度
      * @param heightPix 图片高度
-     * @param logoBm    二维码中心的Logo图标（可以为null）
-     * @param filePath  用于存储二维码图片的文件路径
+     * @param logoBm 二维码中心的Logo图标（可以为null）
+     * @param filePath 用于存储二维码图片的文件路径
      * @return 生成二维码及保存文件是否成功
      */
     public static boolean createQRImage(String content, int widthPix, int heightPix, Bitmap logoBm, String filePath) {
@@ -48,7 +45,7 @@ public class QRCodeUtil {
             //容错级别
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
             //设置空白边距的宽度
-//            hints.put(EncodeHintType.MARGIN, 2); //default is 4
+            //            hints.put(EncodeHintType.MARGIN, 2); //default is 4
 
             // 图像数据转换，使用了矩阵转换
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, widthPix, heightPix, hints);
@@ -140,32 +137,31 @@ public class QRCodeUtil {
     }
 
     /**
-     * @param text        生成二维码的字符串
-     * @param imageView   显示二维码的ImageView
+     * @param text 生成二维码的字符串
+     * @param imageView 显示二维码的ImageView
      * @param centerPhoto 二维码中间的图片
      */
-    public static void showThreadImage(final Activity mContext, final String text, final ImageView imageView, final int centerPhoto) {
-        String preContent = SPUtils.getString("share_code_content","");
+    public static void showThreadImage(final Activity mContext, final String text, final ImageView imageView,
+        final int centerPhoto) {
+        String preContent = SPUtils.getString("share_code_content", "");
         if (text.equals(preContent)) {
-            String preFilePath = SPUtils.getString("share_code_filePath","");
+            String preFilePath = SPUtils.getString("share_code_filePath", "");
             imageView.setImageBitmap(BitmapFactory.decodeFile(preFilePath));
-
         } else {
-            SPUtils.putString("share_code_content",text);
-            final String filePath = getFileRoot(mContext) + File.separator + "qr_" + System.currentTimeMillis() + ".jpg";
-            SPUtils.putString("share_code_filePath",filePath);
+            SPUtils.putString("share_code_content", text);
+            final String filePath =
+                getFileRoot(mContext) + File.separator + "qr_" + System.currentTimeMillis() + ".jpg";
+            SPUtils.putString("share_code_filePath", filePath);
 
             //二维码图片较大时，生成图片、保存文件的时间可能较长，因此放在新线程中
             new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    boolean success = QRCodeUtil.createQRImage(text, 800, 800, BitmapFactory.decodeResource(mContext.getResources(), centerPhoto),
-                            filePath);
+                @Override public void run() {
+                    boolean success = QRCodeUtil.createQRImage(text, 800, 800,
+                        BitmapFactory.decodeResource(mContext.getResources(), centerPhoto), filePath);
 
                     if (success) {
                         mContext.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                            @Override public void run() {
                                 imageView.setImageBitmap(BitmapFactory.decodeFile(filePath));
                             }
                         });
@@ -173,6 +169,5 @@ public class QRCodeUtil {
                 }
             }).start();
         }
-
     }
 }

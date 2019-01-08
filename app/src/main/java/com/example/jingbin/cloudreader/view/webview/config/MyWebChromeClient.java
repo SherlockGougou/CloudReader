@@ -8,12 +8,10 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.view.webview.WebViewActivity;
 
 import static android.app.Activity.RESULT_OK;
-
 
 /**
  * Created by jingbin on 2016/11/17.
@@ -23,16 +21,16 @@ import static android.app.Activity.RESULT_OK;
  */
 public class MyWebChromeClient extends WebChromeClient {
 
-    private ValueCallback<Uri> mUploadMessage;
-    private ValueCallback<Uri[]> mUploadMessageForAndroid5;
     public static int FILECHOOSER_RESULTCODE = 1;
     public static int FILECHOOSER_RESULTCODE_FOR_ANDROID_5 = 2;
-
+    private ValueCallback<Uri> mUploadMessage;
+    private ValueCallback<Uri[]> mUploadMessageForAndroid5;
     private View mXProgressVideo;
     private WebViewActivity mActivity;
     private IWebPageView mIWebPageView;
     private View mXCustomView;
     private CustomViewCallback mXCustomViewCallback;
+    private String title = "";
 
     public MyWebChromeClient(IWebPageView mIWebPageView) {
         this.mIWebPageView = mIWebPageView;
@@ -40,8 +38,7 @@ public class MyWebChromeClient extends WebChromeClient {
     }
 
     // 播放网络视频时全屏会被调用的方法
-    @Override
-    public void onShowCustomView(View view, CustomViewCallback callback) {
+    @Override public void onShowCustomView(View view, CustomViewCallback callback) {
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         mIWebPageView.hindWebView();
         // 如果一个视图已经存在，那么立刻终止并新建一个
@@ -57,10 +54,11 @@ public class MyWebChromeClient extends WebChromeClient {
     }
 
     // 视频播放退出全屏会被调用的
-    @Override
-    public void onHideCustomView() {
+    @Override public void onHideCustomView() {
         if (mXCustomView == null)// 不是全屏播放状态
+        {
             return;
+        }
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mXCustomView.setVisibility(View.GONE);
@@ -74,8 +72,7 @@ public class MyWebChromeClient extends WebChromeClient {
     }
 
     // 视频加载时进程loading
-    @Override
-    public View getVideoLoadingProgressView() {
+    @Override public View getVideoLoadingProgressView() {
         if (mXProgressVideo == null) {
             LayoutInflater inflater = LayoutInflater.from(mActivity);
             mXProgressVideo = inflater.inflate(R.layout.video_loading_progress, null);
@@ -83,8 +80,7 @@ public class MyWebChromeClient extends WebChromeClient {
         return mXProgressVideo;
     }
 
-    @Override
-    public void onProgressChanged(WebView view, int newProgress) {
+    @Override public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
         mIWebPageView.startProgress(newProgress);
     }
@@ -96,15 +92,12 @@ public class MyWebChromeClient extends WebChromeClient {
         return (mXCustomView != null);
     }
 
-    @Override
-    public void onReceivedTitle(WebView view, String title) {
+    @Override public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
         // 设置title
         mActivity.setTitle(title);
         this.title = title;
     }
-
-    private String title = "";
 
     public String getTitle() {
         return title + " ";
@@ -126,8 +119,8 @@ public class MyWebChromeClient extends WebChromeClient {
     }
 
     // For Android > 5.0
-    @Override
-    public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg, FileChooserParams fileChooserParams) {
+    @Override public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg,
+        FileChooserParams fileChooserParams) {
         openFileChooserImplForAndroid5(uploadMsg);
         return true;
     }
@@ -157,8 +150,7 @@ public class MyWebChromeClient extends WebChromeClient {
      * 5.0以下 上传图片成功后的回调
      */
     public void mUploadMessage(Intent intent, int resultCode) {
-        if (null == mUploadMessage)
-            return;
+        if (null == mUploadMessage) return;
         Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();
         mUploadMessage.onReceiveValue(result);
         mUploadMessage = null;
@@ -168,13 +160,12 @@ public class MyWebChromeClient extends WebChromeClient {
      * 5.0以上 上传图片成功后的回调
      */
     public void mUploadMessageForAndroid5(Intent intent, int resultCode) {
-        if (null == mUploadMessageForAndroid5)
-            return;
+        if (null == mUploadMessageForAndroid5) return;
         Uri result = (intent == null || resultCode != RESULT_OK) ? null : intent.getData();
         if (result != null) {
-            mUploadMessageForAndroid5.onReceiveValue(new Uri[]{result});
+            mUploadMessageForAndroid5.onReceiveValue(new Uri[] { result });
         } else {
-            mUploadMessageForAndroid5.onReceiveValue(new Uri[]{});
+            mUploadMessageForAndroid5.onReceiveValue(new Uri[] {});
         }
         mUploadMessageForAndroid5 = null;
     }

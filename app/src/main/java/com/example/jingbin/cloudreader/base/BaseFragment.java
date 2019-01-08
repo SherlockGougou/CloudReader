@@ -16,15 +16,8 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.utils.ClassUtil;
-import com.example.jingbin.cloudreader.utils.PerfectClickListener;
-import com.example.jingbin.cloudreader.viewmodel.menu.NoViewModel;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -39,22 +32,22 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
     protected SV bindingView;
     // fragment是否显示了
     protected boolean mIsVisible = false;
+    // 内容布局
+    protected RelativeLayout mContainer;
     // 加载中
     private View loadingView;
     // 加载失败
     private LinearLayout mRefresh;
-    // 内容布局
-    protected RelativeLayout mContainer;
     // 动画
     private AnimationDrawable mAnimationDrawable;
     private CompositeSubscription mCompositeSubscription;
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View ll = inflater.inflate(R.layout.fragment_base, null);
         bindingView = DataBindingUtil.inflate(getActivity().getLayoutInflater(), setContent(), null, false);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams params =
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         bindingView.getRoot().setLayoutParams(params);
         mContainer = ll.findViewById(R.id.container);
         mContainer.addView(bindingView.getRoot());
@@ -64,8 +57,7 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
     /**
      * 在这里实现Fragment数据的缓加载.
      */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             mIsVisible = true;
@@ -92,8 +84,7 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
         loadData();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         loadingView = ((ViewStub) getView(R.id.vs_loading)).inflate();
         ImageView img = loadingView.findViewById(R.id.img_progress);
@@ -107,8 +98,7 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
         mRefresh = getView(R.id.ll_error_refresh);
         // 点击加载失败布局
         mRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 showLoading();
                 onRefresh();
             }
@@ -207,8 +197,7 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
         this.mCompositeSubscription.add(s);
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.unsubscribe();

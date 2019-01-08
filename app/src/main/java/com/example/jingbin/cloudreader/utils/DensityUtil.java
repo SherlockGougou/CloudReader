@@ -8,7 +8,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
 
 /**
@@ -35,15 +34,15 @@ public class DensityUtil {
     /**
      * 设置某个View的margin
      *
-     * @param view   需要设置的view
-     * @param isDp   需要设置的数值是否为DP
-     * @param left   左边距
-     * @param right  右边距
-     * @param top    上边距
+     * @param view 需要设置的view
+     * @param isDp 需要设置的数值是否为DP
+     * @param left 左边距
+     * @param right 右边距
+     * @param top 上边距
      * @param bottom 下边距
-     * @return
      */
-    public static ViewGroup.LayoutParams setViewMargin(View view, boolean isDp, int left, int right, int top, int bottom) {
+    public static ViewGroup.LayoutParams setViewMargin(View view, boolean isDp, int left, int right, int top,
+        int bottom) {
         if (view == null) {
             return null;
         }
@@ -79,21 +78,25 @@ public class DensityUtil {
     /**
      * 通过比例得到高度
      *
-     * @param bili         图片比例
-     * @param type         1:外层 LinearLayout 2：外层 RelativeLayout
-     * @param marginLR     左右的dp
-     * @param marginTop    上面的dp
+     * @param bili 图片比例
+     * @param type 1:外层 LinearLayout 2：外层 RelativeLayout
+     * @param marginLR 左右的dp
+     * @param marginTop 上面的dp
      * @param marginBottom 下面的dp
      */
-    public static void formatHeight(View imageView, float bili, int type, int marginLR, int marginTop, int marginBottom) {
-        WindowManager wm = (WindowManager) CloudReaderApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+    public static void formatHeight(View imageView, float bili, int type, int marginLR, int marginTop,
+        int marginBottom) {
+        WindowManager wm =
+            (WindowManager) CloudReaderApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
         int height = (int) (width / bili);
         if (type == 1) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+            LinearLayout.LayoutParams lp =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             imageView.setLayoutParams(lp);
         } else if (type == 2) {
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+            RelativeLayout.LayoutParams lp =
+                new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             imageView.setLayoutParams(lp);
         } else {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, height);
@@ -108,16 +111,18 @@ public class DensityUtil {
      * 通过比例设置图片的高度
      *
      * @param width 图片的宽
-     * @param bili  图片比例
-     * @param type  1:外层 LinearLayout 2：外层 RelativeLayout
+     * @param bili 图片比例
+     * @param type 1:外层 LinearLayout 2：外层 RelativeLayout
      */
     public static void formatHeight(View imageView, int width, float bili, int type) {
         int height = (int) (width / bili);
         if (type == 1) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+            LinearLayout.LayoutParams lp =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             imageView.setLayoutParams(lp);
         } else if (type == 2) {
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+            RelativeLayout.LayoutParams lp =
+                new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
             imageView.setLayoutParams(lp);
         } else {
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
@@ -125,28 +130,28 @@ public class DensityUtil {
         }
     }
 
-
     /**
      * 得到屏幕的宽度
      */
     public static int getDisplayWidth() {
         try {
-            WindowManager wm = (WindowManager) CloudReaderApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+            WindowManager wm =
+                (WindowManager) CloudReaderApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
             return wm.getDefaultDisplay().getWidth();
         } catch (Exception e) {
             return 1080;
         }
     }
 
-    @SuppressLint("ResourceType")
-    public static void formatBannerHeight(View imageView, View view) {
+    @SuppressLint("ResourceType") public static void formatBannerHeight(View imageView, View view) {
         float displayWidth = getDisplayWidth();
         float width = (2f / 3 * displayWidth);
         float height = (2f / 3 * (displayWidth / 1.8f));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams((int) width, (int) height);
         imageView.setLayoutParams(lp);
         imageView.setId(1);
-        RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) height);
+        RelativeLayout.LayoutParams lp2 =
+            new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) height);
         lp2.addRule(RelativeLayout.RIGHT_OF, 1);
         view.setLayoutParams(lp2);
     }

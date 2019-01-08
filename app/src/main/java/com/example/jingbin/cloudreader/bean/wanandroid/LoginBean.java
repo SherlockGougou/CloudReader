@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.bean.wanandroid;
 
 import com.example.jingbin.cloudreader.data.room.User;
-
 import java.util.List;
 
 /**
@@ -11,7 +10,6 @@ import java.util.List;
  */
 
 public class LoginBean {
-
 
     /**
      * data : {"collectIds":[2317,2255,2324],"email":"","icon":"","id":1534,"password":"jingbin54770","type":0,"username":"jingbin"}

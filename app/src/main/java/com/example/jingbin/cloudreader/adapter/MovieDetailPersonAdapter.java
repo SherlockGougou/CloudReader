@@ -8,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.bean.moviechild.SubjectsBean;
 import com.example.jingbin.cloudreader.databinding.ActivityMovieHeaderBinding;
 import com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil;
-
 import java.util.List;
-
 
 /**
  * Created by jingbin on 16/11/29.
@@ -32,12 +29,13 @@ public class MovieDetailPersonAdapter extends RecyclerView.Adapter {
     private ImageView mHeaderView;
     private SubjectsBean subjectsBean;
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_CONTENT) {
             return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_detail, null));
         } else {
-            return new HeaderViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.activity_movie_header, null, false).getRoot());
+            return new HeaderViewHolder(
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.activity_movie_header, null,
+                    false).getRoot());
         }
     }
 
@@ -50,8 +48,7 @@ public class MovieDetailPersonAdapter extends RecyclerView.Adapter {
         this.subjectsBean = subjectsBean;
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_CONTENT) {
             MyViewHolder myViewHolder = (MyViewHolder) holder;
             myViewHolder.mTextView.setText(mData.get(position - 1));
@@ -61,13 +58,11 @@ public class MovieDetailPersonAdapter extends RecyclerView.Adapter {
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return mData == null ? 1 : 1 + mData.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    @Override public int getItemViewType(int position) {
         return position == 0 ? TYPE_HEADER : TYPE_CONTENT;
     }
 
@@ -88,12 +83,13 @@ public class MovieDetailPersonAdapter extends RecyclerView.Adapter {
             ActivityMovieHeaderBinding binding = DataBindingUtil.getBinding(itemView);
             // 绑定数据
             binding.setSubjectsBean(subjectsBean);
-//            ImageLoadUtil.displayGaussian(itemView.getContext(), subjectsBean.getImages().getLarge(), binding.imgItemBg);
-//            ImageLoadUtil.getInstance().displayEspImage(itemView.getContext(), subjectsBean.getImages().getLarge(), binding.ivOnePhoto);
+            //            ImageLoadUtil.displayGaussian(itemView.getContext(), subjectsBean.getImages().getLarge(), binding.imgItemBg);
+            //            ImageLoadUtil.getInstance().displayEspImage(itemView.getContext(), subjectsBean.getImages().getLarge(), binding.ivOnePhoto);
 
             // 删掉图片的下面三个状态栏的高度
             if (binding.imgItemBg != null) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.imgItemBg.getLayoutParams();
+                ViewGroup.MarginLayoutParams layoutParams =
+                    (ViewGroup.MarginLayoutParams) binding.imgItemBg.getLayoutParams();
                 layoutParams.setMargins(0, -3 * StatusBarUtil.getStatusBarHeight(itemView.getContext()), 0, 0);
             }
         }

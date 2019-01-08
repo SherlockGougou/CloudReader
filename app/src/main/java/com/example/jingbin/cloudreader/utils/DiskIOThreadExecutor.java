@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.utils;
 
 import android.support.annotation.NonNull;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -17,8 +16,7 @@ public class DiskIOThreadExecutor implements Executor {
         mDiskIO = Executors.newSingleThreadExecutor();
     }
 
-    @Override
-    public void execute(@NonNull Runnable command) {
+    @Override public void execute(@NonNull Runnable command) {
         mDiskIO.execute(command);
     }
 }

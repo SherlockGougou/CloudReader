@@ -18,11 +18,9 @@ package uk.co.senab.photoview.gestures;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.MotionEvent;
-
 import uk.co.senab.photoview.Compat;
 
-@TargetApi(5)
-public class EclairGestureDetector extends CupcakeGestureDetector {
+@TargetApi(5) public class EclairGestureDetector extends CupcakeGestureDetector {
 
     private static final int INVALID_POINTER_ID = -1;
     private int mActivePointerId = INVALID_POINTER_ID;
@@ -32,8 +30,7 @@ public class EclairGestureDetector extends CupcakeGestureDetector {
         super(context);
     }
 
-    @Override
-    float getActiveX(MotionEvent ev) {
+    @Override float getActiveX(MotionEvent ev) {
         try {
             return ev.getX(mActivePointerIndex);
         } catch (Exception e) {
@@ -41,8 +38,7 @@ public class EclairGestureDetector extends CupcakeGestureDetector {
         }
     }
 
-    @Override
-    float getActiveY(MotionEvent ev) {
+    @Override float getActiveY(MotionEvent ev) {
         try {
             return ev.getY(mActivePointerIndex);
         } catch (Exception e) {
@@ -50,8 +46,7 @@ public class EclairGestureDetector extends CupcakeGestureDetector {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    @Override public boolean onTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
@@ -78,9 +73,7 @@ public class EclairGestureDetector extends CupcakeGestureDetector {
                 break;
         }
 
-        mActivePointerIndex = ev
-                .findPointerIndex(mActivePointerId != INVALID_POINTER_ID ? mActivePointerId
-                        : 0);
+        mActivePointerIndex = ev.findPointerIndex(mActivePointerId != INVALID_POINTER_ID ? mActivePointerId : 0);
         try {
             return super.onTouchEvent(ev);
         } catch (IllegalArgumentException e) {

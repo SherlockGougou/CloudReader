@@ -6,11 +6,14 @@ package com.example.jingbin.cloudreader.http.rx;
 public class RxBusBaseMessage {
     private int code;
     private Object object;
-    public RxBusBaseMessage(int code, Object object){
-        this.code=code;
-        this.object=object;
+
+    public RxBusBaseMessage(int code, Object object) {
+        this.code = code;
+        this.object = object;
     }
-    public RxBusBaseMessage(){}
+
+    public RxBusBaseMessage() {
+    }
 
     public int getCode() {
         return code;

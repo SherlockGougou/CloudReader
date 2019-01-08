@@ -2,10 +2,8 @@ package com.example.jingbin.cloudreader.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.http.ParamNames;
 import com.example.jingbin.cloudreader.BR;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,8 +13,7 @@ import java.util.List;
 
 public class GankIoDataBean extends BaseObservable implements Serializable {
 
-    @ParamNames("error")
-    private boolean error;
+    @ParamNames("error") private boolean error;
     /**
      * _id : 5832662b421aa929b0f34e99
      * createdAt : 2016-11-21T11:12:43.567Z
@@ -29,63 +26,35 @@ public class GankIoDataBean extends BaseObservable implements Serializable {
      * who : Chauncey
      */
 
-    @ParamNames("results")
-    private List<ResultBean> results;
+    @ParamNames("results") private List<ResultBean> results;
+
+    public boolean isError() {
+        return error;
+    }
+
+    @Bindable public List<ResultBean> getResults() {
+        return results;
+    }
+
+    public void setResults(List<ResultBean> results) {
+        this.results = results;
+        notifyPropertyChanged(BR.results);
+    }
 
     public static class ResultBean extends BaseObservable implements Serializable {
 
-        @ParamNames("createdAt")
-        private String createdAt;
-        @ParamNames("desc")
-        private String desc;
-        @ParamNames("publishedAt")
-        private String publishedAt;
-        @ParamNames("source")
-        private String source;
-        @ParamNames("type")
-        private String type;
-        @ParamNames("url")
-        private String url;
-        @ParamNames("used")
-        private boolean used;
-        @ParamNames("who")
-        private String who;
-        @ParamNames("images")
-        private List<String> images;
+        @ParamNames("createdAt") private String createdAt;
+        @ParamNames("desc") private String desc;
+        @ParamNames("publishedAt") private String publishedAt;
+        @ParamNames("source") private String source;
+        @ParamNames("type") private String type;
+        @ParamNames("url") private String url;
+        @ParamNames("used") private boolean used;
+        @ParamNames("who") private String who;
+        @ParamNames("images") private List<String> images;
 
-        @Bindable
-        public String getCreatedAt() {
+        @Bindable public String getCreatedAt() {
             return createdAt;
-        }
-
-        @Bindable
-        public String getDesc() {
-            return desc;
-        }
-
-        @Bindable
-        public String getPublishedAt() {
-            return publishedAt;
-        }
-
-        @Bindable
-        public String getSource() {
-            return source;
-        }
-
-        @Bindable
-        public String getType() {
-            return type;
-        }
-
-        @Bindable
-        public String getUrl() {
-            return url;
-        }
-
-        @Bindable
-        public String getWho() {
-            return who;
         }
 
         public void setCreatedAt(String createdAt) {
@@ -93,9 +62,17 @@ public class GankIoDataBean extends BaseObservable implements Serializable {
             notifyPropertyChanged(BR.createdAt);
         }
 
+        @Bindable public String getDesc() {
+            return desc;
+        }
+
         public void setDesc(String desc) {
             this.desc = desc;
             notifyPropertyChanged(BR.desc);
+        }
+
+        @Bindable public String getPublishedAt() {
+            return publishedAt;
         }
 
         public void setPublishedAt(String publishedAt) {
@@ -103,9 +80,17 @@ public class GankIoDataBean extends BaseObservable implements Serializable {
             notifyPropertyChanged(BR.publishedAt);
         }
 
+        @Bindable public String getSource() {
+            return source;
+        }
+
         public void setSource(String source) {
             this.source = source;
             notifyPropertyChanged(BR.source);
+        }
+
+        @Bindable public String getType() {
+            return type;
         }
 
         public void setType(String type) {
@@ -113,9 +98,17 @@ public class GankIoDataBean extends BaseObservable implements Serializable {
             notifyPropertyChanged(BR.type);
         }
 
+        @Bindable public String getUrl() {
+            return url;
+        }
+
         public void setUrl(String url) {
             this.url = url;
             notifyPropertyChanged(BR.url);
+        }
+
+        @Bindable public String getWho() {
+            return who;
         }
 
         public void setWho(String who) {
@@ -123,28 +116,13 @@ public class GankIoDataBean extends BaseObservable implements Serializable {
             notifyPropertyChanged(BR.who);
         }
 
+        @Bindable public List<String> getImages() {
+            return images;
+        }
+
         public void setImages(List<String> images) {
             this.images = images;
             notifyPropertyChanged(BR.images);
         }
-
-        @Bindable
-        public List<String> getImages() {
-            return images;
-        }
-    }
-
-    public boolean isError() {
-        return error;
-    }
-
-    @Bindable
-    public List<ResultBean> getResults() {
-        return results;
-    }
-
-    public void setResults(List<ResultBean> results) {
-        this.results = results;
-        notifyPropertyChanged(BR.results);
     }
 }

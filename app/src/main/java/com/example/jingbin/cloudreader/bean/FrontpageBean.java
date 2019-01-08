@@ -167,9 +167,6 @@ public class FrontpageBean implements Serializable {
             public void setResult(List<BannerItemBean> result) {
                 this.result = result;
             }
-
         }
-
     }
-
 }

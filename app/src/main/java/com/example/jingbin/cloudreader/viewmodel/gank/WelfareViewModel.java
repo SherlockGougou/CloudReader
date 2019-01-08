@@ -3,17 +3,12 @@ package com.example.jingbin.cloudreader.viewmodel.gank;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
-
 import com.example.http.HttpUtils;
-import com.example.jingbin.cloudreader.bean.CollectUrlBean;
 import com.example.jingbin.cloudreader.bean.GankIoDataBean;
 import com.example.jingbin.cloudreader.data.model.GankOtherModel;
 import com.example.jingbin.cloudreader.http.RequestImpl;
-
 import java.util.ArrayList;
-
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,8 +25,8 @@ import rx.schedulers.Schedulers;
 public class WelfareViewModel extends AndroidViewModel {
 
     private final GankOtherModel mModel;
+    private final MutableLiveData<ArrayList<ArrayList<String>>> allListData = new MutableLiveData<>();
     private int mPage = 1;
-
     /**
      * 图片url集合
      */
@@ -44,7 +39,6 @@ public class WelfareViewModel extends AndroidViewModel {
      * 传递给Activity数据集合
      */
     private ArrayList<ArrayList<String>> allList = new ArrayList<>();
-    private final MutableLiveData<ArrayList<ArrayList<String>>> allListData = new MutableLiveData<>();
 
     public WelfareViewModel(@NonNull Application application) {
         super(application);
@@ -59,23 +53,20 @@ public class WelfareViewModel extends AndroidViewModel {
         final MutableLiveData<GankIoDataBean> data = new MutableLiveData<>();
         mModel.setData("福利", mPage, HttpUtils.per_page_more);
         mModel.getGankIoData(new RequestImpl() {
-            @Override
-            public void loadSuccess(Object object) {
+            @Override public void loadSuccess(Object object) {
                 GankIoDataBean gankIoDataBean = (GankIoDataBean) object;
                 handleImageList(gankIoDataBean);
                 data.setValue(gankIoDataBean);
             }
 
-            @Override
-            public void loadFailed() {
+            @Override public void loadFailed() {
                 if (mPage > 1) {
                     mPage--;
                 }
                 data.setValue(null);
             }
 
-            @Override
-            public void addSubscription(Subscription subscription) {
+            @Override public void addSubscription(Subscription subscription) {
             }
         });
         return data;
@@ -87,10 +78,10 @@ public class WelfareViewModel extends AndroidViewModel {
      * @param gankIoDataBean 原数据
      */
     private void handleImageList(GankIoDataBean gankIoDataBean) {
-        Subscription subscribe = Observable.just(gankIoDataBean)
+        Subscription subscribe =
+            Observable.just(gankIoDataBean)
                 .map(new Func1<GankIoDataBean, ArrayList<ArrayList<String>>>() {
-                    @Override
-                    public ArrayList<ArrayList<String>> call(GankIoDataBean gankIoDataBean) {
+                    @Override public ArrayList<ArrayList<String>> call(GankIoDataBean gankIoDataBean) {
                         imgList.clear();
                         imageTitleList.clear();
                         for (int i = 0; i < gankIoDataBean.getResults().size(); i++) {
@@ -106,8 +97,7 @@ public class WelfareViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<ArrayList<ArrayList<String>>>() {
-                    @Override
-                    public void call(ArrayList<ArrayList<String>> arrayLists) {
+                    @Override public void call(ArrayList<ArrayList<String>> arrayLists) {
                         allListData.setValue(arrayLists);
                     }
                 });

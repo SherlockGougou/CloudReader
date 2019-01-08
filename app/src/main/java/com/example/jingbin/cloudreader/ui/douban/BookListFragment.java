@@ -7,9 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.inputmethod.EditorInfo;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.WanBookAdapter;
 import com.example.jingbin.cloudreader.base.BaseFragment;
@@ -24,7 +22,7 @@ import com.example.xrecyclerview.XRecyclerView;
 
 /**
  * @author jingbin
- *         Updated by jingbin on 18/12/27.
+ * Updated by jingbin on 18/12/27.
  */
 public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWanAndroidBinding> {
 
@@ -35,17 +33,6 @@ public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWa
     private WanBookAdapter mBookAdapter;
     private FragmentActivity activity;
 
-    @Override
-    public int setContent() {
-        return R.layout.fragment_wan_android;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = getActivity();
-    }
-
     public static BookListFragment newInstance(String param1) {
         BookListFragment fragment = new BookListFragment();
         Bundle args = new Bundle();
@@ -54,16 +41,23 @@ public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWa
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public int setContent() {
+        return R.layout.fragment_wan_android;
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
         }
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showContentView();
         initRefreshView();
@@ -79,7 +73,8 @@ public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWa
     private void initRefreshView() {
         bindingView.srlWan.setColorSchemeColors(CommonUtils.getColor(R.color.colorTheme));
         mBookAdapter = new WanBookAdapter();
-        HeaderItemBookBinding oneBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_item_book, null, false);
+        HeaderItemBookBinding oneBinding =
+            DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_item_book, null, false);
         oneBinding.setViewModel(viewModel);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         bindingView.xrvWan.setLayoutManager(mLayoutManager);
@@ -103,32 +98,27 @@ public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWa
             return false;
         });
         bindingView.srlWan.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 bindingView.srlWan.postDelayed(() -> {
                     viewModel.setStart(0);
                     bindingView.xrvWan.reset();
                     getBook();
                 }, 300);
-
             }
         });
         bindingView.xrvWan.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
 
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 viewModel.handleNextStart();
                 getBook();
             }
         });
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         DebugUtil.error("-----loadData");
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
@@ -141,8 +131,7 @@ public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWa
 
     private void getBook() {
         viewModel.getBook().observe(this, new android.arch.lifecycle.Observer<BookBean>() {
-            @Override
-            public void onChanged(@Nullable BookBean bookBean) {
+            @Override public void onChanged(@Nullable BookBean bookBean) {
                 if (bindingView.srlWan.isRefreshing()) {
                     bindingView.srlWan.setRefreshing(false);
                 }
@@ -170,14 +159,12 @@ public class BookListFragment extends BaseFragment<BookListViewModel, FragmentWa
         });
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         bindingView.srlWan.setRefreshing(true);
         getBook();
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
         if (mBookAdapter != null) {
             mBookAdapter.clear();

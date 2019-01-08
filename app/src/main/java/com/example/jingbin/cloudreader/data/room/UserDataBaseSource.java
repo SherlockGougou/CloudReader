@@ -1,15 +1,12 @@
 package com.example.jingbin.cloudreader.data.room;
 
 import android.support.annotation.NonNull;
-
 import com.example.jingbin.cloudreader.utils.AppExecutors;
 import com.example.jingbin.cloudreader.utils.DebugUtil;
-
-import java.util.List;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import java.util.List;
 
 /**
  * @author jingbin
@@ -28,8 +25,7 @@ public class UserDataBaseSource {
         this.mUserDao = mUserDao;
     }
 
-    public static UserDataBaseSource getInstance(@NonNull AppExecutors appExecutors,
-                                                 @NonNull UserDao tasksDao) {
+    public static UserDataBaseSource getInstance(@NonNull AppExecutors appExecutors, @NonNull UserDao tasksDao) {
         if (INSTANCE == null) {
             synchronized (UserDataBaseSource.class) {
                 if (INSTANCE == null) {
@@ -47,13 +43,11 @@ public class UserDataBaseSource {
      */
     public void getSingleBean(UserDataCallback callback) {
         Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try {
                     User user = mUserDao.findSingleBean();
                     mAppExecutors.mainThread().execute(new Runnable() {
-                        @Override
-                        public void run() {
+                        @Override public void run() {
                             if (user == null) {
                                 callback.onDataNotAvailable();
                             } else {
@@ -74,8 +68,7 @@ public class UserDataBaseSource {
      */
     public void addData(@NonNull User user) {
         Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try {
                     int success = mUserDao.deleteAll();
                     DebugUtil.error("----success:" + success);
@@ -88,14 +81,12 @@ public class UserDataBaseSource {
         mAppExecutors.diskIO().execute(runnable);
     }
 
-
     /**
      * 更新数据
      */
     public void updateData(@NonNull User user) {
         Runnable saveRunnable = new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try {
                     mUserDao.addUser(user);
                 } catch (Exception e) {
@@ -111,8 +102,7 @@ public class UserDataBaseSource {
      */
     public void deleteAllData() {
         Runnable saveRunnable = new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try {
                     mUserDao.deleteAll();
                 } catch (Exception e) {
@@ -127,29 +117,29 @@ public class UserDataBaseSource {
      * 获取数据集合
      */
     public void getAll() {
-        UserDataBase.getDatabase().waitDao().findAll()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<User>>() {
-                    @Override
-                    public void accept(List<User> users) throws Exception {
-//                        DebugUtil.error("----waitList.size():" + waits.size());
-//                        DebugUtil.error("----waitList:" + waits.toString());
-                    }
-                });
+        UserDataBase.getDatabase()
+            .waitDao()
+            .findAll()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<List<User>>() {
+                @Override public void accept(List<User> users) throws Exception {
+                    //                        DebugUtil.error("----waitList.size():" + waits.size());
+                    //                        DebugUtil.error("----waitList:" + waits.toString());
+                }
+            });
     }
+
     /**
      * 获取全部数据集合
      */
     public void getAllData() {
         Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 try {
                     List<User> waits = mUserDao.findUsers();
                     mAppExecutors.mainThread().execute(new Runnable() {
-                        @Override
-                        public void run() {
+                        @Override public void run() {
 
                         }
                     });

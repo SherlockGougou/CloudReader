@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -28,9 +27,7 @@ public class OneAdapter extends BaseRecyclerViewAdapter<SubjectsBean> {
         this.activity = activity;
     }
 
-    @NonNull
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_one);
     }
 
@@ -40,34 +37,40 @@ public class OneAdapter extends BaseRecyclerViewAdapter<SubjectsBean> {
             super(context, layoutId);
         }
 
-        @Override
-        public void onBindViewHolder(final SubjectsBean positionData, final int position) {
+        @Override public void onBindViewHolder(final SubjectsBean positionData, final int position) {
             if (positionData != null) {
                 binding.setSubjectsBean(positionData);
                 binding.llOneItem.setOnClickListener(new PerfectClickListener() {
-                    @Override
-                    protected void onNoDoubleClick(View v) {
+                    @Override protected void onNoDoubleClick(View v) {
                         OneMovieDetailActivity.start(activity, positionData, binding.ivOnePhoto);
                     }
                 });
 
                 // 图片
-//                ImageLoadUtil.displayEspImage(positionData.getImages().getLarge(), binding.ivOnePhoto,0);
+                //                ImageLoadUtil.displayEspImage(positionData.getImages().getLarge(), binding.ivOnePhoto,0);
                 // 导演
-//                binding.tvOneDirectors.setText(StringFormatUtil.formatName(positionData.getDirectors()));
+                //                binding.tvOneDirectors.setText(StringFormatUtil.formatName(positionData.getDirectors()));
                 // 主演
-//                binding.tvOneCasts.setText(StringFormatUtil.formatName(positionData.getCasts()));
+                //                binding.tvOneCasts.setText(StringFormatUtil.formatName(positionData.getCasts()));
                 // 类型
-//                binding.tvOneGenres.setText("类型：" + StringFormatUtil.formatGenres(positionData.getGenres()));
+                //                binding.tvOneGenres.setText("类型：" + StringFormatUtil.formatGenres(positionData.getGenres()));
                 // 评分
-//                binding.tvOneRatingRate.setText("评分：" + String.valueOf(positionData.getRating().getAverage()));
+                //                binding.tvOneRatingRate.setText("评分：" + String.valueOf(positionData.getRating().getAverage()));
                 // 分割线颜色
-//                binding.viewColor.setBackgroundColor(CommonUtils.randomColor());
+                //                binding.viewColor.setBackgroundColor(CommonUtils.randomColor());
 
                 ViewHelper.setScaleX(itemView, 0.8f);
                 ViewHelper.setScaleY(itemView, 0.8f);
-                ViewPropertyAnimator.animate(itemView).scaleX(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();
-                ViewPropertyAnimator.animate(itemView).scaleY(1).setDuration(350).setInterpolator(new OvershootInterpolator()).start();
+                ViewPropertyAnimator.animate(itemView)
+                    .scaleX(1)
+                    .setDuration(350)
+                    .setInterpolator(new OvershootInterpolator())
+                    .start();
+                ViewPropertyAnimator.animate(itemView)
+                    .scaleY(1)
+                    .setDuration(350)
+                    .setInterpolator(new OvershootInterpolator())
+                    .start();
 
                 /*binding.llOneItem.setOnClickListener(new PerfectClickListener() {
                     @Override

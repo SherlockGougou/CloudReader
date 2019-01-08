@@ -2,12 +2,10 @@ package com.example.jingbin.cloudreader.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.jingbin.cloudreader.BR;
 import com.example.jingbin.cloudreader.bean.moviechild.ImagesBean;
 import com.example.jingbin.cloudreader.bean.moviechild.PersonBean;
 import com.example.jingbin.cloudreader.bean.moviechild.RatingBean;
-
 import java.util.List;
 
 /**
@@ -15,7 +13,6 @@ import java.util.List;
  */
 
 public class MovieDetailBean extends BaseObservable {
-
 
     /**
      * rating : {"max":10,"average":6.9,"stars":"35","min":0}
@@ -75,8 +72,7 @@ public class MovieDetailBean extends BaseObservable {
     private List<PersonBean> directors;
     private List<String> aka;
 
-    @Bindable
-    public RatingBean getRating() {
+    @Bindable public RatingBean getRating() {
         return rating;
     }
 
@@ -85,8 +81,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.rating);
     }
 
-    @Bindable
-    public int getReviews_count() {
+    @Bindable public int getReviews_count() {
         return reviews_count;
     }
 
@@ -95,8 +90,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.reviews_count);
     }
 
-    @Bindable
-    public int getWish_count() {
+    @Bindable public int getWish_count() {
         return wish_count;
     }
 
@@ -105,8 +99,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.wish_count);
     }
 
-    @Bindable
-    public String getDouban_site() {
+    @Bindable public String getDouban_site() {
         return douban_site;
     }
 
@@ -115,8 +108,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.douban_site);
     }
 
-    @Bindable
-    public String getYear() {
+    @Bindable public String getYear() {
         return year;
     }
 
@@ -125,8 +117,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.year);
     }
 
-    @Bindable
-    public ImagesBean getImages() {
+    @Bindable public ImagesBean getImages() {
         return images;
     }
 
@@ -135,8 +126,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.images);
     }
 
-    @Bindable
-    public String getAlt() {
+    @Bindable public String getAlt() {
         return alt;
     }
 
@@ -145,8 +135,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.alt);
     }
 
-    @Bindable
-    public String getId() {
+    @Bindable public String getId() {
         return id;
     }
 
@@ -155,8 +144,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.id);
     }
 
-    @Bindable
-    public String getMobile_url() {
+    @Bindable public String getMobile_url() {
         return mobile_url;
     }
 
@@ -165,8 +153,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.mobile_url);
     }
 
-    @Bindable
-    public String getTitle() {
+    @Bindable public String getTitle() {
         return title;
     }
 
@@ -175,8 +162,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.title);
     }
 
-    @Bindable
-    public int getDo_count() {
+    @Bindable public int getDo_count() {
         return do_count;
     }
 
@@ -185,8 +171,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.do_count);
     }
 
-    @Bindable
-    public String getShare_url() {
+    @Bindable public String getShare_url() {
         return share_url;
     }
 
@@ -195,8 +180,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.share_url);
     }
 
-    @Bindable
-    public int getSeasons_count() {
+    @Bindable public int getSeasons_count() {
         return seasons_count;
     }
 
@@ -205,8 +189,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.seasons_count);
     }
 
-    @Bindable
-    public String getSchedule_url() {
+    @Bindable public String getSchedule_url() {
         return schedule_url;
     }
 
@@ -215,8 +198,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.schedule_url);
     }
 
-    @Bindable
-    public int getEpisodes_count() {
+    @Bindable public int getEpisodes_count() {
         return episodes_count;
     }
 
@@ -225,8 +207,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.episodes_count);
     }
 
-    @Bindable
-    public int getCollect_count() {
+    @Bindable public int getCollect_count() {
         return collect_count;
     }
 
@@ -235,8 +216,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.collect_count);
     }
 
-    @Bindable
-    public String getCurrent_season() {
+    @Bindable public String getCurrent_season() {
         return current_season;
     }
 
@@ -245,8 +225,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.current_season);
     }
 
-    @Bindable
-    public String getOriginal_title() {
+    @Bindable public String getOriginal_title() {
         return original_title;
     }
 
@@ -255,8 +234,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.original_title);
     }
 
-    @Bindable
-    public String getSummary() {
+    @Bindable public String getSummary() {
         return summary;
     }
 
@@ -265,8 +243,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.summary);
     }
 
-    @Bindable
-    public String getSubtype() {
+    @Bindable public String getSubtype() {
         return subtype;
     }
 
@@ -275,8 +252,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.subtype);
     }
 
-    @Bindable
-    public int getComments_count() {
+    @Bindable public int getComments_count() {
         return comments_count;
     }
 
@@ -285,8 +261,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.comments_count);
     }
 
-    @Bindable
-    public int getRatings_count() {
+    @Bindable public int getRatings_count() {
         return ratings_count;
     }
 
@@ -295,8 +270,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.ratings_count);
     }
 
-    @Bindable
-    public List<String> getCountries() {
+    @Bindable public List<String> getCountries() {
         return countries;
     }
 
@@ -305,8 +279,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.countries);
     }
 
-    @Bindable
-    public List<String> getGenres() {
+    @Bindable public List<String> getGenres() {
         return genres;
     }
 
@@ -315,8 +288,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.genres);
     }
 
-    @Bindable
-    public List<PersonBean> getCasts() {
+    @Bindable public List<PersonBean> getCasts() {
         return casts;
     }
 
@@ -325,8 +297,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.casts);
     }
 
-    @Bindable
-    public List<PersonBean> getDirectors() {
+    @Bindable public List<PersonBean> getDirectors() {
         return directors;
     }
 
@@ -335,8 +306,7 @@ public class MovieDetailBean extends BaseObservable {
         notifyPropertyChanged(BR.directors);
     }
 
-    @Bindable
-    public List<String> getAka() {
+    @Bindable public List<String> getAka() {
         return aka;
     }
 

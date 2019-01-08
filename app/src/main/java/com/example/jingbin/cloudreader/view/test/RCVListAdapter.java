@@ -6,14 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author linxiao
  * @version 1.0.0
  */
@@ -32,7 +29,7 @@ public class RCVListAdapter extends RecyclerView.Adapter<RCVListAdapter.ItemHold
         this.context = context;
     }
 
-    public void setDataSource(List<String> dataSource){
+    public void setDataSource(List<String> dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -44,8 +41,7 @@ public class RCVListAdapter extends RecyclerView.Adapter<RCVListAdapter.ItemHold
         header = v;
     }
 
-    @Override
-    public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d("RCVListAdapter", "onCreateViewHolder");
         if (viewType == TYPE_HEADER) {
             return new ItemHolder(header);
@@ -54,18 +50,15 @@ public class RCVListAdapter extends RecyclerView.Adapter<RCVListAdapter.ItemHold
         return new ItemHolder(itemView);
     }
 
-    @Override
-    public void onBindViewHolder(ItemHolder holder, int position) {
+    @Override public void onBindViewHolder(ItemHolder holder, int position) {
 
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    @Override public int getItemViewType(int position) {
         return isHeader(position) ? TYPE_HEADER : TYPE_ITEM;
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return dataSource.size() + 1;
     }
 

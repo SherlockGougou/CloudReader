@@ -13,40 +13,37 @@ import android.support.annotation.NonNull;
  * 3、List<>不能简单使用，需要处理
  */
 
-@Entity(tableName = "User")
-public class User {
-
+@Entity(tableName = "User") public class User {
 
     /**
      * 通过主键来标识删除的
      * 主键递增：PrimaryKey(autoGenerate = true)
      */
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "id")
-    private int id;
+    @PrimaryKey @NonNull @ColumnInfo(name = "id") private int id;
 
-    @ColumnInfo(name = "email")
-    private String email;
-    @ColumnInfo(name = "icon")
-    private String icon;
-    @ColumnInfo(name = "password")
-    private String password;
-    @ColumnInfo(name = "type")
-    private int type;
-    @ColumnInfo(name = "username")
-    private String username;
+    @ColumnInfo(name = "email") private String email;
+    @ColumnInfo(name = "icon") private String icon;
+    @ColumnInfo(name = "password") private String password;
+    @ColumnInfo(name = "type") private int type;
+    @ColumnInfo(name = "username") private String username;
 
-//    @ColumnInfo(name = "collectIds")
-//    private List<Integer> collectIds;
+    //    @ColumnInfo(name = "collectIds")
+    //    private List<Integer> collectIds;
 
     //这里定义User 和 Book的关系
-//    @Relation(parentColumn = "id", entityColumn = "id", entity = Integer.class)
-//    private ArrayList<Integer> collectIds;
+    //    @Relation(parentColumn = "id", entityColumn = "id", entity = Integer.class)
+    //    private ArrayList<Integer> collectIds;
 
+    public User(@NonNull int id, String email, String icon, String password, int type, String username) {
+        this.id = id;
+        this.email = email;
+        this.icon = icon;
+        this.password = password;
+        this.type = type;
+        this.username = username;
+    }
 
-    @NonNull
-    public int getId() {
+    @NonNull public int getId() {
         return id;
     }
 
@@ -94,24 +91,24 @@ public class User {
         this.username = username;
     }
 
-    public User(@NonNull int id, String email, String icon, String password, int type, String username) {
-        this.id = id;
-        this.email = email;
-        this.icon = icon;
-        this.password = password;
-        this.type = type;
-        this.username = username;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", icon='" + icon + '\'' +
-                ", password='" + password + '\'' +
-                ", type=" + type +
-                ", username='" + username + '\'' +
-                '}';
+    @Override public String toString() {
+        return "User{"
+            + "id="
+            + id
+            + ", email='"
+            + email
+            + '\''
+            + ", icon='"
+            + icon
+            + '\''
+            + ", password='"
+            + password
+            + '\''
+            + ", type="
+            + type
+            + ", username='"
+            + username
+            + '\''
+            + '}';
     }
 }

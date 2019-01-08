@@ -2,7 +2,6 @@ package com.example.jingbin.cloudreader.adapter;
 
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -16,21 +15,17 @@ import com.example.jingbin.cloudreader.utils.DensityUtil;
  */
 public class WelfareAdapter extends BaseRecyclerViewAdapter<GankIoDataBean.ResultBean> {
 
-    @NonNull
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_welfare);
     }
-    
-    private class ViewHolder extends BaseRecyclerViewHolder<GankIoDataBean.ResultBean, ItemWelfareBinding> {
 
+    private class ViewHolder extends BaseRecyclerViewHolder<GankIoDataBean.ResultBean, ItemWelfareBinding> {
 
         ViewHolder(ViewGroup viewGroup, int layoutId) {
             super(viewGroup, layoutId);
         }
 
-        @Override
-        public void onBindViewHolder(final GankIoDataBean.ResultBean resultsBean, final int position) {
+        @Override public void onBindViewHolder(final GankIoDataBean.ResultBean resultsBean, final int position) {
             /**
              * 注意：DensityUtil.setViewMargin(itemView,true,5,3,5,0);
              * 如果这样使用，则每个item的左右边距是不一样的，

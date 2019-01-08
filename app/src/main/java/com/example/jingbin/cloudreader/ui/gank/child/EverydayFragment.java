@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-
 import com.bumptech.glide.Glide;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.EverydayAdapter;
@@ -32,7 +31,6 @@ import com.example.jingbin.cloudreader.utils.PerfectClickListener;
 import com.example.jingbin.cloudreader.utils.UpdateUtil;
 import com.example.jingbin.cloudreader.view.webview.WebViewActivity;
 import com.example.jingbin.cloudreader.viewmodel.gank.EverydayViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,14 +53,32 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
     private boolean mIsPrepared = false;
     private RotateAnimation animation;
     private boolean isLoadBanner;
+    private PerfectClickListener listener = new PerfectClickListener() {
+        @Override protected void onNoDoubleClick(View v) {
+            switch (v.getId()) {
+                case R.id.ib_xiandu:
+                    WebViewActivity.loadUrl(v.getContext(), getString(R.string.string_url_xiandu), "闲读");
+                    break;
+                case R.id.ib_wan_android:
+                    WebViewActivity.loadUrl(v.getContext(), getString(R.string.string_url_wanandroid), "玩Android");
+                    break;
+                case R.id.ib_movie_hot:
+                    RxBus.getDefault().post(RxCodeConstants.JUMP_TYPE_TO_ONE, new RxBusBaseMessage());
+                    break;
+                case R.id.fl_everyday:
+                    WebViewActivity.loadUrl(v.getContext(), getString(R.string.string_url_trending), "Trending");
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
-    @Override
-    public int setContent() {
+    @Override public int setContent() {
         return R.layout.fragment_everyday;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         showContentView();
@@ -78,8 +94,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
         loadData();
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsVisible || !mIsPrepared) {
             return;
         }
@@ -87,8 +102,10 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
     }
 
     private void initRecyclerView() {
-        mHeaderBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.header_item_everyday, null, false);
-        FooterItemEverydayBinding mFooterBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.footer_item_everyday, null, false);
+        mHeaderBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.header_item_everyday, null, false);
+        FooterItemEverydayBinding mFooterBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.footer_item_everyday, null, false);
         bindingView.xrvEveryday.setPullRefreshEnabled(false);
         bindingView.xrvEveryday.setLoadingMoreEnabled(false);
         bindingView.xrvEveryday.addHeaderView(mHeaderBinding.getRoot());
@@ -116,20 +133,20 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
 
     private void onObserveViewModel() {
         viewModel.getShowLoading().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
+            @Override public void onChanged(@Nullable Boolean aBoolean) {
                 showRotaLoading(aBoolean);
             }
         });
         viewModel.getBannerData().observe(this, new Observer<EverydayViewModel.BannerDataBean>() {
-            @Override
-            public void onChanged(@Nullable EverydayViewModel.BannerDataBean bean) {
+            @Override public void onChanged(@Nullable EverydayViewModel.BannerDataBean bean) {
                 if (bean != null && bean.getImageUrls() != null && bean.getImageUrls().size() > 0) {
                     mHeaderBinding.banner.setImages(bean.getImageUrls()).setImageLoader(new GlideImageLoader()).start();
                     ArrayList<BannerItemBean> list = bean.getList();
                     if (list != null && list.size() > 0) {
                         mHeaderBinding.banner.setOnBannerListener(position -> {
-                            if (!TextUtils.isEmpty(list.get(position).getCode()) && list.get(position).getCode().startsWith("http")) {
+                            if (!TextUtils.isEmpty(list.get(position).getCode()) && list.get(position)
+                                .getCode()
+                                .startsWith("http")) {
                                 WebViewActivity.loadUrl(getContext(), list.get(position).getCode(), "加载中...");
                             }
                         });
@@ -139,8 +156,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
             }
         });
         viewModel.getContentData().observe(this, new Observer<ArrayList<List<AndroidBean>>>() {
-            @Override
-            public void onChanged(@Nullable ArrayList<List<AndroidBean>> lists) {
+            @Override public void onChanged(@Nullable ArrayList<List<AndroidBean>> lists) {
                 if (lists != null && lists.size() > 0) {
                     mEverydayAdapter.clear();
                     mEverydayAdapter.addAll(lists);
@@ -153,30 +169,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
         });
     }
 
-    private PerfectClickListener listener = new PerfectClickListener() {
-        @Override
-        protected void onNoDoubleClick(View v) {
-            switch (v.getId()) {
-                case R.id.ib_xiandu:
-                    WebViewActivity.loadUrl(v.getContext(), getString(R.string.string_url_xiandu), "闲读");
-                    break;
-                case R.id.ib_wan_android:
-                    WebViewActivity.loadUrl(v.getContext(), getString(R.string.string_url_wanandroid), "玩Android");
-                    break;
-                case R.id.ib_movie_hot:
-                    RxBus.getDefault().post(RxCodeConstants.JUMP_TYPE_TO_ONE, new RxBusBaseMessage());
-                    break;
-                case R.id.fl_everyday:
-                    WebViewActivity.loadUrl(v.getContext(), getString(R.string.string_url_trending), "Trending");
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         // 失去焦点，否则RecyclerView第一个item会回到顶部
         bindingView.xrvEveryday.setFocusable(false);
@@ -187,8 +180,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
         }
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         // 停止全部图片请求 跟随着Activity
         Glide.with(getActivity()).pauseRequests();
@@ -224,17 +216,14 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
         }
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         showContentView();
         showRotaLoading(true);
         viewModel.loadData();
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
         viewModel.onDestroy();
     }
-
 }

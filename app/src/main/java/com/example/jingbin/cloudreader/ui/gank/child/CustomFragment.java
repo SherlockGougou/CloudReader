@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
-
 import com.cocosw.bottomsheet.BottomSheet;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.GankAndroidAdapter;
@@ -33,8 +31,7 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
     private BottomSheet.Builder builder = null;
     private GankAndroidAdapter adapter;
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
         initRecyclerView();
@@ -42,13 +39,11 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
         mIsPrepared = true;
     }
 
-    @Override
-    public int setContent() {
+    @Override public int setContent() {
         return R.layout.fragment_custom;
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
@@ -81,12 +76,10 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
         bindingView.xrvCustom.setLayoutManager(new LinearLayoutManager(getActivity()));
         bindingView.xrvCustom.setAdapter(adapter);
         bindingView.xrvCustom.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 int page = viewModel.getPage();
                 page++;
                 viewModel.setPage(page);
@@ -97,8 +90,7 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
 
     private void loadCustomData() {
         viewModel.loadCustomData().observe(this, new Observer<GankIoDataBean>() {
-            @Override
-            public void onChanged(@Nullable GankIoDataBean bean) {
+            @Override public void onChanged(@Nullable GankIoDataBean bean) {
                 if (bean != null && bean.getResults() != null && bean.getResults().size() > 0) {
                     int positionStart = adapter.getItemCount() + 2;
                     if (viewModel.getPage() == 1) {
@@ -132,45 +124,44 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
         String gankCala = SPUtils.getString(GANK_CALA, "全部");
         txName.setText(gankCala);
         try {
-            builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog)
-                    .title("选择分类")
-                    .sheet(R.menu.gank_bottomsheet)
-                    .listener((dialog, which) -> {
-                        switch (which) {
-                            case R.id.gank_all:
-                                if (isOtherType("全部")) {
-                                    changeContent(txName, "全部");
-                                }
-                                break;
-                            case R.id.gank_ios:
-                                if (isOtherType("IOS")) {
-                                    changeContent(txName, "IOS");
-                                }
-                                break;
-                            case R.id.gank_qian:
-                                if (isOtherType("前端")) {
-                                    changeContent(txName, "前端");
-                                }
-                                break;
-                            case R.id.gank_app:
-                                if (isOtherType("App")) {
-                                    changeContent(txName, "App");
-                                }
-                                break;
-                            case R.id.gank_movie:
-                                if (isOtherType("休息视频")) {
-                                    changeContent(txName, "休息视频");
-                                }
-                                break;
-                            case R.id.gank_resouce:
-                                if (isOtherType("拓展资源")) {
-                                    changeContent(txName, "拓展资源");
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                    });
+            builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog).title("选择分类")
+                .sheet(R.menu.gank_bottomsheet)
+                .listener((dialog, which) -> {
+                    switch (which) {
+                        case R.id.gank_all:
+                            if (isOtherType("全部")) {
+                                changeContent(txName, "全部");
+                            }
+                            break;
+                        case R.id.gank_ios:
+                            if (isOtherType("IOS")) {
+                                changeContent(txName, "IOS");
+                            }
+                            break;
+                        case R.id.gank_qian:
+                            if (isOtherType("前端")) {
+                                changeContent(txName, "前端");
+                            }
+                            break;
+                        case R.id.gank_app:
+                            if (isOtherType("App")) {
+                                changeContent(txName, "App");
+                            }
+                            break;
+                        case R.id.gank_movie:
+                            if (isOtherType("休息视频")) {
+                                changeContent(txName, "休息视频");
+                            }
+                            break;
+                        case R.id.gank_resouce:
+                            if (isOtherType("拓展资源")) {
+                                changeContent(txName, "拓展资源");
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -187,12 +178,10 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
             textView.setText("全部");
             // 全部传 all
             mType = "all";
-
         } else if ("IOS".equals(content)) {
             textView.setText("IOS");
             // 这里有严格大小写
             mType = "iOS";
-
         } else {
             textView.setText(content);
             mType = content;
@@ -219,8 +208,7 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
     /**
      * 加载失败后点击后的操作
      */
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         loadCustomData();
     }
 }

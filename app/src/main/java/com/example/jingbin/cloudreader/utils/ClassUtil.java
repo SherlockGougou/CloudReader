@@ -1,9 +1,7 @@
 package com.example.jingbin.cloudreader.utils;
 
 import android.arch.lifecycle.AndroidViewModel;
-
 import com.example.jingbin.cloudreader.viewmodel.menu.NoViewModel;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 

@@ -26,5 +26,4 @@ public interface GestureDetector {
     boolean isDragging();
 
     void setOnGestureListener(OnGestureListener listener);
-
 }

@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.base.baseadapter;
 
 import android.support.v7.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,23 +13,21 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     protected OnItemClickListener<T> listener;
     protected OnItemLongClickListener<T> onItemLongClickListener;
 
-    @Override
-    public void onBindViewHolder(BaseRecyclerViewHolder holder, final int position) {
+    @Override public void onBindViewHolder(BaseRecyclerViewHolder holder, final int position) {
         holder.onBaseBindViewHolder(data.get(position), position);
 
-//        holder.itemView.setOnClickListener(new PerfectClickListener() {
-//            @Override
-//            protected void onNoDoubleClick(View v) {
-//                if (listener!=null){
-//                    listener.onClick(data.get(position), position);
-//                }
-//            }
-//        });
+        //        holder.itemView.setOnClickListener(new PerfectClickListener() {
+        //            @Override
+        //            protected void onNoDoubleClick(View v) {
+        //                if (listener!=null){
+        //                    listener.onClick(data.get(position), position);
+        //                }
+        //            }
+        //        });
 
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return data.size();
     }
 
@@ -49,9 +46,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     public void remove(T object) {
         data.remove(object);
     }
+
     public void remove(int position) {
         data.remove(position);
     }
+
     public void removeAll(List<T> data) {
         this.data.retainAll(data);
     }
@@ -59,7 +58,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     public void setOnItemClickListener(OnItemClickListener<T> listener) {
         this.listener = listener;
     }
-
 
     public List<T> getData() {
         return data;

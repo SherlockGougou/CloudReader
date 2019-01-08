@@ -2,7 +2,6 @@ package com.example.jingbin.cloudreader.bean.wanandroid;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.jingbin.cloudreader.BR;
 
 /**
@@ -19,9 +18,7 @@ public class DuanZiBean extends BaseObservable {
     private String content;
     private String categoryName;
 
-
-    @Bindable
-    public String getName() {
+    @Bindable public String getName() {
         return name;
     }
 
@@ -30,8 +27,7 @@ public class DuanZiBean extends BaseObservable {
         notifyPropertyChanged(BR.name);
     }
 
-    @Bindable
-    public String getAvatarUrl() {
+    @Bindable public String getAvatarUrl() {
         return avatarUrl;
     }
 
@@ -40,8 +36,7 @@ public class DuanZiBean extends BaseObservable {
         notifyPropertyChanged(BR.avatarUrl);
     }
 
-    @Bindable
-    public long getCreateTime() {
+    @Bindable public long getCreateTime() {
         return createTime;
     }
 
@@ -50,8 +45,7 @@ public class DuanZiBean extends BaseObservable {
         notifyPropertyChanged(BR.createTime);
     }
 
-    @Bindable
-    public String getContent() {
+    @Bindable public String getContent() {
         return content;
     }
 
@@ -60,8 +54,7 @@ public class DuanZiBean extends BaseObservable {
         notifyPropertyChanged(BR.content);
     }
 
-    @Bindable
-    public String getCategoryName() {
+    @Bindable public String getCategoryName() {
         return categoryName;
     }
 

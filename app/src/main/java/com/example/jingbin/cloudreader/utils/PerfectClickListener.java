@@ -2,7 +2,6 @@ package com.example.jingbin.cloudreader.utils;
 
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import java.util.Calendar;
 
 /**
@@ -14,8 +13,7 @@ public abstract class PerfectClickListener implements OnClickListener {
     private long lastClickTime = 0;
     private int id = -1;
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         long currentTime = Calendar.getInstance().getTimeInMillis();
         int mId = v.getId();
         if (id != mId) {

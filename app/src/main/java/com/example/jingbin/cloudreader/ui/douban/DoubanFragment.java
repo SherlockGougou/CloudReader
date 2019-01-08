@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.BaseFragment;
 import com.example.jingbin.cloudreader.databinding.FragmentGankBinding;
 import com.example.jingbin.cloudreader.view.MyFragmentPagerAdapter;
 import com.example.jingbin.cloudreader.viewmodel.menu.NoViewModel;
-
 import java.util.ArrayList;
 
 /**
@@ -24,21 +22,20 @@ public class DoubanFragment extends BaseFragment<NoViewModel, FragmentGankBindin
     private boolean mIsFirst = true;
     private boolean mIsPrepared;
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         showContentView();
         mIsPrepared = true;
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
         initFragmentList();
-        MyFragmentPagerAdapter myAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitleList);
+        MyFragmentPagerAdapter myAdapter =
+            new MyFragmentPagerAdapter(getChildFragmentManager(), mFragments, mTitleList);
         bindingView.vpGank.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
         bindingView.tabGank.setTabMode(TabLayout.MODE_FIXED);
@@ -46,8 +43,7 @@ public class DoubanFragment extends BaseFragment<NoViewModel, FragmentGankBindin
         mIsFirst = false;
     }
 
-    @Override
-    public int setContent() {
+    @Override public int setContent() {
         return R.layout.fragment_gank;
     }
 
@@ -58,5 +54,4 @@ public class DoubanFragment extends BaseFragment<NoViewModel, FragmentGankBindin
         mFragments.add(new OneFragment());
         mFragments.add(BookListFragment.newInstance("沟通"));
     }
-
 }

@@ -3,7 +3,6 @@ package com.example.jingbin.cloudreader.adapter;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -18,9 +17,7 @@ import com.example.jingbin.cloudreader.utils.TimeUtil;
 
 public class JokeAdapter extends BaseRecyclerViewAdapter<DuanZiBean> {
 
-    @NonNull
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_joke);
     }
 
@@ -30,17 +27,15 @@ public class JokeAdapter extends BaseRecyclerViewAdapter<DuanZiBean> {
             super(context, layoutId);
         }
 
-        @Override
-        public void onBindViewHolder(final DuanZiBean bean, final int position) {
+        @Override public void onBindViewHolder(final DuanZiBean bean, final int position) {
             if (bean != null) {
                 binding.setBean(bean);
                 binding.executePendingBindings();
                 String time = TimeUtil.formatDataTime(Long.valueOf(bean.getCreateTime() + "000"));
                 binding.setTime(time);
                 binding.llItemTop.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        DialogBuild.showItems(v,bean.getContent());
+                    @Override public boolean onLongClick(View v) {
+                        DialogBuild.showItems(v, bean.getContent());
                         return false;
                     }
                 });

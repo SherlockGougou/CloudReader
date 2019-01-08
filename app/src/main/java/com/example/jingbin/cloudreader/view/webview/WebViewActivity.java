@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +24,6 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.http.utils.CheckNetwork;
 import com.example.jingbin.cloudreader.MainActivity;
 import com.example.jingbin.cloudreader.R;
@@ -74,8 +72,25 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
     private TextView tvGunTitle;
     private CollectModel collectModel;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /**
+     * 打开网页:
+     *
+     * @param mContext 上下文
+     * @param mUrl 要加载的网页url
+     * @param mTitle title
+     */
+    public static void loadUrl(Context mContext, String mUrl, String mTitle) {
+        if (CheckNetwork.isNetworkConnected(mContext)) {
+            Intent intent = new Intent(mContext, WebViewActivity.class);
+            intent.putExtra("mUrl", mUrl);
+            intent.putExtra("mTitle", mTitle == null ? "" : mTitle);
+            mContext.startActivity(intent);
+        } else {
+            ToastUtil.showToastLong("当前网络不可用，请检查你的网络设置");
+        }
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         getIntentData();
@@ -115,8 +130,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         setTitle(mTitle);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.webview_menu, menu);
         return true;
     }
@@ -125,8 +139,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         tvGunTitle.setText(mTitle);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // 返回键
@@ -156,10 +169,11 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
                 // 添加到收藏
                 if (UserUtil.isLogin(webView.getContext())) {
                     if (SPUtils.getBoolean(Constants.IS_FIRST_COLLECTURL, true)) {
-                        DialogBuild.show(webView, "网址不同于文章，相同网址可多次进行收藏，且不会显示收藏状态。", "知道了", (DialogInterface.OnClickListener) (dialog, which) -> {
-                            SPUtils.putBoolean(Constants.IS_FIRST_COLLECTURL, false);
-                            collectUrl();
-                        });
+                        DialogBuild.show(webView, "网址不同于文章，相同网址可多次进行收藏，且不会显示收藏状态。", "知道了",
+                            (DialogInterface.OnClickListener) (dialog, which) -> {
+                                SPUtils.putBoolean(Constants.IS_FIRST_COLLECTURL, false);
+                                collectUrl();
+                            });
                     } else {
                         collectUrl();
                     }
@@ -177,20 +191,17 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
             collectModel = new CollectModel();
         }
         collectModel.collectUrl(webView.getTitle(), webView.getUrl(), new WanNavigator.OnCollectNavigator() {
-            @Override
-            public void onSuccess() {
+            @Override public void onSuccess() {
                 ToastUtil.showToastLong("收藏网址成功");
             }
 
-            @Override
-            public void onFailure() {
+            @Override public void onFailure() {
                 ToastUtil.showToastLong("收藏网址失败");
             }
         });
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private void initWebView() {
+    @SuppressLint("SetJavaScriptEnabled") private void initWebView() {
         mProgressBar.setVisibility(View.VISIBLE);
         WebSettings ws = webView.getSettings();
         // 网页内容的宽度是否可大于WebView控件的宽度
@@ -219,7 +230,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         // 排版适应屏幕
         ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         // WebView是否新窗口打开(加了后可能打不开网页)
-//        ws.setSupportMultipleWindows(true);
+        //        ws.setSupportMultipleWindows(true);
 
         // webview从5.0开始默认不允许混合模式,https中不能加载http资源,需要设置开启。
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -234,48 +245,40 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         webView.addJavascriptInterface(new ImageClickInterface(this), "injectedObject");
         webView.setWebViewClient(new MyWebViewClient(this));
         webView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
+            @Override public boolean onLongClick(View v) {
                 return handleLongImage();
             }
         });
     }
 
-    @Override
-    public void hindProgressBar() {
+    @Override public void hindProgressBar() {
         mProgressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void showWebView() {
+    @Override public void showWebView() {
         webView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void hindWebView() {
+    @Override public void hindWebView() {
         webView.setVisibility(View.INVISIBLE);
     }
 
-    @Override
-    public void fullViewAddView(View view) {
+    @Override public void fullViewAddView(View view) {
         FrameLayout decor = (FrameLayout) getWindow().getDecorView();
         videoFullView = new FullscreenHolder(WebViewActivity.this);
         videoFullView.addView(view);
         decor.addView(videoFullView);
     }
 
-    @Override
-    public void showVideoFullView() {
+    @Override public void showVideoFullView() {
         videoFullView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void hindVideoFullView() {
+    @Override public void hindVideoFullView() {
         videoFullView.setVisibility(View.GONE);
     }
 
-    @Override
-    public void startProgress(int newProgress) {
+    @Override public void startProgress(int newProgress) {
         mProgressBar.setVisibility(View.VISIBLE);
         mProgressBar.setProgress(newProgress);
         if (newProgress == 100) {
@@ -283,28 +286,28 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         }
     }
 
-    @Override
-    public void addImageClickListener() {
+    @Override public void addImageClickListener() {
         // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
         // 如要点击一张图片在弹出的页面查看所有的图片集合,则获取的值应该是个图片数组
-        webView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName(\"img\");" +
-                "for(var i=0;i<objs.length;i++)" +
-                "{" +
-                //  "objs[i].onclick=function(){alert(this.getAttribute(\"has_link\"));}" +
-                "objs[i].onclick=function(){window.injectedObject.imageClick(this.getAttribute(\"src\"),this.getAttribute(\"has_link\"));}" +
-                "}" +
-                "})()");
+        webView.loadUrl("javascript:(function(){"
+            + "var objs = document.getElementsByTagName(\"img\");"
+            + "for(var i=0;i<objs.length;i++)"
+            + "{"
+            +
+            //  "objs[i].onclick=function(){alert(this.getAttribute(\"has_link\"));}" +
+            "objs[i].onclick=function(){window.injectedObject.imageClick(this.getAttribute(\"src\"),this.getAttribute(\"has_link\"));}"
+            + "}"
+            + "})()");
 
         // 遍历所有的a节点,将节点里的属性传递过去(属性自定义,用于页面跳转)
-        webView.loadUrl("javascript:(function(){" +
-                "var objs =document.getElementsByTagName(\"a\");" +
-                "for(var i=0;i<objs.length;i++)" +
-                "{" +
-                "objs[i].onclick=function(){" +
-                "window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}" +
-                "}" +
-                "})()");
+        webView.loadUrl("javascript:(function(){"
+            + "var objs =document.getElementsByTagName(\"a\");"
+            + "for(var i=0;i<objs.length;i++)"
+            + "{"
+            + "objs[i].onclick=function(){"
+            + "window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}"
+            + "}"
+            + "})()");
     }
 
     public FrameLayout getVideoFullView() {
@@ -322,8 +325,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
     /**
      * 上传图片之后的回调
      */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE) {
             mWebChromeClient.mUploadMessage(intent, resultCode);
         } else if (requestCode == MyWebChromeClient.FILECHOOSER_RESULTCODE_FOR_ANDROID_5) {
@@ -336,8 +338,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
      * 如果这个实例已经存在，intent就会通过onNewIntent传递到这个Activity。
      * 否则新的Activity实例被创建。
      */
-    @Override
-    protected void onNewIntent(Intent intent) {
+    @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         getDataFromBrowser(intent);
     }
@@ -356,8 +357,8 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
                 String scheme = data.getScheme();
                 String host = data.getHost();
                 String path = data.getPath();
-//                String text = "Scheme: " + scheme + "\n" + "host: " + host + "\n" + "path: " + path;
-//                Log.e("data", text);
+                //                String text = "Scheme: " + scheme + "\n" + "host: " + host + "\n" + "path: " + path;
+                //                Log.e("data", text);
                 String url = scheme + "://" + host + path;
                 webView.loadUrl(url);
             } catch (Exception e) {
@@ -372,39 +373,37 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
     private boolean handleLongImage() {
         final WebView.HitTestResult hitTestResult = webView.getHitTestResult();
         // 如果是图片类型或者是带有图片链接的类型
-        if (hitTestResult.getType() == WebView.HitTestResult.IMAGE_TYPE ||
-                hitTestResult.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+        if (hitTestResult.getType() == WebView.HitTestResult.IMAGE_TYPE
+            || hitTestResult.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
             // 弹出保存图片的对话框
-            new AlertDialog.Builder(WebViewActivity.this)
-                    .setItems(new String[]{"查看大图", "保存图片到相册"}, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String picUrl = hitTestResult.getExtra();
-                            //获取图片
-//                            Log.e("picUrl", picUrl);
-                            switch (which) {
-                                case 0:
-                                    ViewBigImageActivity.start(WebViewActivity.this, picUrl, picUrl);
-                                    break;
-                                case 1:
-                                    if (!PermissionHandler.isHandlePermission(WebViewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                                        return;
-                                    }
-                                    RxSaveImage.saveImageToGallery(WebViewActivity.this, picUrl, picUrl);
-                                    break;
-                                default:
-                                    break;
-                            }
+            new AlertDialog.Builder(WebViewActivity.this).setItems(new String[] { "查看大图", "保存图片到相册" },
+                new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        String picUrl = hitTestResult.getExtra();
+                        //获取图片
+                        //                            Log.e("picUrl", picUrl);
+                        switch (which) {
+                            case 0:
+                                ViewBigImageActivity.start(WebViewActivity.this, picUrl, picUrl);
+                                break;
+                            case 1:
+                                if (!PermissionHandler.isHandlePermission(WebViewActivity.this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                    return;
+                                }
+                                RxSaveImage.saveImageToGallery(WebViewActivity.this, picUrl, picUrl);
+                                break;
+                            default:
+                                break;
                         }
-                    })
-                    .show();
+                    }
+                }).show();
             return true;
         }
         return false;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //全屏播放退出全屏
             if (mWebChromeClient.inCustomView()) {
@@ -438,14 +437,12 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         }
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         webView.onPause();
     }
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         webView.onResume();
         // 支付宝网页版在打开文章详情之后,无法点击按钮下一步
@@ -456,8 +453,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
         }
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         if (videoFullView != null) {
             videoFullView.clearAnimation();
             videoFullView.removeAllViews();
@@ -483,23 +479,5 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
             collectModel = null;
         }
         super.onDestroy();
-    }
-
-    /**
-     * 打开网页:
-     *
-     * @param mContext 上下文
-     * @param mUrl     要加载的网页url
-     * @param mTitle   title
-     */
-    public static void loadUrl(Context mContext, String mUrl, String mTitle) {
-        if (CheckNetwork.isNetworkConnected(mContext)) {
-            Intent intent = new Intent(mContext, WebViewActivity.class);
-            intent.putExtra("mUrl", mUrl);
-            intent.putExtra("mTitle", mTitle == null ? "" : mTitle);
-            mContext.startActivity(intent);
-        } else {
-            ToastUtil.showToastLong("当前网络不可用，请检查你的网络设置");
-        }
     }
 }

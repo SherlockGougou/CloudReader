@@ -2,10 +2,8 @@ package com.example.jingbin.cloudreader.bean.moviechild;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.http.ParamNames;
 import com.example.jingbin.cloudreader.BR;
-
 import java.io.Serializable;
 
 /**
@@ -19,33 +17,13 @@ public class RatingBean extends BaseObservable implements Serializable {
      * stars : 35
      * min : 0
      */
-    @ParamNames("max")
-    private int max;
-    @ParamNames("average")
-    private double average;
-    @ParamNames("stars")
-    private String stars;
-    @ParamNames("min")
-    private int min;
+    @ParamNames("max") private int max;
+    @ParamNames("average") private double average;
+    @ParamNames("stars") private String stars;
+    @ParamNames("min") private int min;
 
-    @Bindable
-    public int getMax() {
+    @Bindable public int getMax() {
         return max;
-    }
-
-    @Bindable
-    public double getAverage() {
-        return average;
-    }
-
-    @Bindable
-    public String getStars() {
-        return stars;
-    }
-
-    @Bindable
-    public int getMin() {
-        return min;
     }
 
     public void setMax(int max) {
@@ -53,14 +31,26 @@ public class RatingBean extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.max);
     }
 
+    @Bindable public double getAverage() {
+        return average;
+    }
+
     public void setAverage(double average) {
         this.average = average;
         notifyPropertyChanged(BR.average);
     }
 
+    @Bindable public String getStars() {
+        return stars;
+    }
+
     public void setStars(String stars) {
         this.stars = stars;
         notifyPropertyChanged(BR.stars);
+    }
+
+    @Bindable public int getMin() {
+        return min;
     }
 
     public void setMin(int min) {

@@ -30,8 +30,7 @@ public class MyScrollview extends ScrollView {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent e) {
+    @Override public boolean onInterceptTouchEvent(MotionEvent e) {
         int action = e.getAction();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -46,5 +45,4 @@ public class MyScrollview extends ScrollView {
         }
         return super.onInterceptTouchEvent(e);
     }
-
 }

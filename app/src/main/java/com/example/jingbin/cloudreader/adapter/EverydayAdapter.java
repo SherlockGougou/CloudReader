@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
@@ -28,7 +27,6 @@ import com.example.jingbin.cloudreader.utils.DialogBuild;
 import com.example.jingbin.cloudreader.utils.ImageLoadUtil;
 import com.example.jingbin.cloudreader.utils.PerfectClickListener;
 import com.example.jingbin.cloudreader.view.webview.WebViewActivity;
-
 import java.util.List;
 
 /**
@@ -44,12 +42,12 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
     private int width;
 
     public EverydayAdapter() {
-        WindowManager wm = (WindowManager) CloudReaderApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm =
+            (WindowManager) CloudReaderApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
         width = wm.getDefaultDisplay().getWidth();
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    @Override public int getItemViewType(int position) {
         if (!TextUtils.isEmpty(getData().get(position).get(0).getType_title())) {
             return TYPE_TITLE;
         } else if (getData().get(position).size() == 1) {
@@ -62,10 +60,7 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
         return super.getItemViewType(position);
     }
 
-
-    @NonNull
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    @NonNull @Override public BaseRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case TYPE_TITLE:
                 return new TitleHolder(parent, R.layout.item_everyday_title);
@@ -78,14 +73,43 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
         }
     }
 
+    private void setDes(List<AndroidBean> object, int position, TextView textView) {
+        textView.setText(object.get(position).getDesc());
+    }
+
+    private void displayRandomImg(int imgNumber, int position, ImageView imageView, List<AndroidBean> object) {
+        //        DebugUtil.error("-----Image_url: "+object.get(position).getImage_url());
+        ImageLoadUtil.displayRandom(imgNumber, object.get(position).getImage_url(), imageView);
+    }
+
+    private void setOnClick(final LinearLayout linearLayout, final AndroidBean bean) {
+        linearLayout.setOnClickListener(new PerfectClickListener() {
+            @Override protected void onNoDoubleClick(View v) {
+                WebViewActivity.loadUrl(v.getContext(), bean.getUrl(), bean.getDesc());
+            }
+        });
+
+        linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                String title =
+                    TextUtils.isEmpty(bean.getType()) ? bean.getDesc() : bean.getType() + "：  " + bean.getDesc();
+                DialogBuild.showCustom(v, title, "查看详情", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        WebViewActivity.loadUrl(linearLayout.getContext(), bean.getUrl(), bean.getDesc());
+                    }
+                });
+                return false;
+            }
+        });
+    }
+
     private class TitleHolder extends BaseRecyclerViewHolder<List<AndroidBean>, ItemEverydayTitleBinding> {
 
         TitleHolder(ViewGroup parent, int title) {
             super(parent, title);
         }
 
-        @Override
-        public void onBindViewHolder(List<AndroidBean> object, final int position) {
+        @Override public void onBindViewHolder(List<AndroidBean> object, final int position) {
             int index = 0;
             String title = object.get(0).getType_title();
             binding.tvTitleType.setText(title);
@@ -115,8 +139,7 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
 
             final int finalIndex = index;
             binding.llTitleMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                @Override public void onClick(View v) {
                     RxBus.getDefault().post(RxCodeConstants.JUMP_TYPE, finalIndex);
                 }
             });
@@ -129,20 +152,18 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
             super(parent, title);
         }
 
-        @Override
-        public void onBindViewHolder(final List<AndroidBean> object, int position) {
+        @Override public void onBindViewHolder(final List<AndroidBean> object, int position) {
             DensityUtil.formatHeight(binding.ivOnePhoto, width, 2.6f, 1);
             if ("福利".equals(object.get(0).getType())) {
                 binding.tvOnePhotoTitle.setVisibility(View.GONE);
                 binding.ivOnePhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                ImageLoadUtil.displayEspImage(object.get(0).getUrl(), binding.ivOnePhoto, 1);
+                //                ImageLoadUtil.displayEspImage(object.get(0).getUrl(), binding.ivOnePhoto, 1);
                 Glide.with(binding.ivOnePhoto.getContext())
-                        .load(object.get(0).getUrl())
-                        .crossFade(1500)
-                        .placeholder(R.drawable.img_two_bi_one)
-                        .error(R.drawable.img_two_bi_one)
-                        .into(binding.ivOnePhoto);
-
+                    .load(object.get(0).getUrl())
+                    .crossFade(1500)
+                    .placeholder(R.drawable.img_two_bi_one)
+                    .error(R.drawable.img_two_bi_one)
+                    .into(binding.ivOnePhoto);
             } else {
                 binding.tvOnePhotoTitle.setVisibility(View.VISIBLE);
                 setDes(object, 0, binding.tvOnePhotoTitle);
@@ -158,8 +179,7 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
             super(parent, title);
         }
 
-        @Override
-        public void onBindViewHolder(List<AndroidBean> object, int position) {
+        @Override public void onBindViewHolder(List<AndroidBean> object, int position) {
             int imageWidth = (width - DensityUtil.dip2px(3)) / 2;
             DensityUtil.formatHeight(binding.ivTwoOneOne, imageWidth, 1.75f, 1);
             DensityUtil.formatHeight(binding.ivTwoOneTwo, imageWidth, 1.75f, 1);
@@ -178,8 +198,7 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
             super(parent, title);
         }
 
-        @Override
-        public void onBindViewHolder(List<AndroidBean> object, int position) {
+        @Override public void onBindViewHolder(List<AndroidBean> object, int position) {
             int imageWidth = (width - DensityUtil.dip2px(6)) / 3;
             DensityUtil.formatHeight(binding.ivThreeOneOne, imageWidth, 1, 1);
             DensityUtil.formatHeight(binding.ivThreeOneTwo, imageWidth, 1, 1);
@@ -194,39 +213,5 @@ public class EverydayAdapter extends BaseRecyclerViewAdapter<List<AndroidBean>> 
             setDes(object, 1, binding.tvThreeOneTwoTitle);
             setDes(object, 2, binding.tvThreeOneThreeTitle);
         }
-    }
-
-    private void setDes(List<AndroidBean> object, int position, TextView textView) {
-        textView.setText(object.get(position).getDesc());
-    }
-
-    private void displayRandomImg(int imgNumber, int position, ImageView imageView, List<AndroidBean> object) {
-//        DebugUtil.error("-----Image_url: "+object.get(position).getImage_url());
-        ImageLoadUtil.displayRandom(imgNumber, object.get(position).getImage_url(), imageView);
-    }
-
-
-    private void setOnClick(final LinearLayout linearLayout, final AndroidBean bean) {
-        linearLayout.setOnClickListener(new PerfectClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
-                WebViewActivity.loadUrl(v.getContext(), bean.getUrl(), bean.getDesc());
-            }
-        });
-
-        linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                String title = TextUtils.isEmpty(bean.getType()) ? bean.getDesc() : bean.getType() + "：  " + bean.getDesc();
-                DialogBuild.showCustom(v, title, "查看详情", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        WebViewActivity.loadUrl(linearLayout.getContext(), bean.getUrl(), bean.getDesc());
-                    }
-                });
-                return false;
-            }
-        });
-
     }
 }

@@ -16,14 +16,12 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.databinding.ActivityBaseBinding;
 import com.example.jingbin.cloudreader.utils.ClassUtil;
 import com.example.jingbin.cloudreader.utils.CommonUtils;
 import com.example.jingbin.cloudreader.utils.PerfectClickListener;
 import com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil;
-
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -31,7 +29,7 @@ import rx.subscriptions.CompositeSubscription;
  * @author jingbin
  * @date 16/12/10
  */
-public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDataBinding> extends AppCompatActivity {
+public abstract class BaseActivity<VM extends AndroidViewModel, SV extends ViewDataBinding> extends AppCompatActivity {
 
     // ViewModel
     protected VM viewModel;
@@ -47,19 +45,18 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         return (T) findViewById(id);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
+    @Override public void setContentView(@LayoutRes int layoutResID) {
 
         mBaseBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_base, null, false);
         bindingView = DataBindingUtil.inflate(getLayoutInflater(), layoutResID, null, false);
 
         // content
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams params =
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         bindingView.getRoot().setLayoutParams(params);
         RelativeLayout mContainer = (RelativeLayout) mBaseBinding.getRoot().findViewById(R.id.container);
         mContainer.addView(bindingView.getRoot());
@@ -81,8 +78,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         setToolBar();
         // 点击加载失败布局
         refresh.setOnClickListener(new PerfectClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
+            @Override protected void onNoDoubleClick(View v) {
                 showLoading();
                 onRefresh();
             }
@@ -114,8 +110,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
             actionBar.setHomeAsUpIndicator(R.drawable.icon_back);
         }
         mBaseBinding.toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     finishAfterTransition();
                 } else {
@@ -125,8 +120,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         });
     }
 
-    @Override
-    public void setTitle(CharSequence text) {
+    @Override public void setTitle(CharSequence text) {
         mBaseBinding.toolBar.setTitle(text);
     }
 
@@ -192,8 +186,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel,SV extends ViewDa
         this.mCompositeSubscription.add(s);
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.unsubscribe();

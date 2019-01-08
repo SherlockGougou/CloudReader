@@ -14,5 +14,4 @@ public class Injection {
         UserDataBase database = UserDataBase.getDatabase();
         return UserDataBaseSource.getInstance(new AppExecutors(), database.waitDao());
     }
-
 }

@@ -51,12 +51,11 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
         setGravity(Gravity.CENTER_HORIZONTAL);
         mContainer = (LinearLayout) findViewById(R.id.container);
         mContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 0));
-        this.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        this.setLayoutParams(
+            new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
-
-    @Override
-    public void onMove(float delta) {
+    @Override public void onMove(float delta) {
         if (getVisiableHeight() > 0 || delta > 0) {
             setVisiableHeight((int) delta + getVisiableHeight());
             if (mState <= STATE_RELEASE_TO_REFRESH) { // 未处于刷新状态，更新箭头
@@ -67,6 +66,73 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
                 }
             }
         }
+    }
+
+    @Override public boolean releaseAction() {
+        boolean isOnRefresh = false;
+        int height = getVisiableHeight();
+        if (height == 0) // not visible.
+        {
+            isOnRefresh = false;
+        }
+
+        if (getVisiableHeight() > mMeasuredHeight && mState < STATE_REFRESHING) {
+            setState(STATE_REFRESHING);
+            isOnRefresh = true;
+        }
+        // refreshing and header isn't shown fully. do nothing.
+        if (mState == STATE_REFRESHING && height <= mMeasuredHeight) {
+            //return;
+        }
+        int destHeight = 0; // default: scroll back to dismiss header.
+        // is refreshing, just scroll back to show all the header.
+        if (mState == STATE_REFRESHING) {
+            destHeight = mMeasuredHeight;
+        }
+        smoothScrollTo(destHeight);
+
+        return isOnRefresh;
+    }
+
+    @Override public void refreshComplate() {
+        setState(STATE_DONE);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                reset();
+            }
+        }, 500);
+    }
+
+    public void reset() {
+        smoothScrollTo(0);
+        setState(STATE_NORMAL);
+    }
+
+    private void smoothScrollTo(int destHeight) {
+        ValueAnimator animator = ValueAnimator.ofInt(getVisiableHeight(), destHeight);
+        animator.setDuration(300).start();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override public void onAnimationUpdate(ValueAnimator animation) {
+                setVisiableHeight((int) animation.getAnimatedValue());
+            }
+        });
+        animator.start();
+    }
+
+    @Override public int getVisiableHeight() {
+        return mContainer.getHeight();
+    }
+
+    private void setVisiableHeight(int height) {
+        if (height < 0) height = 0;
+        //       `
+        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+        lp.height = height;
+        mContainer.setLayoutParams(lp);
+    }
+
+    public int getState() {
+        return mState;
     }
 
     private void setState(int state) {
@@ -95,75 +161,5 @@ public class YunRefreshHeader extends LinearLayout implements BaseRefreshHeader 
             default:
         }
         mState = state;
-    }
-
-    @Override
-    public boolean releaseAction() {
-        boolean isOnRefresh = false;
-        int height = getVisiableHeight();
-        if (height == 0) // not visible.
-            isOnRefresh = false;
-
-        if (getVisiableHeight() > mMeasuredHeight && mState < STATE_REFRESHING) {
-            setState(STATE_REFRESHING);
-            isOnRefresh = true;
-        }
-        // refreshing and header isn't shown fully. do nothing.
-        if (mState == STATE_REFRESHING && height <= mMeasuredHeight) {
-            //return;
-        }
-        int destHeight = 0; // default: scroll back to dismiss header.
-        // is refreshing, just scroll back to show all the header.
-        if (mState == STATE_REFRESHING) {
-            destHeight = mMeasuredHeight;
-        }
-        smoothScrollTo(destHeight);
-
-        return isOnRefresh;
-    }
-
-    @Override
-    public void refreshComplate() {
-        setState(STATE_DONE);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                reset();
-            }
-        }, 500);
-    }
-
-    public void reset() {
-        smoothScrollTo(0);
-        setState(STATE_NORMAL);
-    }
-
-    private void smoothScrollTo(int destHeight) {
-        ValueAnimator animator = ValueAnimator.ofInt(getVisiableHeight(), destHeight);
-        animator.setDuration(300).start();
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                setVisiableHeight((int) animation.getAnimatedValue());
-            }
-        });
-        animator.start();
-    }
-
-    private void setVisiableHeight(int height) {
-        if (height < 0)
-            height = 0;
-//       `
-        LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
-        lp.height = height;
-        mContainer.setLayoutParams(lp);
-    }
-
-    @Override
-    public int getVisiableHeight() {
-        return mContainer.getHeight();
-    }
-
-    public int getState() {
-        return mState;
     }
 }

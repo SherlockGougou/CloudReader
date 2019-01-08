@@ -9,9 +9,6 @@ import java.lang.annotation.Target;
 /**
  * Created by jingbin on 2015/6/24.
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface ParamNames {
+@Documented @Retention(RetentionPolicy.RUNTIME) @Target(ElementType.FIELD) public @interface ParamNames {
     String value();
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.CollectUrlAdapter;
 import com.example.jingbin.cloudreader.base.BaseFragment;
@@ -28,28 +27,24 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
     private FragmentActivity activity;
     private CollectUrlAdapter mAdapter;
 
-    @Override
-    public int setContent() {
-        return R.layout.fragment_wan_android;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = getActivity();
-    }
-
     public static CollectLinkFragment newInstance() {
         return new CollectLinkFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public int setContent() {
+        return R.layout.fragment_wan_android;
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         showContentView();
         initRefreshView();
@@ -69,8 +64,7 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
         bindingView.srlWan.setOnRefreshListener(() -> bindingView.srlWan.postDelayed(this::getCollectUrlList, 300));
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
@@ -81,8 +75,7 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
 
     private void getCollectUrlList() {
         viewModel.getCollectUrlList().observe(this, new Observer<CollectUrlBean>() {
-            @Override
-            public void onChanged(@Nullable CollectUrlBean bean) {
+            @Override public void onChanged(@Nullable CollectUrlBean bean) {
                 showContentView();
                 if (bindingView.srlWan.isRefreshing()) {
                     bindingView.srlWan.setRefreshing(false);
@@ -103,8 +96,7 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
         });
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         bindingView.srlWan.setRefreshing(true);
         getCollectUrlList();
     }

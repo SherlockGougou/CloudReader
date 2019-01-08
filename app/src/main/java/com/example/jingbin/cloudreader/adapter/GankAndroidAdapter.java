@@ -3,7 +3,6 @@ package com.example.jingbin.cloudreader.adapter;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -24,11 +23,9 @@ public class GankAndroidAdapter extends BaseRecyclerViewAdapter<GankIoDataBean.R
         this.isAll = isAll;
     }
 
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_android);
     }
-
 
     private class ViewHolder extends BaseRecyclerViewHolder<GankIoDataBean.ResultBean, ItemAndroidBinding> {
 
@@ -36,8 +33,7 @@ public class GankAndroidAdapter extends BaseRecyclerViewAdapter<GankIoDataBean.R
             super(parent, item_android);
         }
 
-        @Override
-        public void onBindViewHolder(final GankIoDataBean.ResultBean object, int position) {
+        @Override public void onBindViewHolder(final GankIoDataBean.ResultBean object, int position) {
 
             if (isAll && "福利".equals(object.getType())) {
                 binding.ivAllWelfare.setVisibility(View.VISIBLE);
@@ -53,29 +49,27 @@ public class GankAndroidAdapter extends BaseRecyclerViewAdapter<GankIoDataBean.R
                 binding.tvContentType.setText(" · " + object.getType());
             } else {
                 binding.tvContentType.setVisibility(View.GONE);
-
             }
 
             // 显示gif图片会很耗内存
-            if (object.getImages() != null
-                    && object.getImages().size() > 0
-                    && !TextUtils.isEmpty(object.getImages().get(0))) {
+            if (object.getImages() != null && object.getImages().size() > 0 && !TextUtils.isEmpty(
+                object.getImages().get(0))) {
                 binding.ivAndroidPic.setVisibility(View.VISIBLE);
                 ImageLoadUtil.displayGif(object.getImages().get(0), binding.ivAndroidPic);
                 //                Glide.with(context).load(object.getImages().get(0))
-//                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                        .placeholder(R.drawable.img_one_bi_one)
-//                        .error(R.drawable.img_one_bi_one)
-//                        .into(binding.ivAndroidPic);
+                //                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                //                        .placeholder(R.drawable.img_one_bi_one)
+                //                        .error(R.drawable.img_one_bi_one)
+                //                        .into(binding.ivAndroidPic);
             } else {
                 binding.ivAndroidPic.setVisibility(View.GONE);
             }
-            binding.llAll.setOnClickListener(v -> WebViewActivity.loadUrl(v.getContext(), object.getUrl(), object.getDesc()));
+            binding.llAll.setOnClickListener(
+                v -> WebViewActivity.loadUrl(v.getContext(), object.getUrl(), object.getDesc()));
 
             binding.setResultsBean(object);
             binding.setCommand(GankAndroidAdapter.this);
             binding.executePendingBindings();
         }
-
     }
 }

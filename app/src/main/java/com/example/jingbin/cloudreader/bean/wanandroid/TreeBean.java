@@ -2,9 +2,7 @@ package com.example.jingbin.cloudreader.bean.wanandroid;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.jingbin.cloudreader.BR;
-
 import java.util.List;
 
 /**
@@ -19,8 +17,7 @@ public class TreeBean extends BaseObservable {
     private String errorMsg;
     private List<DataBean> data;
 
-    @Bindable
-    public int getErrorCode() {
+    @Bindable public int getErrorCode() {
         return errorCode;
     }
 
@@ -29,8 +26,7 @@ public class TreeBean extends BaseObservable {
         notifyPropertyChanged(BR.errorCode);
     }
 
-    @Bindable
-    public String getErrorMsg() {
+    @Bindable public String getErrorMsg() {
         return errorMsg;
     }
 
@@ -39,8 +35,7 @@ public class TreeBean extends BaseObservable {
         notifyPropertyChanged(BR.errorMsg);
     }
 
-    @Bindable
-    public List<DataBean> getData() {
+    @Bindable public List<DataBean> getData() {
         return data;
     }
 

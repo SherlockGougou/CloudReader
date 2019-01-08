@@ -3,7 +3,6 @@ package com.example.jingbin.cloudreader.adapter;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -17,8 +16,7 @@ import com.example.jingbin.cloudreader.view.webview.WebViewActivity;
  */
 
 public class MovieDetailAdapter extends BaseRecyclerViewAdapter<PersonBean> {
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_movie_detail_person);
     }
 
@@ -28,12 +26,10 @@ public class MovieDetailAdapter extends BaseRecyclerViewAdapter<PersonBean> {
             super(parent, layout);
         }
 
-        @Override
-        public void onBindViewHolder(final PersonBean bean, int position) {
+        @Override public void onBindViewHolder(final PersonBean bean, int position) {
             binding.setPersonBean(bean);
             binding.llItem.setOnClickListener(new PerfectClickListener() {
-                @Override
-                protected void onNoDoubleClick(View v) {
+                @Override protected void onNoDoubleClick(View v) {
                     if (bean != null && !TextUtils.isEmpty(bean.getAlt())) {
                         WebViewActivity.loadUrl(v.getContext(), bean.getAlt(), bean.getName());
                     }

@@ -2,9 +2,7 @@ package com.example.jingbin.cloudreader.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.jingbin.cloudreader.BR;
-
 import java.util.List;
 
 /**
@@ -25,8 +23,7 @@ public class CollectUrlBean extends BaseObservable {
     private String errorMsg;
     private List<DataBean> data;
 
-    @Bindable
-    public int getErrorCode() {
+    @Bindable public int getErrorCode() {
         return errorCode;
     }
 
@@ -35,8 +32,7 @@ public class CollectUrlBean extends BaseObservable {
         notifyPropertyChanged(BR.errorCode);
     }
 
-    @Bindable
-    public String getErrorMsg() {
+    @Bindable public String getErrorMsg() {
         return errorMsg;
     }
 
@@ -45,8 +41,7 @@ public class CollectUrlBean extends BaseObservable {
         notifyPropertyChanged(BR.errorMsg);
     }
 
-    @Bindable
-    public List<DataBean> getData() {
+    @Bindable public List<DataBean> getData() {
         return data;
     }
 
@@ -76,8 +71,7 @@ public class CollectUrlBean extends BaseObservable {
         private int userId;
         private int visible;
 
-        @Bindable
-        public String getDesc() {
+        @Bindable public String getDesc() {
             return desc;
         }
 
@@ -86,8 +80,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.desc);
         }
 
-        @Bindable
-        public String getIcon() {
+        @Bindable public String getIcon() {
             return icon;
         }
 
@@ -96,8 +89,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.icon);
         }
 
-        @Bindable
-        public int getId() {
+        @Bindable public int getId() {
             return id;
         }
 
@@ -106,8 +98,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.id);
         }
 
-        @Bindable
-        public String getLink() {
+        @Bindable public String getLink() {
             return link;
         }
 
@@ -116,8 +107,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.link);
         }
 
-        @Bindable
-        public String getName() {
+        @Bindable public String getName() {
             return name;
         }
 
@@ -126,8 +116,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.name);
         }
 
-        @Bindable
-        public int getOrder() {
+        @Bindable public int getOrder() {
             return order;
         }
 
@@ -136,8 +125,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.order);
         }
 
-        @Bindable
-        public int getUserId() {
+        @Bindable public int getUserId() {
             return userId;
         }
 
@@ -146,8 +134,7 @@ public class CollectUrlBean extends BaseObservable {
             notifyPropertyChanged(BR.userId);
         }
 
-        @Bindable
-        public int getVisible() {
+        @Bindable public int getVisible() {
             return visible;
         }
 

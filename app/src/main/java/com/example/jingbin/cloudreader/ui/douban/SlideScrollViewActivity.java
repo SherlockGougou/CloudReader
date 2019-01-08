@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.bean.moviechild.SubjectsBean;
 import com.example.jingbin.cloudreader.databinding.ActivitySlideScroolViewBinding;
@@ -28,7 +27,6 @@ import com.example.jingbin.cloudreader.view.CallBack_ScrollChanged;
 import com.example.jingbin.cloudreader.view.DiscoverScrollView;
 import com.example.jingbin.cloudreader.view.test.RCVListAdapter;
 import com.example.jingbin.cloudreader.view.test.StatusBarUtils;
-
 import java.util.Arrays;
 
 import static com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil.getStatusBarHeight;
@@ -37,8 +35,7 @@ import static com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil.getSt
  * （已使用：{@link OneMovieDetailActivity} 替代）
  * 暂时的电影详情页 2016-11-29
  */
-@Deprecated
-public class SlideScrollViewActivity extends AppCompatActivity {
+@Deprecated public class SlideScrollViewActivity extends AppCompatActivity {
 
     private RelativeLayout rlHead;
     private RecyclerView rcvGoodsList;
@@ -52,8 +49,20 @@ public class SlideScrollViewActivity extends AppCompatActivity {
 
     private String TAG = "----MainActivity:";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /**
+     * @param context activity
+     * @param positionData bean
+     * @param imageView imageView
+     */
+    public static void start(Activity context, SubjectsBean positionData, ImageView imageView) {
+        Intent intent = new Intent(context, SlideScrollViewActivity.class);
+        intent.putExtra("bean", positionData);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, imageView,
+            CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
+        ActivityCompat.startActivity(context, intent, options.toBundle());
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_slide_scrool_view);
 
@@ -71,13 +80,14 @@ public class SlideScrollViewActivity extends AppCompatActivity {
         initNewSlidingParams();
 
         if (binding.include.imgItemBg != null) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.include.imgItemBg.getLayoutParams();
+            ViewGroup.MarginLayoutParams layoutParams =
+                (ViewGroup.MarginLayoutParams) binding.include.imgItemBg.getLayoutParams();
             layoutParams.setMargins(0, -getStatusBarHeight(this), 0, 0);
-//            DebugUtil.error("getStatusBarHeight:" + getStatusBarHeight(this));
+            //            DebugUtil.error("getStatusBarHeight:" + getStatusBarHeight(this));
         }
 
         initRecyclerView();
-//        initScrollView();
+        //        initScrollView();
 
         setTitleBar();
         setHeaderData(subjectsBean);
@@ -95,8 +105,8 @@ public class SlideScrollViewActivity extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.icon_back);
-//            actionBar.setTitle(subjectsBean.getTitle());
-//            actionBar.setSubtitle("主演：" + StringFormatUtil.formatName(subjectsBean.getCasts()));
+            //            actionBar.setTitle(subjectsBean.getTitle());
+            //            actionBar.setSubtitle("主演：" + StringFormatUtil.formatName(subjectsBean.getCasts()));
         }
 
         // title
@@ -105,8 +115,7 @@ public class SlideScrollViewActivity extends AppCompatActivity {
         binding.tvSubtitle.setText("主演：" + StringFormatUtil.formatName(subjectsBean.getCasts()));
 
         binding.titleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 onBackPressed();
             }
         });
@@ -115,8 +124,7 @@ public class SlideScrollViewActivity extends AppCompatActivity {
     private void initScrollView() {
         discoverScrollView.setVisibility(View.VISIBLE);
         discoverScrollView.setCallBack_scrollChanged(new CallBack_ScrollChanged() {
-            @Override
-            public void onScrollChanged(int scrolledY) {
+            @Override public void onScrollChanged(int scrolledY) {
                 scrollChangeHeader(scrolledY);
             }
         });
@@ -126,40 +134,37 @@ public class SlideScrollViewActivity extends AppCompatActivity {
         rcvGoodsList.setVisibility(View.VISIBLE);
         final RCVListAdapter adapter = new RCVListAdapter(this);
         View header = new View(this);
-        header.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        header.getLayoutParams().height = getResources().getDimensionPixelOffset(R.dimen.new_home_header_size) - getStatusBarHeight(this);
+        header.setLayoutParams(
+            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        header.getLayoutParams().height =
+            getResources().getDimensionPixelOffset(R.dimen.new_home_header_size) - getStatusBarHeight(this);
         adapter.setHeader(header);
 
         rcvGoodsList.setLayoutManager(new LinearLayoutManager(this));
         rcvGoodsList.setItemAnimator(new DefaultItemAnimator());
         rcvGoodsList.setAdapter(adapter);
-        adapter.setDataSource(Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-                "", "", "", "", ""));
+        adapter.setDataSource(
+            Arrays.asList("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
         adapter.notifyDataSetChanged();
-
 
         rcvGoodsList.setOnScrollListener(new RecyclerView.OnScrollListener() {
             public int scrolledY = 0;
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, final int dx, final int dy) {
+            @Override public void onScrolled(RecyclerView recyclerView, final int dx, final int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 scrolledY += dy;
                 scrollChangeHeader(scrolledY);
             }
         });
-
     }
-
 
     private void initNewSlidingParams() {
         int headerSize = getResources().getDimensionPixelOffset(R.dimen.new_home_header_size);
-        int navBarHeight = getResources().getDimensionPixelOffset(R.dimen.nav_bar_height) + 2 * getStatusBarHeight(this);
+        int navBarHeight =
+            getResources().getDimensionPixelOffset(R.dimen.nav_bar_height) + 2 * getStatusBarHeight(this);
         slidingDistance = headerSize - navBarHeight;// 172-(56+titleHeight)
         Log.d("HomeFragment", "slidingDistance" + slidingDistance);
     }
-
 
     /**
      * 根据页面滑动距离改变Header方法
@@ -183,20 +188,4 @@ public class SlideScrollViewActivity extends AppCompatActivity {
             currScrollY = slidingDistance;
         }
     }
-
-
-    /**
-     * @param context      activity
-     * @param positionData bean
-     * @param imageView    imageView
-     */
-    public static void start(Activity context, SubjectsBean positionData, ImageView imageView) {
-        Intent intent = new Intent(context, SlideScrollViewActivity.class);
-        intent.putExtra("bean", positionData);
-        ActivityOptionsCompat options =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                        imageView, CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
-        ActivityCompat.startActivity(context, intent, options.toBundle());
-    }
-
 }

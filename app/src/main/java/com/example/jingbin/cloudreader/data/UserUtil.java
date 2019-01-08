@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.data;
 
 import android.content.Context;
-
 import com.example.jingbin.cloudreader.app.Constants;
 import com.example.jingbin.cloudreader.data.room.Injection;
 import com.example.jingbin.cloudreader.data.room.User;
@@ -23,13 +22,11 @@ public class UserUtil {
      */
     public static void getLoginStatus() {
         Injection.get().getSingleBean(new UserDataCallback() {
-            @Override
-            public void onDataNotAvailable() {
+            @Override public void onDataNotAvailable() {
                 SPUtils.putBoolean(Constants.IS_LOGIN, false);
             }
 
-            @Override
-            public void getData(User bean) {
+            @Override public void getData(User bean) {
                 SPUtils.putBoolean(Constants.IS_LOGIN, true);
             }
         });

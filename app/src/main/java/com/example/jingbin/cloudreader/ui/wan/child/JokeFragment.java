@@ -6,26 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.JokeAdapter;
 import com.example.jingbin.cloudreader.base.BaseFragment;
 import com.example.jingbin.cloudreader.bean.wanandroid.DuanZiBean;
 import com.example.jingbin.cloudreader.databinding.FragmentWanAndroidBinding;
 import com.example.jingbin.cloudreader.utils.CommonUtils;
-import com.example.jingbin.cloudreader.viewmodel.menu.NoViewModel;
 import com.example.jingbin.cloudreader.viewmodel.wan.JokeViewModel;
-import com.example.jingbin.cloudreader.viewmodel.wan.WanNavigator;
 import com.example.xrecyclerview.XRecyclerView;
-
 import java.util.List;
 import java.util.Random;
 
-import rx.Subscription;
-
 /**
  * @author jingbin
- *         Updated by jingbin on 18/12/23.
+ * Updated by jingbin on 18/12/23.
  */
 public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroidBinding> {
 
@@ -35,16 +29,6 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
     private boolean mIsFirst = true;
     private JokeAdapter mAdapter;
 
-    @Override
-    public int setContent() {
-        return R.layout.fragment_wan_android;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
     public static JokeFragment newInstance(String param1) {
         JokeFragment fragment = new JokeFragment();
         Bundle args = new Bundle();
@@ -53,16 +37,22 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public int setContent() {
+        return R.layout.fragment_wan_android;
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
         }
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRefreshView();
 
@@ -81,25 +71,21 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
         bindingView.xrvWan.setAdapter(mAdapter);
 
         bindingView.srlWan.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 bindingView.srlWan.postDelayed(() -> {
                     bindingView.xrvWan.reset();
                     viewModel.setRefreshBK(true);
                     viewModel.setPage(new Random().nextInt(100));
                     viewModel.showQSBKList();
-
                 }, 100);
             }
         });
         bindingView.xrvWan.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
 
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 int page = viewModel.getPage();
                 viewModel.setPage(++page);
                 viewModel.setRefreshBK(false);
@@ -107,8 +93,7 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
             }
         });
         viewModel.getData().observe(this, new Observer<List<DuanZiBean>>() {
-            @Override
-            public void onChanged(@Nullable List<DuanZiBean> duanZiBeans) {
+            @Override public void onChanged(@Nullable List<DuanZiBean> duanZiBeans) {
                 showContentView();
                 if (bindingView.srlWan.isRefreshing()) {
                     bindingView.srlWan.setRefreshing(false);
@@ -125,7 +110,6 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
                     if (mIsFirst) {
                         mIsFirst = false;
                     }
-
                 } else {
                     if (viewModel.isRefreshBK()) {
                         showError();
@@ -137,8 +121,7 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
         });
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
@@ -147,8 +130,7 @@ public class JokeFragment extends BaseFragment<JokeViewModel, FragmentWanAndroid
         bindingView.srlWan.postDelayed(() -> viewModel.showQSBKList(), 100);
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         bindingView.srlWan.setRefreshing(true);
         viewModel.showQSBKList();
     }

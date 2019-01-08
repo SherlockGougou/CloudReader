@@ -3,24 +3,19 @@ package com.example.jingbin.cloudreader.viewmodel.gank;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
-
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
 import com.example.jingbin.cloudreader.app.Constants;
 import com.example.jingbin.cloudreader.bean.AndroidBean;
 import com.example.jingbin.cloudreader.bean.BannerItemBean;
 import com.example.jingbin.cloudreader.bean.FrontpageBean;
-import com.example.jingbin.cloudreader.bean.GankIoDataBean;
 import com.example.jingbin.cloudreader.data.model.EverydayModel;
 import com.example.jingbin.cloudreader.http.RequestImpl;
 import com.example.jingbin.cloudreader.http.cache.ACache;
 import com.example.jingbin.cloudreader.utils.SPUtils;
 import com.example.jingbin.cloudreader.utils.TimeUtil;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import rx.Subscription;
 
 /**
@@ -29,6 +24,9 @@ import rx.Subscription;
  */
 public class EverydayViewModel extends AndroidViewModel {
 
+    private final MutableLiveData<Boolean> isShowLoading = new MutableLiveData<>();
+    private final MutableLiveData<BannerDataBean> bannerData = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<List<AndroidBean>>> contentData = new MutableLiveData<>();
     private EverydayModel mEverydayModel;
     private ACache maCache;
     private ArrayList<List<AndroidBean>> mLists;
@@ -42,9 +40,31 @@ public class EverydayViewModel extends AndroidViewModel {
     // 是否已经展示了数据
     private boolean isHaveData = false;
 
-    private final MutableLiveData<Boolean> isShowLoading = new MutableLiveData<>();
-    private final MutableLiveData<BannerDataBean> bannerData = new MutableLiveData<>();
-    private final MutableLiveData<ArrayList<List<AndroidBean>>> contentData = new MutableLiveData<>();
+    public EverydayViewModel(@NonNull Application application) {
+        super(application);
+        maCache = ACache.get(CloudReaderApplication.getInstance());
+        mEverydayModel = new EverydayModel();
+        year = getTodayTime().get(0);
+        month = getTodayTime().get(1);
+        day = getTodayTime().get(2);
+        mEverydayModel.setData(year, month, day);
+    }
+
+    /**
+     * 获取当天日期
+     */
+    public static ArrayList<String> getTodayTime() {
+        String data = TimeUtil.getData();
+        String[] split = data.split("-");
+        String year = split[0];
+        String month = split[1];
+        String day = split[2];
+        ArrayList<String> list = new ArrayList<>();
+        list.add(year);
+        list.add(month);
+        list.add(day);
+        return list;
+    }
 
     public MutableLiveData<Boolean> getShowLoading() {
         return isShowLoading;
@@ -56,16 +76,6 @@ public class EverydayViewModel extends AndroidViewModel {
 
     public MutableLiveData<ArrayList<List<AndroidBean>>> getContentData() {
         return contentData;
-    }
-
-    public EverydayViewModel(@NonNull Application application) {
-        super(application);
-        maCache = ACache.get(CloudReaderApplication.getInstance());
-        mEverydayModel = new EverydayModel();
-        year = getTodayTime().get(0);
-        month = getTodayTime().get(1);
-        day = getTodayTime().get(2);
-        mEverydayModel.setData(year, month, day);
     }
 
     /**
@@ -88,10 +98,10 @@ public class EverydayViewModel extends AndroidViewModel {
                 mEverydayModel.setData(getTodayTime().get(0), getTodayTime().get(1), getTodayTime().get(2));
                 showBannerPage();
                 showRecyclerViewData();
-
             } else {
                 // 小于，取缓存没有请求前一天
-                ArrayList<String> lastTime = TimeUtil.getLastTime(getTodayTime().get(0), getTodayTime().get(1), getTodayTime().get(2));
+                ArrayList<String> lastTime =
+                    TimeUtil.getLastTime(getTodayTime().get(0), getTodayTime().get(1), getTodayTime().get(2));
                 mEverydayModel.setData(lastTime.get(0), lastTime.get(1), lastTime.get(2));
                 year = lastTime.get(0);
                 month = lastTime.get(1);
@@ -114,8 +124,7 @@ public class EverydayViewModel extends AndroidViewModel {
      */
     private void showRecyclerViewData() {
         mEverydayModel.showRecyclerViewData(new RequestImpl() {
-            @Override
-            public void loadSuccess(Object object) {
+            @Override public void loadSuccess(Object object) {
                 if (mLists != null) {
                     mLists.clear();
                 }
@@ -142,16 +151,14 @@ public class EverydayViewModel extends AndroidViewModel {
                 }
             }
 
-            @Override
-            public void loadFailed() {
+            @Override public void loadFailed() {
                 if (mLists != null && mLists.size() > 0) {
                     return;
                 }
                 handleNoData();
             }
 
-            @Override
-            public void addSubscription(Subscription subscription) {
+            @Override public void addSubscription(Subscription subscription) {
             }
         });
     }
@@ -161,11 +168,14 @@ public class EverydayViewModel extends AndroidViewModel {
      */
     private void showBannerPage() {
         mEverydayModel.showBannerPage(new RequestImpl() {
-            @Override
-            public void loadSuccess(Object object) {
+            @Override public void loadSuccess(Object object) {
                 FrontpageBean bean = (FrontpageBean) object;
-                if (bean != null && bean.getResult() != null && bean.getResult().getFocus() != null && bean.getResult().getFocus().getResult() != null) {
-                    final ArrayList<BannerItemBean> result = (ArrayList<BannerItemBean>) bean.getResult().getFocus().getResult();
+                if (bean != null
+                    && bean.getResult() != null
+                    && bean.getResult().getFocus() != null
+                    && bean.getResult().getFocus().getResult() != null) {
+                    final ArrayList<BannerItemBean> result =
+                        (ArrayList<BannerItemBean>) bean.getResult().getFocus().getResult();
                     ArrayList<String> mBannerImages = new ArrayList<String>();
                     if (result != null && result.size() > 0) {
                         for (int i = 0; i < result.size(); i++) {
@@ -183,13 +193,11 @@ public class EverydayViewModel extends AndroidViewModel {
                 }
             }
 
-            @Override
-            public void loadFailed() {
+            @Override public void loadFailed() {
 
             }
 
-            @Override
-            public void addSubscription(Subscription subscription) {
+            @Override public void addSubscription(Subscription subscription) {
             }
         });
     }
@@ -237,28 +245,13 @@ public class EverydayViewModel extends AndroidViewModel {
         isHaveData = true;
         isShowLoading.setValue(false);
         if (isOldDayRequest) {
-            ArrayList<String> lastTime = TimeUtil.getLastTime(getTodayTime().get(0), getTodayTime().get(1), getTodayTime().get(2));
+            ArrayList<String> lastTime =
+                TimeUtil.getLastTime(getTodayTime().get(0), getTodayTime().get(1), getTodayTime().get(2));
             SPUtils.putString("everyday_data", lastTime.get(0) + "-" + lastTime.get(1) + "-" + lastTime.get(2));
         } else {
             // 保存请求的日期
             SPUtils.putString("everyday_data", TimeUtil.getData());
         }
-    }
-
-    /**
-     * 获取当天日期
-     */
-    public static ArrayList<String> getTodayTime() {
-        String data = TimeUtil.getData();
-        String[] split = data.split("-");
-        String year = split[0];
-        String month = split[1];
-        String day = split[2];
-        ArrayList<String> list = new ArrayList<>();
-        list.add(year);
-        list.add(month);
-        list.add(day);
-        return list;
     }
 
     public void onDestroy() {
@@ -288,10 +281,8 @@ public class EverydayViewModel extends AndroidViewModel {
             return imageUrls;
         }
 
-
         public ArrayList<BannerItemBean> getList() {
             return list;
         }
-
     }
 }

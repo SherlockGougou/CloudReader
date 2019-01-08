@@ -1,112 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.jingbin.cloudreader">
+	xmlns:tools="http://schemas.android.com/tools"
+	package="com.example.jingbin.cloudreader">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- bugly start -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <application
-        android:name=".app.CloudReaderApplication"
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup">
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".ui.TransitionActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ViewBigPicTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+	<application
+		android:name=".app.CloudReaderApplication"
+		android:allowBackup="false"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name"
+		android:theme="@style/AppTheme"
+		tools:replace="android:allowBackup">
+		<activity
+			android:name=".MainActivity"
+			android:launchMode="singleTask"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".ui.TransitionActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/ViewBigPicTheme">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.douban.TestActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".ui.douban.SlideActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".ui.douban.SlideScrollViewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".ui.douban.SlideShadeViewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".ui.douban.MovieDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".view.viewbigimage.ViewBigImageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ViewBigPicTheme" />
-        <activity
-            android:name=".view.webview.WebViewActivity"
-            android:configChanges="orientation|screenSize"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".ui.douban.TestActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".ui.douban.SlideActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".ui.douban.SlideScrollViewActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".ui.douban.SlideShadeViewActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".ui.douban.MovieDetailActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".view.viewbigimage.ViewBigImageActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/ViewBigPicTheme"/>
+		<activity
+			android:name=".view.webview.WebViewActivity"
+			android:configChanges="orientation|screenSize"
+			android:hardwareAccelerated="true"
+			android:launchMode="singleTask"
+			android:screenOrientation="portrait">
 
-            <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW" />
+			<intent-filter tools:ignore="AppLinkUrlError">
+				<action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!--使用http，则只能打开http开头的网页-->
-                <data android:scheme="https" />
-            </intent-filter>
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+				<!--使用http，则只能打开http开头的网页-->
+				<data android:scheme="https"/>
+			</intent-filter>
 
-        </activity>
-        <activity
-            android:name=".ui.douban.DoubanTopActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.douban.OneMovieDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyScrollPage" />
-        <activity
-            android:name=".ui.menu.NavHomePageActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/HomePageTheme" />
-        <activity
-            android:name=".ui.menu.NavDeedBackActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.menu.NavAboutActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.douban.BookDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.menu.NavDownloadActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.wan.child.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.wan.child.ArticleListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.wan.child.MyCollectActivity"
-            android:screenOrientation="portrait" />
-    </application>
+		</activity>
+		<activity
+			android:name=".ui.douban.DoubanTopActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.douban.OneMovieDetailActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/MyScrollPage"/>
+		<activity
+			android:name=".ui.menu.NavHomePageActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/HomePageTheme"/>
+		<activity
+			android:name=".ui.menu.NavDeedBackActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.menu.NavAboutActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.douban.BookDetailActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.menu.NavDownloadActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.wan.child.LoginActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.wan.child.ArticleListActivity"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ui.wan.child.MyCollectActivity"
+			android:screenOrientation="portrait"/>
+	</application>
 
 </manifest>

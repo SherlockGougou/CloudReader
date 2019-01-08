@@ -1,6 +1,5 @@
 package com.example.xrecyclerview;
 
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -18,18 +17,43 @@ import android.view.ViewGroup;
  * Created by jingbin on 2016/1/28.
  */
 public class XRecyclerView extends RecyclerView {
+    private static final float DRAG_RATE = 1.75f;
+    public int previousTotal;
+    public boolean isnomore;
     private LoadingListener mLoadingListener;
     private WrapAdapter mWrapAdapter;
+    private final RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override public void onChanged() {
+            mWrapAdapter.notifyDataSetChanged();
+        }
+
+        @Override public void onItemRangeInserted(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeInserted(positionStart, itemCount);
+        }
+
+        @Override public void onItemRangeChanged(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
+        }
+
+        @Override public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
+        }
+
+        @Override public void onItemRangeRemoved(int positionStart, int itemCount) {
+            mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
+        }
+
+        @Override public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            mWrapAdapter.notifyItemMoved(fromPosition, toPosition);
+        }
+    };
     private SparseArray<View> mHeaderViews = new SparseArray<View>();
     private SparseArray<View> mFootViews = new SparseArray<View>();
     private boolean pullRefreshEnabled = true;
     private boolean loadingMoreEnabled = true;
     private YunRefreshHeader mRefreshHeader;
     private boolean isLoadingData;
-    public int previousTotal;
-    public boolean isnomore;
     private float mLastY = -1;
-    private static final float DRAG_RATE = 1.75f;
     // 是否是额外添加FooterView
     private boolean isOther = false;
 
@@ -44,6 +68,21 @@ public class XRecyclerView extends RecyclerView {
     public XRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
+    }
+
+    /**
+     * 检测网络是否可用
+     */
+    public static boolean isNetWorkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
 
     private void init(Context context) {
@@ -136,18 +175,19 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    @Override
-    public void setAdapter(Adapter adapter) {
+    @Override public void setAdapter(Adapter adapter) {
         mWrapAdapter = new WrapAdapter(mHeaderViews, mFootViews, adapter);
         super.setAdapter(mWrapAdapter);
         adapter.registerAdapterDataObserver(mDataObserver);
     }
 
-    @Override
-    public void onScrollStateChanged(int state) {
+    @Override public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
 
-        if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData && loadingMoreEnabled) {
+        if (state == RecyclerView.SCROLL_STATE_IDLE
+            && mLoadingListener != null
+            && !isLoadingData
+            && loadingMoreEnabled) {
             LayoutManager layoutManager = getLayoutManager();
             int lastVisibleItemPosition;
             if (layoutManager instanceof GridLayoutManager) {
@@ -160,10 +200,10 @@ public class XRecyclerView extends RecyclerView {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
             if (layoutManager.getChildCount() > 0
-                    && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
-                    && layoutManager.getItemCount() > layoutManager.getChildCount()
-                    && !isnomore
-                    && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
+                && lastVisibleItemPosition >= layoutManager.getItemCount() - 1
+                && layoutManager.getItemCount() > layoutManager.getChildCount()
+                && !isnomore
+                && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
 
                 View footView = mFootViews.get(0);
                 isLoadingData = true;
@@ -178,8 +218,7 @@ public class XRecyclerView extends RecyclerView {
                     mLoadingListener.onLoadMore();
                 } else {
                     postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                        @Override public void run() {
                             mLoadingListener.onLoadMore();
                         }
                     }, 1000);
@@ -188,8 +227,7 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    @Override public boolean onTouchEvent(MotionEvent ev) {
         if (mLastY == -1) {
             mLastY = ev.getRawY();
         }
@@ -202,7 +240,8 @@ public class XRecyclerView extends RecyclerView {
                 mLastY = ev.getRawY();
                 if (isOnTop() && pullRefreshEnabled) {
                     mRefreshHeader.onMove(deltaY / DRAG_RATE);
-                    if (mRefreshHeader.getVisiableHeight() > 0 && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
+                    if (mRefreshHeader.getVisiableHeight() > 0
+                        && mRefreshHeader.getState() < YunRefreshHeader.STATE_REFRESHING) {
                         return false;
                     }
                 }
@@ -262,39 +301,6 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    private final RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            mWrapAdapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeInserted(positionStart, itemCount);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
-        }
-
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount) {
-            mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
-        }
-
-        @Override
-        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            mWrapAdapter.notifyItemMoved(fromPosition, toPosition);
-        }
-    };
-
-
     public void setLoadingListener(LoadingListener listener) {
         mLoadingListener = listener;
     }
@@ -317,7 +323,6 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-
     public void setLoadMoreGone() {
         if (mFootViews == null) {
             return;
@@ -328,30 +333,6 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
-    public interface LoadingListener {
-
-        void onRefresh();
-
-        void onLoadMore();
-    }
-
-    /**
-     * 检测网络是否可用
-     *
-     * @param context
-     * @return
-     */
-    public static boolean isNetWorkConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable();
-            }
-        }
-        return false;
-    }
-
     public void reset() {
         isnomore = false;
         previousTotal = 0;
@@ -359,5 +340,12 @@ public class XRecyclerView extends RecyclerView {
         if (footView instanceof LoadingMoreFooter) {
             ((LoadingMoreFooter) footView).reSet();
         }
+    }
+
+    public interface LoadingListener {
+
+        void onRefresh();
+
+        void onLoadMore();
     }
 }

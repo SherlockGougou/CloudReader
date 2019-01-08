@@ -6,18 +6,15 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
-
-import java.util.List;
-
 import io.reactivex.Flowable;
+import java.util.List;
 
 /**
  * @author jingbin
  * @Description Data Access Object for the User table.
  * @date 2018/3/13
  */
-@Dao
-public interface UserDao {
+@Dao public interface UserDao {
 
     /**
      * 查找数据库的全部内容
@@ -25,26 +22,21 @@ public interface UserDao {
      *
      * @return 用户信息列表，可以用作Rx链式调用
      */
-    @Query("SELECT * FROM User")
-    Flowable<List<User>> findAll();
-
+    @Query("SELECT * FROM User") Flowable<List<User>> findAll();
 
     /**
      * 查找数据库的全部内容
      *
      * @return 用户信息列表
      */
-    @Query("SELECT * FROM User")
-    List<User> findUsers();
-
+    @Query("SELECT * FROM User") List<User> findUsers();
 
     /**
      * 查找任何的bean：
      * 如果数据库里有一条数据就返回这条数据
      * 如果有多条信息，则返回第一条数据
      */
-    @Query("SELECT * FROM User")
-    User findSingleBean();
+    @Query("SELECT * FROM User") User findSingleBean();
 
     /**
      * 加入一条数据，如果主键值一样就替换，如果不一样就添加
@@ -52,14 +44,11 @@ public interface UserDao {
      *
      * @param user the task to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addUser(User user);
+    @Insert(onConflict = OnConflictStrategy.REPLACE) void addUser(User user);
 
-    @Delete
-    void deleteUser(User user);
+    @Delete void deleteUser(User user);
 
-    @Update
-    void updateUser(User user);
+    @Update void updateUser(User user);
 
     /**
      * Select a User by id.
@@ -68,23 +57,21 @@ public interface UserDao {
      * @param id the bean id.
      * @return the task with taskId.
      */
-    @Query("SELECT * FROM User WHERE id = :id")
-    Flowable<User> getUserById(int id);
+    @Query("SELECT * FROM User WHERE id = :id") Flowable<User> getUserById(int id);
 
-//    /**
-//     * 清空数据库
-//     * Delete all User.
-//     */
-//    @Query("DELETE FROM User")
-//    void deleteAllData();
+    //    /**
+    //     * 清空数据库
+    //     * Delete all User.
+    //     */
+    //    @Query("DELETE FROM User")
+    //    void deleteAllData();
 
     /**
      * 清空数据库
      *
      * @return 返回：1 表示有数据删除成功；0:没有数据时
      */
-    @Query("DELETE FROM User")
-    int deleteAll();
+    @Query("DELETE FROM User") int deleteAll();
 
     /**
      * Update a task.
@@ -92,8 +79,7 @@ public interface UserDao {
      * @param user task to be updated
      * @return the number of tasks updated. This should always be 1.
      */
-    @Update
-    int updateUserResult(User user);
+    @Update int updateUserResult(User user);
 
     /**
      * Select a bean by id.
@@ -101,6 +87,5 @@ public interface UserDao {
      * @param id the bean id.
      * @return the bean with beanId.
      */
-    @Query("SELECT * FROM User WHERE id = :id")
-    User getTaskById(int id);
+    @Query("SELECT * FROM User WHERE id = :id") User getTaskById(int id);
 }

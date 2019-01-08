@@ -105,5 +105,4 @@ public class BuildFactory {
                 return (T) gankHttps;
         }
     }
-
 }

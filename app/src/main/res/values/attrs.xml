@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--SlidingLayout-->
-    <declare-styleable name="SlidingLayout">
-        <attr name="background_view" format="reference"/>
-        <attr name="sliding_mode" format="enum">
-            <enum name="both" value="0"/>
-            <enum name="top" value="1"/>
-            <enum name="bottom" value="2"/>
-        </attr>
-        <attr name="sliding_pointer_mode" format="enum">
-            <enum name="one" value="0"/>
-            <enum name="more" value="1"/>
-        </attr>
-        <attr name="top_max" format="dimension"/>
-    </declare-styleable>
+	<!--SlidingLayout-->
+	<declare-styleable name="SlidingLayout">
+		<attr format="reference" name="background_view"/>
+		<attr format="enum" name="sliding_mode">
+			<enum name="both" value="0"/>
+			<enum name="top" value="1"/>
+			<enum name="bottom" value="2"/>
+		</attr>
+		<attr format="enum" name="sliding_pointer_mode">
+			<enum name="one" value="0"/>
+			<enum name="more" value="1"/>
+		</attr>
+		<attr format="dimension" name="top_max"/>
+	</declare-styleable>
 </resources>

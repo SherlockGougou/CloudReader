@@ -6,11 +6,9 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import com.example.jingbin.cloudreader.utils.BaseTools;
 import com.example.jingbin.cloudreader.utils.CheckNetwork;
 import com.example.jingbin.cloudreader.view.webview.WebViewActivity;
-
 
 /**
  * Created by jingbin on 2016/11/17.
@@ -28,13 +26,10 @@ public class MyWebViewClient extends WebViewClient {
     public MyWebViewClient(IWebPageView mIWebPageView) {
         this.mIWebPageView = mIWebPageView;
         mActivity = (WebViewActivity) mIWebPageView;
-
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//        DebugUtil.error("----url:"+url);
+    @SuppressWarnings("deprecation") @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        //        DebugUtil.error("----url:"+url);
         if (TextUtils.isEmpty(url)) {
             return false;
         }
@@ -51,8 +46,7 @@ public class MyWebViewClient extends WebViewClient {
         return true;
     }
 
-    @Override
-    public void onPageFinished(WebView view, String url) {
+    @Override public void onPageFinished(WebView view, String url) {
         if (!CheckNetwork.isNetworkConnected(mActivity)) {
             mIWebPageView.hindProgressBar();
         }
@@ -62,8 +56,7 @@ public class MyWebViewClient extends WebViewClient {
     }
 
     // 视频全屏播放按返回页面被放大的问题
-    @Override
-    public void onScaleChanged(WebView view, float oldScale, float newScale) {
+    @Override public void onScaleChanged(WebView view, float oldScale, float newScale) {
         super.onScaleChanged(view, oldScale, newScale);
         if (newScale - oldScale > 7) {
             view.setInitialScale((int) (oldScale / newScale * 100)); //异常放大，缩回去。
@@ -106,5 +99,4 @@ public class MyWebViewClient extends WebViewClient {
             e.printStackTrace();
         }
     }
-
 }

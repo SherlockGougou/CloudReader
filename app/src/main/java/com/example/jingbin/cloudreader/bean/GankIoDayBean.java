@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.bean;
 
 import com.example.http.ParamNames;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,12 +10,21 @@ import java.util.List;
 
 public class GankIoDayBean implements Serializable {
 
-    @ParamNames("error")
-    private boolean error;
-    @ParamNames("results")
-    private ResultsBean results;
-    @ParamNames("category")
-    private List<String> category;
+    @ParamNames("error") private boolean error;
+    @ParamNames("results") private ResultsBean results;
+    @ParamNames("category") private List<String> category;
+
+    public boolean isError() {
+        return error;
+    }
+
+    public ResultsBean getResults() {
+        return results;
+    }
+
+    public List<String> getCategory() {
+        return category;
+    }
 
     public static class ResultsBean {
         /**
@@ -32,30 +40,21 @@ public class GankIoDayBean implements Serializable {
          * who : mthli
          */
 
-        @ParamNames("Android")
-        private List<AndroidBean> Android;
+        @ParamNames("Android") private List<AndroidBean> Android;
 
-        @ParamNames("iOS")
-        private List<AndroidBean> iOS;
+        @ParamNames("iOS") private List<AndroidBean> iOS;
 
-        @ParamNames("前端")
-        private List<AndroidBean> front;
+        @ParamNames("前端") private List<AndroidBean> front;
 
-        @ParamNames("App")
-        private List<AndroidBean> app;
+        @ParamNames("App") private List<AndroidBean> app;
 
-        @ParamNames("休息视频")
-        private List<AndroidBean> restMovie;
+        @ParamNames("休息视频") private List<AndroidBean> restMovie;
 
-        @ParamNames("拓展资源")
-        private List<AndroidBean> resource;
+        @ParamNames("拓展资源") private List<AndroidBean> resource;
 
-        @ParamNames("瞎推荐")
-        private List<AndroidBean> recommend;
+        @ParamNames("瞎推荐") private List<AndroidBean> recommend;
 
-        @ParamNames("福利")
-        private List<AndroidBean> welfare;
-
+        @ParamNames("福利") private List<AndroidBean> welfare;
 
         public List<AndroidBean> getAndroid() {
             return Android;
@@ -88,17 +87,5 @@ public class GankIoDayBean implements Serializable {
         public List<AndroidBean> getApp() {
             return app;
         }
-    }
-
-    public boolean isError() {
-        return error;
-    }
-
-    public ResultsBean getResults() {
-        return results;
-    }
-
-    public List<String> getCategory() {
-        return category;
     }
 }

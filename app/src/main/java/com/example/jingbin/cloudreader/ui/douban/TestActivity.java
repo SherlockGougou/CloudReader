@@ -15,39 +15,50 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.jingbin.cloudreader.R;
+import com.example.jingbin.cloudreader.adapter.MovieDetailPersonAdapter;
 import com.example.jingbin.cloudreader.bean.moviechild.SubjectsBean;
 import com.example.jingbin.cloudreader.databinding.ActivityTestBinding;
-import com.example.jingbin.cloudreader.adapter.MovieDetailPersonAdapter;
 import com.example.jingbin.cloudreader.view.test.StatusBarUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * （已使用：{@link OneMovieDetailActivity} 替代）
  * 第二种电影详情页
  */
-@Deprecated
-public class TestActivity extends AppCompatActivity {
+@Deprecated public class TestActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Toolbar mToolbar;
     //    private ImageView iv_title_bg;
-//    private RecyclerView mRecyclerView;
+    //    private RecyclerView mRecyclerView;
     private MovieDetailPersonAdapter mMyAdapter;
     private SubjectsBean subjectsBean;
     private ActivityTestBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /**
+     * @param context activity
+     * @param positionData bean
+     * @param imageView imageView
+     */
+    public static void start(Activity context, SubjectsBean positionData, ImageView imageView) {
+        Intent intent = new Intent(context, TestActivity.class);
+        intent.putExtra("bean", positionData);
+        //        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+        //                        imageView, CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
+
+        //        ActivityOptionsCompat options = ActivityOptionsCompat.makeBasic();// 右边进右边出
+        //        ActivityCompat.startActivity(context, intent, options.toBundle());
+        context.startActivity(intent);
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_test);
         if (getIntent() != null) {
@@ -62,38 +73,39 @@ public class TestActivity extends AppCompatActivity {
         if (subjectsBean != null) {
 
             // 高斯模糊背景
-            Glide.with(this).load(subjectsBean.getImages().getLarge())
-                    .error(R.drawable.stackblur_default)
-//                .placeholder(R.drawable.stackblur_default)
-                    .bitmapTransform(new BlurTransformation(this, 12, 5)).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    return false;
-                }
+            Glide.with(this)
+                .load(subjectsBean.getImages().getLarge())
+                .error(R.drawable.stackblur_default)
+                //                .placeholder(R.drawable.stackblur_default)
+                .bitmapTransform(new BlurTransformation(this, 12, 5))
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+                        boolean isFirstResource) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    mToolbar.setBackgroundColor(Color.TRANSPARENT);
-                    binding.ivTitleBg.setImageAlpha(0);
-                    binding.ivTitleBg.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            }).into(binding.ivTitleBg);
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target,
+                        boolean isFromMemoryCache, boolean isFirstResource) {
+                        mToolbar.setBackgroundColor(Color.TRANSPARENT);
+                        binding.ivTitleBg.setImageAlpha(0);
+                        binding.ivTitleBg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(binding.ivTitleBg);
         }
     }
-
 
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setBackgroundColor(Color.TRANSPARENT);
-//        mToolbar.inflateMenu(R.menu.toolbar_right_menu);
-//        mToolbar.setTitle(R.string.title);
+        //        mToolbar.inflateMenu(R.menu.toolbar_right_menu);
+        //        mToolbar.setTitle(R.string.title);
         mToolbar.setTitleTextColor(Color.WHITE);
 
-
-//        MovieDetailPersonAdapter adapter = new MovieDetailPersonAdapter();
-//        adapter.addAll(objects);
-
+        //        MovieDetailPersonAdapter adapter = new MovieDetailPersonAdapter();
+        //        adapter.addAll(objects);
 
         mMyAdapter = new MovieDetailPersonAdapter();
         mMyAdapter.setData(getData(), subjectsBean);
@@ -112,17 +124,15 @@ public class TestActivity extends AppCompatActivity {
         params.height = headerBgHeight;
 
         binding.ivTitleBg.setImageAlpha(0);
-//
+        //
         StatusBarUtils.setTranslucentImageHeader(this, 0, mToolbar);
 
         binding.xrecyclerTest.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 View headerView = null;
 
@@ -137,7 +147,8 @@ public class TestActivity extends AppCompatActivity {
 
                 // 从头部高斯图底部到titlebar底部开始就设置不透明
                 float alpha = Math.abs(headerView.getTop()) * 1.0f / (headerView.getHeight() - headerBgHeight);
-                Log.e(TAG, "alpha:" + alpha + "top :" + headerView.getTop() + " height: " + (headerView.getHeight() - 2 * headerBgHeight));
+                Log.e(TAG, "alpha:" + alpha + "top :" + headerView.getTop() + " height: " + (headerView.getHeight()
+                    - 2 * headerBgHeight));
 
                 Drawable drawable = binding.ivTitleBg.getDrawable();
                 if (drawable != null && alpha <= 1) {
@@ -149,7 +160,6 @@ public class TestActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public List<String> getData() {
 
@@ -174,26 +184,8 @@ public class TestActivity extends AppCompatActivity {
         return context.getResources().getDimensionPixelSize(resourceId);
     }
 
-
-    @Override
-    public void finish() {
+    @Override public void finish() {
         super.finish();
-//        overridePendingTransition(R.anim.push_fade_out, R.anim.push_fade_in);
-    }
-
-    /**
-     * @param context      activity
-     * @param positionData bean
-     * @param imageView    imageView
-     */
-    public static void start(Activity context, SubjectsBean positionData, ImageView imageView) {
-        Intent intent = new Intent(context, TestActivity.class);
-        intent.putExtra("bean", positionData);
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-//                        imageView, CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
-
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeBasic();// 右边进右边出
-//        ActivityCompat.startActivity(context, intent, options.toBundle());
-        context.startActivity(intent);
+        //        overridePendingTransition(R.anim.push_fade_out, R.anim.push_fade_in);
     }
 }

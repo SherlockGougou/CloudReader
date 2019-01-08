@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.DouBanTopAdapter;
 import com.example.jingbin.cloudreader.base.BaseActivity;
 import com.example.jingbin.cloudreader.bean.HotMovieBean;
 import com.example.jingbin.cloudreader.databinding.ActivityDoubanTopBinding;
-import com.example.jingbin.cloudreader.utils.DebugUtil;
 import com.example.jingbin.cloudreader.viewmodel.movie.DoubanTopViewModel;
 import com.example.xrecyclerview.XRecyclerView;
 
@@ -24,8 +22,12 @@ public class DoubanTopActivity extends BaseActivity<DoubanTopViewModel, Activity
 
     private DouBanTopAdapter mDouBanTopAdapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public static void start(Context mContext) {
+        Intent intent = new Intent(mContext, DoubanTopActivity.class);
+        mContext.startActivity(intent);
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_douban_top);
         setTitle("豆瓣电影Top250");
@@ -42,12 +44,10 @@ public class DoubanTopActivity extends BaseActivity<DoubanTopViewModel, Activity
         bindingView.xrvTop.setLoadingMoreEnabled(true);
         bindingView.xrvTop.setAdapter(mDouBanTopAdapter);
         bindingView.xrvTop.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 viewModel.handleNextStart();
                 loadDouBanTop250();
             }
@@ -56,8 +56,7 @@ public class DoubanTopActivity extends BaseActivity<DoubanTopViewModel, Activity
 
     private void loadDouBanTop250() {
         viewModel.getHotMovie().observe(this, new Observer<HotMovieBean>() {
-            @Override
-            public void onChanged(@Nullable HotMovieBean bean) {
+            @Override public void onChanged(@Nullable HotMovieBean bean) {
                 if (bean != null && bean.getSubjects() != null && bean.getSubjects().size() > 0) {
                     int positionStart = mDouBanTopAdapter.getItemCount() + 1;
                     if (viewModel.getStart() == 0) {
@@ -78,13 +77,7 @@ public class DoubanTopActivity extends BaseActivity<DoubanTopViewModel, Activity
         });
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         loadDouBanTop250();
-    }
-
-    public static void start(Context mContext) {
-        Intent intent = new Intent(mContext, DoubanTopActivity.class);
-        mContext.startActivity(intent);
     }
 }

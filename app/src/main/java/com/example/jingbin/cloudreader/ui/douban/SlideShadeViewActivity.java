@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -31,7 +30,6 @@ import com.example.jingbin.cloudreader.utils.StringFormatUtil;
 import com.example.jingbin.cloudreader.view.MyNestedScrollView;
 import com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil;
 import com.example.jingbin.cloudreader.view.test.StatusBarUtils;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil.getStatusBarHeight;
@@ -44,8 +42,7 @@ import static com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil.getSt
  * 3、上移，通过scrollview拿到上移的高度，同时（在背景图的高度内） 调整titlebar的颜色使透明变为不透明，调整背景图的颜色，是不透明变为透明
  * 4、下拉，使上面反过来即可
  */
-@Deprecated
-public class SlideShadeViewActivity extends AppCompatActivity {
+@Deprecated public class SlideShadeViewActivity extends AppCompatActivity {
 
     private int slidingDistance;
     private SubjectsBean subjectsBean;
@@ -54,8 +51,20 @@ public class SlideShadeViewActivity extends AppCompatActivity {
     // 这个是高斯图背景的高度
     private int imageBgHeight;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /**
+     * @param context activity
+     * @param positionData bean
+     * @param imageView imageView
+     */
+    public static void start(Activity context, SubjectsBean positionData, ImageView imageView) {
+        Intent intent = new Intent(context, SlideShadeViewActivity.class);
+        intent.putExtra("bean", positionData);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, imageView,
+            CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
+        ActivityCompat.startActivity(context, intent, options.toBundle());
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_slide_shade_view);
         if (getIntent() != null) {
@@ -71,7 +80,8 @@ public class SlideShadeViewActivity extends AppCompatActivity {
 
         // 使背景图向上移动到图片的最低端，保留（titlebar+statusbar）的高度
         ViewGroup.LayoutParams params = binding.ivTitleHeadBg.getLayoutParams();
-        ViewGroup.MarginLayoutParams ivTitleHeadBgParams = (ViewGroup.MarginLayoutParams) binding.ivTitleHeadBg.getLayoutParams();
+        ViewGroup.MarginLayoutParams ivTitleHeadBgParams =
+            (ViewGroup.MarginLayoutParams) binding.ivTitleHeadBg.getLayoutParams();
         int marginTop = params.height - headerBgHeight;
         ivTitleHeadBgParams.setMargins(0, -marginTop, 0, 0);
 
@@ -80,7 +90,8 @@ public class SlideShadeViewActivity extends AppCompatActivity {
 
         // 上移背景图片，使空白状态栏消失
         if (binding.include.imgItemBg != null) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.include.imgItemBg.getLayoutParams();
+            ViewGroup.MarginLayoutParams layoutParams =
+                (ViewGroup.MarginLayoutParams) binding.include.imgItemBg.getLayoutParams();
             layoutParams.setMargins(0, -StatusBarUtil.getStatusBarHeight(this), 0, 0);
         }
 
@@ -98,7 +109,6 @@ public class SlideShadeViewActivity extends AppCompatActivity {
         initNewSlidingParams();
     }
 
-
     /**
      * 加载titlebar背景
      */
@@ -106,25 +116,28 @@ public class SlideShadeViewActivity extends AppCompatActivity {
         if (subjectsBean != null) {
 
             // 高斯模糊背景 原来 参数：12,5  23,4
-            Glide.with(this).load(subjectsBean.getImages().getLarge())
-                    .error(R.drawable.stackblur_default)
-                    .bitmapTransform(new BlurTransformation(this, 23, 4)).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    return false;
-                }
+            Glide.with(this)
+                .load(subjectsBean.getImages().getLarge())
+                .error(R.drawable.stackblur_default)
+                .bitmapTransform(new BlurTransformation(this, 23, 4))
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+                        boolean isFirstResource) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    binding.titleToolBar.setBackgroundColor(Color.TRANSPARENT);
-                    binding.ivTitleHeadBg.setImageAlpha(0);
-                    binding.ivTitleHeadBg.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            }).into(binding.ivTitleHeadBg);
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target,
+                        boolean isFromMemoryCache, boolean isFirstResource) {
+                        binding.titleToolBar.setBackgroundColor(Color.TRANSPARENT);
+                        binding.ivTitleHeadBg.setImageAlpha(0);
+                        binding.ivTitleHeadBg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(binding.ivTitleHeadBg);
         }
     }
-
 
     private void setHeaderData(SubjectsBean positionData) {
         binding.include.setSubjectsBean(positionData);
@@ -146,8 +159,7 @@ public class SlideShadeViewActivity extends AppCompatActivity {
         binding.tvSubtitle.setText("主演：" + StringFormatUtil.formatName(subjectsBean.getCasts()));
 
         binding.titleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            @Override public void onClick(View v) {
                 onBackPressed();
             }
         });
@@ -157,8 +169,7 @@ public class SlideShadeViewActivity extends AppCompatActivity {
     private void initScrollViewListener() {
         // 为了兼容23以下
         binding.nsvScrollview.setOnScrollChangeListener(new MyNestedScrollView.ScrollInterface() {
-            @Override
-            public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            @Override public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 scrollChangeHeader(scrollY);
             }
         });
@@ -166,7 +177,8 @@ public class SlideShadeViewActivity extends AppCompatActivity {
 
     private void initNewSlidingParams() {
         int titleBarAndStatusHeight = (int) (CommonUtils.getDimens(R.dimen.nav_bar_height) + getStatusBarHeight(this));
-        slidingDistance = imageBgHeight - titleBarAndStatusHeight - (int) (CommonUtils.getDimens(R.dimen.nav_bar_height_more));
+        slidingDistance =
+            imageBgHeight - titleBarAndStatusHeight - (int) (CommonUtils.getDimens(R.dimen.nav_bar_height_more));
     }
 
     /**
@@ -195,14 +207,12 @@ public class SlideShadeViewActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.slide, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
@@ -210,20 +220,5 @@ public class SlideShadeViewActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-
-    /**
-     * @param context      activity
-     * @param positionData bean
-     * @param imageView    imageView
-     */
-    public static void start(Activity context, SubjectsBean positionData, ImageView imageView) {
-        Intent intent = new Intent(context, SlideShadeViewActivity.class);
-        intent.putExtra("bean", positionData);
-        ActivityOptionsCompat options =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                        imageView, CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
-        ActivityCompat.startActivity(context, intent, options.toBundle());
     }
 }

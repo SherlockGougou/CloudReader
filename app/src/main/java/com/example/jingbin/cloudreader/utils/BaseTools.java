@@ -15,9 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
-
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -38,8 +36,7 @@ public class BaseTools {
 
     public static int getWindowWidth(Context context) {
         // 获取屏幕分辨率
-        WindowManager wm = (WindowManager) (context
-                .getSystemService(Context.WINDOW_SERVICE));
+        WindowManager wm = (WindowManager) (context.getSystemService(Context.WINDOW_SERVICE));
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
         int mScreenWidth = dm.widthPixels;
@@ -48,8 +45,7 @@ public class BaseTools {
 
     public static int getWindowHeigh(Context context) {
         // 获取屏幕分辨率
-        WindowManager wm = (WindowManager) (context
-                .getSystemService(Context.WINDOW_SERVICE));
+        WindowManager wm = (WindowManager) (context.getSystemService(Context.WINDOW_SERVICE));
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
         int mScreenHeigh = dm.heightPixels;
@@ -93,7 +89,6 @@ public class BaseTools {
         return s;
     }
 
-
     /**
      * 去掉无效小数点 ".00"
      */
@@ -106,16 +101,6 @@ public class BaseTools {
         } else {
             return tmp;
         }
-    }
-
-
-    /**
-     * 处于栈顶的Activity名
-     */
-    public String getTopActivityName(Context context) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List var2 = am.getRunningTasks(1);
-        return ((ActivityManager.RunningTaskInfo) var2.get(0)).topActivity.getClassName();
     }
 
     public static void setText(String text, TextView textView) {
@@ -152,7 +137,8 @@ public class BaseTools {
      */
     public static void copy(String content) {
         // 得到剪贴板管理器
-        ClipboardManager cmb = (ClipboardManager) CloudReaderApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager cmb =
+            (ClipboardManager) CloudReaderApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText(content.trim());
     }
 
@@ -168,7 +154,6 @@ public class BaseTools {
     /**
      * 判断手机是否安装某个应用
      *
-     * @param context
      * @param appPackageName 应用包名
      * @return true：安装，false：未安装
      */
@@ -202,12 +187,20 @@ public class BaseTools {
         final View v = activity.getWindow().peekDecorView();
         if (v != null && v.getWindowToken() != null) {
             try {
-                ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(activity.getCurrentFocus()
-                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             } catch (Exception e) {
                 Log.w("TAG", e.toString());
             }
         }
     }
 
+    /**
+     * 处于栈顶的Activity名
+     */
+    public String getTopActivityName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List var2 = am.getRunningTasks(1);
+        return ((ActivityManager.RunningTaskInfo) var2.get(0)).topActivity.getClassName();
+    }
 }

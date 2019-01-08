@@ -2,11 +2,8 @@ package com.example.jingbin.cloudreader.utils;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
-import android.widget.TextClock;
 import android.widget.Toast;
-
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
-
 import me.drakeet.support.toast.ToastCompat;
 
 /**
@@ -19,8 +16,7 @@ public class ToastUtil {
 
     private static ToastCompat mToast;
 
-    @SuppressLint("ShowToast")
-    public static void showToast(String text) {
+    @SuppressLint("ShowToast") public static void showToast(String text) {
         if (!TextUtils.isEmpty(text)) {
             if (mToast == null) {
                 mToast = ToastCompat.makeText(CloudReaderApplication.getInstance(), text, Toast.LENGTH_SHORT);
@@ -34,8 +30,7 @@ public class ToastUtil {
         }
     }
 
-    @SuppressLint("ShowToast")
-    public static void showToastLong(String text) {
+    @SuppressLint("ShowToast") public static void showToastLong(String text) {
         if (!TextUtils.isEmpty(text)) {
             if (mToast == null) {
                 mToast = ToastCompat.makeText(CloudReaderApplication.getInstance(), text, Toast.LENGTH_LONG);
@@ -48,5 +43,4 @@ public class ToastUtil {
             mToast.show();
         }
     }
-
 }

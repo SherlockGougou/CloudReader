@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.MainActivity;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.GankAndroidAdapter;
@@ -26,13 +25,6 @@ public class AndroidFragment extends BaseFragment<BigAndroidViewModel, FragmentA
     private GankAndroidAdapter adapter;
     private MainActivity activity;
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = (MainActivity) context;
-    }
-
     public static AndroidFragment newInstance(String type) {
         AndroidFragment fragment = new AndroidFragment();
         Bundle args = new Bundle();
@@ -41,21 +33,23 @@ public class AndroidFragment extends BaseFragment<BigAndroidViewModel, FragmentA
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) context;
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mType = getArguments().getString(TYPE);
         }
     }
 
-    @Override
-    public int setContent() {
+    @Override public int setContent() {
         return R.layout.fragment_android;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         viewModel.setType(mType);
@@ -64,8 +58,7 @@ public class AndroidFragment extends BaseFragment<BigAndroidViewModel, FragmentA
         mIsPrepared = true;
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
@@ -77,14 +70,12 @@ public class AndroidFragment extends BaseFragment<BigAndroidViewModel, FragmentA
         bindingView.xrvAndroid.setItemAnimator(null);
         bindingView.xrvAndroid.setLayoutManager(new LinearLayoutManager(activity));
         bindingView.xrvAndroid.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
+            @Override public void onRefresh() {
                 viewModel.setPage(1);
                 loadAndroidData();
             }
 
-            @Override
-            public void onLoadMore() {
+            @Override public void onLoadMore() {
                 int page = viewModel.getPage();
                 page++;
                 viewModel.setPage(page);
@@ -123,8 +114,7 @@ public class AndroidFragment extends BaseFragment<BigAndroidViewModel, FragmentA
     /**
      * 加载失败后点击后的操作
      */
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         loadAndroidData();
     }
 }

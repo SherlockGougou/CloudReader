@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.data.model;
 
 import android.text.TextUtils;
-
 import com.example.jingbin.cloudreader.app.ConstantsImageUrl;
 import com.example.jingbin.cloudreader.bean.AndroidBean;
 import com.example.jingbin.cloudreader.bean.FrontpageBean;
@@ -9,11 +8,9 @@ import com.example.jingbin.cloudreader.bean.GankIoDayBean;
 import com.example.jingbin.cloudreader.http.HttpClient;
 import com.example.jingbin.cloudreader.http.RequestImpl;
 import com.example.jingbin.cloudreader.utils.SPUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -27,12 +24,12 @@ import rx.schedulers.Schedulers;
  */
 public class EverydayModel {
 
-    private String year = "2016";
-    private String month = "11";
-    private String day = "24";
     private static final String HOME_ONE = "home_one";
     private static final String HOME_TWO = "home_two";
     private static final String HOME_SIX = "home_six";
+    private String year = "2016";
+    private String month = "11";
+    private String day = "24";
 
     public void setData(String year, String month, String day) {
         this.year = year;
@@ -44,27 +41,26 @@ public class EverydayModel {
      * 轮播图
      */
     public void showBannerPage(final RequestImpl listener) {
-        Subscription subscription = HttpClient.Builder.getTingServer().getFrontpage()
-                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(new Observer<FrontpageBean>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+        Subscription subscription = HttpClient.Builder.getTingServer()
+            .getFrontpage()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(new Observer<FrontpageBean>() {
+                @Override public void onCompleted() {
+                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (listener != null) {
-                            listener.loadFailed();
-                        }
+                @Override public void onError(Throwable e) {
+                    if (listener != null) {
+                        listener.loadFailed();
                     }
+                }
 
-                    @Override
-                    public void onNext(FrontpageBean frontpageBean) {
-                        if (listener != null) {
-                            listener.loadSuccess(frontpageBean);
-                        }
+                @Override public void onNext(FrontpageBean frontpageBean) {
+                    if (listener != null) {
+                        listener.loadSuccess(frontpageBean);
                     }
-                });
+                }
+            });
         if (listener != null) {
             listener.addSubscription(subscription);
         }
@@ -77,63 +73,61 @@ public class EverydayModel {
         SPUtils.putString(HOME_ONE, "");
         SPUtils.putString(HOME_TWO, "");
         SPUtils.putString(HOME_SIX, "");
-        Func1<GankIoDayBean, Observable<List<List<AndroidBean>>>> func1 = new Func1<GankIoDayBean, Observable<List<List<AndroidBean>>>>() {
-            @Override
-            public Observable<List<List<AndroidBean>>> call(GankIoDayBean gankIoDayBean) {
+        Func1<GankIoDayBean, Observable<List<List<AndroidBean>>>> func1 =
+            new Func1<GankIoDayBean, Observable<List<List<AndroidBean>>>>() {
+                @Override public Observable<List<List<AndroidBean>>> call(GankIoDayBean gankIoDayBean) {
 
-                List<List<AndroidBean>> lists = new ArrayList<>();
-                GankIoDayBean.ResultsBean results = gankIoDayBean.getResults();
+                    List<List<AndroidBean>> lists = new ArrayList<>();
+                    GankIoDayBean.ResultsBean results = gankIoDayBean.getResults();
 
-                if (results.getAndroid() != null && results.getAndroid().size() > 0) {
-                    addUrlList(lists, results.getAndroid(), "Android");
-                }
-                if (results.getWelfare() != null && results.getWelfare().size() > 0) {
-                    addUrlList(lists, results.getWelfare(), "福利");
-                }
-                if (results.getiOS() != null && results.getiOS().size() > 0) {
-                    addUrlList(lists, results.getiOS(), "IOS");
-                }
-                if (results.getRestMovie() != null && results.getRestMovie().size() > 0) {
-                    addUrlList(lists, results.getRestMovie(), "休息视频");
-                }
-                if (results.getResource() != null && results.getResource().size() > 0) {
-                    addUrlList(lists, results.getResource(), "拓展资源");
-                }
-                if (results.getRecommend() != null && results.getRecommend().size() > 0) {
-                    addUrlList(lists, results.getRecommend(), "瞎推荐");
-                }
-                if (results.getFront() != null && results.getFront().size() > 0) {
-                    addUrlList(lists, results.getFront(), "前端");
-                }
-                if (results.getApp() != null && results.getApp().size() > 0) {
-                    addUrlList(lists, results.getApp(), "App");
-                }
+                    if (results.getAndroid() != null && results.getAndroid().size() > 0) {
+                        addUrlList(lists, results.getAndroid(), "Android");
+                    }
+                    if (results.getWelfare() != null && results.getWelfare().size() > 0) {
+                        addUrlList(lists, results.getWelfare(), "福利");
+                    }
+                    if (results.getiOS() != null && results.getiOS().size() > 0) {
+                        addUrlList(lists, results.getiOS(), "IOS");
+                    }
+                    if (results.getRestMovie() != null && results.getRestMovie().size() > 0) {
+                        addUrlList(lists, results.getRestMovie(), "休息视频");
+                    }
+                    if (results.getResource() != null && results.getResource().size() > 0) {
+                        addUrlList(lists, results.getResource(), "拓展资源");
+                    }
+                    if (results.getRecommend() != null && results.getRecommend().size() > 0) {
+                        addUrlList(lists, results.getRecommend(), "瞎推荐");
+                    }
+                    if (results.getFront() != null && results.getFront().size() > 0) {
+                        addUrlList(lists, results.getFront(), "前端");
+                    }
+                    if (results.getApp() != null && results.getApp().size() > 0) {
+                        addUrlList(lists, results.getApp(), "App");
+                    }
 
-                return Observable.just(lists);
-            }
-        };
+                    return Observable.just(lists);
+                }
+            };
 
         Observer<List<List<AndroidBean>>> observer = new Observer<List<List<AndroidBean>>>() {
-            @Override
-            public void onCompleted() {
+            @Override public void onCompleted() {
             }
 
-            @Override
-            public void onError(Throwable e) {
+            @Override public void onError(Throwable e) {
                 listener.loadFailed();
             }
 
-            @Override
-            public void onNext(List<List<AndroidBean>> lists) {
+            @Override public void onNext(List<List<AndroidBean>> lists) {
                 listener.loadSuccess(lists);
             }
         };
 
-        Subscription subscription = HttpClient.Builder.getGankIOServer().getGankIoDay(year, month, day)
-                .flatMap(func1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+        Subscription subscription = HttpClient.Builder.getGankIOServer()
+            .getGankIoDay(year, month, day)
+            .flatMap(func1)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer);
         listener.addSubscription(subscription);
     }
 
@@ -190,7 +184,6 @@ public class EverydayModel {
         return androidBean;
     }
 
-
     private List<AndroidBean> addUrlList(List<AndroidBean> arrayList, int androidSize) {
         List<AndroidBean> tempList = new ArrayList<>();
         for (int i = 0; i < androidSize; i++) {
@@ -201,7 +194,7 @@ public class EverydayModel {
             androidBean.setType(arrayList.get(i).getType());
             // 跳转链接
             androidBean.setUrl(arrayList.get(i).getUrl());
-//            DebugUtil.error("---androidSize:  " + androidSize);
+            //            DebugUtil.error("---androidSize:  " + androidSize);
             // 随机图的url
             if (androidSize == 1) {
                 androidBean.setImage_url(ConstantsImageUrl.HOME_ONE_URLS[getRandom(1)]);//一图
@@ -255,7 +248,6 @@ public class EverydayModel {
                     return randomInt;
                 }
             }
-
         } else {
             Random random = new Random();
             int randomInt = random.nextInt(urlLength);

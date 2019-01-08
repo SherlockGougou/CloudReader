@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-
 import com.example.jingbin.cloudreader.bean.HotMovieBean;
 import com.example.jingbin.cloudreader.data.model.OneRepository;
 
@@ -30,9 +29,9 @@ public class OneViewModel extends AndroidViewModel {
 
     public LiveData<HotMovieBean> getHotMovie() {
         if (hotMovieBean == null
-                || hotMovieBean.getValue() == null
-                || hotMovieBean.getValue().getSubjects() == null
-                || hotMovieBean.getValue().getSubjects().size() == 0) {
+            || hotMovieBean.getValue() == null
+            || hotMovieBean.getValue().getSubjects() == null
+            || hotMovieBean.getValue().getSubjects().size() == 0) {
             hotMovieBean = new MutableLiveData<>();
             return loadHotMovie();
         } else {

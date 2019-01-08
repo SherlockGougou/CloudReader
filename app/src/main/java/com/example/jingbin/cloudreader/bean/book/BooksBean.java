@@ -2,11 +2,9 @@ package com.example.jingbin.cloudreader.bean.book;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.http.ParamNames;
 import com.example.jingbin.cloudreader.BR;
 import com.example.jingbin.cloudreader.bean.moviechild.ImagesBean;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * Created by jingbin on 2016/12/15.
  */
 
-public class BooksBean extends BaseObservable implements Serializable{
+public class BooksBean extends BaseObservable implements Serializable {
 
     /**
      * rating : {"max":10,"numRaters":116375,"average":"7.9","min":0}
@@ -45,66 +43,139 @@ public class BooksBean extends BaseObservable implements Serializable{
      * 目前“公路小说”的系列已经开始策划，韩寒的作品首当其冲，韩寒表示将会撰写三部作品与聚石文华联合打造“公路小说”这一品牌
      * price : 25.00元
      */
-    @ParamNames("rating")
-    private RatingBean rating;
-    @ParamNames("subtitle")
-    private String subtitle;
-    @ParamNames("pubdate")
-    private String pubdate;
-    @ParamNames("origin_title")
-    private String origin_title;
-    @ParamNames("image")
-    private String image;
-    @ParamNames("binding")
-    private String binding;
-    @ParamNames("catalog")
-    private String catalog;
-    @ParamNames("pages")
-    private String pages;
-    @ParamNames("images")
-    private ImagesBean images;
-    @ParamNames("alt")
-    private String alt;
-    @ParamNames("id")
-    private String id;
-    @ParamNames("publisher")
-    private String publisher;
-    @ParamNames("title")
-    private String title;
-    @ParamNames("url")
-    private String url;
-    @ParamNames("author_intro")
-    private String author_intro;
-    @ParamNames("summary")
-    private String summary;
-    @ParamNames("price")
-    private String price;
-    @ParamNames("author")
-    private List<String> author;
-    @ParamNames("tags")
-    private List<TagsBean> tags;
-    @ParamNames("translator")
-    private List<String> translator;// 翻译
+    @ParamNames("rating") private RatingBean rating;
+    @ParamNames("subtitle") private String subtitle;
+    @ParamNames("pubdate") private String pubdate;
+    @ParamNames("origin_title") private String origin_title;
+    @ParamNames("image") private String image;
+    @ParamNames("binding") private String binding;
+    @ParamNames("catalog") private String catalog;
+    @ParamNames("pages") private String pages;
+    @ParamNames("images") private ImagesBean images;
+    @ParamNames("alt") private String alt;
+    @ParamNames("id") private String id;
+    @ParamNames("publisher") private String publisher;
+    @ParamNames("title") private String title;
+    @ParamNames("url") private String url;
+    @ParamNames("author_intro") private String author_intro;
+    @ParamNames("summary") private String summary;
+    @ParamNames("price") private String price;
+    @ParamNames("author") private List<String> author;
+    @ParamNames("tags") private List<TagsBean> tags;
+    @ParamNames("translator") private List<String> translator;// 翻译
 
+    @Bindable public RatingBean getRating() {
+        return rating;
+    }
 
-    public static class RatingBean extends BaseObservable implements Serializable{
+    public void setRating(RatingBean rating) {
+        this.rating = rating;
+        notifyPropertyChanged(BR.rating);
+    }
+
+    @Bindable public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+        notifyPropertyChanged(BR.subtitle);
+    }
+
+    @Bindable public String getPubdate() {
+        return pubdate;
+    }
+
+    public void setPubdate(String pubdate) {
+        this.pubdate = pubdate;
+        notifyPropertyChanged(BR.pubdate);
+    }
+
+    @Bindable public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+        notifyPropertyChanged(BR.image);
+    }
+
+    @Bindable public ImagesBean getImages() {
+        return images;
+    }
+
+    public void setImages(ImagesBean images) {
+        this.images = images;
+        notifyPropertyChanged(BR.images);
+    }
+
+    @Bindable public String getAlt() {
+        return alt;
+    }
+
+    public void setAlt(String alt) {
+        this.alt = alt;
+        notifyPropertyChanged(BR.alt);
+    }
+
+    @Bindable public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+        notifyPropertyChanged(BR.id);
+    }
+
+    @Bindable public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+        notifyPropertyChanged(BR.publisher);
+    }
+
+    @Bindable public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+        notifyPropertyChanged(BR.title);
+    }
+
+    @Bindable public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+        notifyPropertyChanged(BR.url);
+    }
+
+    @Bindable public List<String> getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(List<String> author) {
+        this.author = author;
+        notifyPropertyChanged(BR.author);
+    }
+
+    public static class RatingBean extends BaseObservable implements Serializable {
         /**
          * max : 10
          * numRaters : 116375
          * average : 7.9
          * min : 0
          */
-        @ParamNames("max")
-        private int max;
-        @ParamNames("numRaters")
-        private int numRaters;
-        @ParamNames("average")
-        private String average;
-        @ParamNames("min")
-        private int min;
+        @ParamNames("max") private int max;
+        @ParamNames("numRaters") private int numRaters;
+        @ParamNames("average") private String average;
+        @ParamNames("min") private int min;
 
-        @Bindable
-        public int getMax() {
+        @Bindable public int getMax() {
             return max;
         }
 
@@ -113,8 +184,7 @@ public class BooksBean extends BaseObservable implements Serializable{
             notifyPropertyChanged(BR.max);
         }
 
-        @Bindable
-        public int getNumRaters() {
+        @Bindable public int getNumRaters() {
             return numRaters;
         }
 
@@ -123,8 +193,7 @@ public class BooksBean extends BaseObservable implements Serializable{
             notifyPropertyChanged(BR.numRaters);
         }
 
-        @Bindable
-        public String getAverage() {
+        @Bindable public String getAverage() {
             return average;
         }
 
@@ -133,8 +202,7 @@ public class BooksBean extends BaseObservable implements Serializable{
             notifyPropertyChanged(BR.average);
         }
 
-        @Bindable
-        public int getMin() {
+        @Bindable public int getMin() {
             return min;
         }
 
@@ -144,22 +212,17 @@ public class BooksBean extends BaseObservable implements Serializable{
         }
     }
 
-
-    public static class TagsBean extends BaseObservable implements Serializable{
+    public static class TagsBean extends BaseObservable implements Serializable {
         /**
          * count : 38955
          * name : 韩寒
          * title : 韩寒
          */
-        @ParamNames("count")
-        private int count;
-        @ParamNames("name")
-        private String name;
-        @ParamNames("title")
-        private String title;
+        @ParamNames("count") private int count;
+        @ParamNames("name") private String name;
+        @ParamNames("title") private String title;
 
-        @Bindable
-        public int getCount() {
+        @Bindable public int getCount() {
             return count;
         }
 
@@ -168,8 +231,7 @@ public class BooksBean extends BaseObservable implements Serializable{
             notifyPropertyChanged(BR.count);
         }
 
-        @Bindable
-        public String getName() {
+        @Bindable public String getName() {
             return name;
         }
 
@@ -178,8 +240,7 @@ public class BooksBean extends BaseObservable implements Serializable{
             notifyPropertyChanged(BR.name);
         }
 
-        @Bindable
-        public String getTitle() {
+        @Bindable public String getTitle() {
             return title;
         }
 
@@ -188,115 +249,4 @@ public class BooksBean extends BaseObservable implements Serializable{
             notifyPropertyChanged(BR.title);
         }
     }
-
-    @Bindable
-    public RatingBean getRating() {
-        return rating;
-    }
-
-    public void setRating(RatingBean rating) {
-        this.rating = rating;
-        notifyPropertyChanged(BR.rating);
-    }
-
-    @Bindable
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-        notifyPropertyChanged(BR.subtitle);
-    }
-
-    @Bindable
-    public String getPubdate() {
-        return pubdate;
-    }
-
-    public void setPubdate(String pubdate) {
-        this.pubdate = pubdate;
-        notifyPropertyChanged(BR.pubdate);
-    }
-
-    @Bindable
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-        notifyPropertyChanged(BR.image);
-    }
-
-    @Bindable
-    public ImagesBean getImages() {
-        return images;
-    }
-
-    public void setImages(ImagesBean images) {
-        this.images = images;
-        notifyPropertyChanged(BR.images);
-    }
-
-    @Bindable
-    public String getAlt() {
-        return alt;
-    }
-
-    public void setAlt(String alt) {
-        this.alt = alt;
-        notifyPropertyChanged(BR.alt);
-    }
-
-    @Bindable
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-        notifyPropertyChanged(BR.id);
-    }
-
-    @Bindable
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-        notifyPropertyChanged(BR.publisher);
-    }
-
-    @Bindable
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-        notifyPropertyChanged(BR.title);
-    }
-
-    @Bindable
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-        notifyPropertyChanged(BR.url);
-    }
-
-    @Bindable
-    public List<String> getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(List<String> author) {
-        this.author = author;
-        notifyPropertyChanged(BR.author);
-    }
-
 }

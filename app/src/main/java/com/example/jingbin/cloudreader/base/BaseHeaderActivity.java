@@ -23,7 +23,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -36,13 +35,10 @@ import com.example.jingbin.cloudreader.view.CustomChangeBounds;
 import com.example.jingbin.cloudreader.view.MyNestedScrollView;
 import com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil;
 import com.example.jingbin.cloudreader.view.test.StatusBarUtils;
-
 import java.lang.reflect.Method;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
-
 
 /**
  * Created by jingbin on 16/12/12.
@@ -50,7 +46,8 @@ import rx.subscriptions.CompositeSubscription;
  * 书籍等详情页
  * 根布局：fitsSystemWindows 惹的祸
  */
-public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends ViewDataBinding> extends AppCompatActivity {
+public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends ViewDataBinding>
+    extends AppCompatActivity {
 
     // 标题
     protected BaseHeaderTitleBarBinding bindingTitleView;
@@ -73,13 +70,11 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         return (T) findViewById(id);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
+    @Override public void setContentView(@LayoutRes int layoutResID) {
         View ll = getLayoutInflater().inflate(R.layout.activity_header_base, null);
 
         // 内容
@@ -90,21 +85,24 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         bindingTitleView = DataBindingUtil.inflate(getLayoutInflater(), R.layout.base_header_title_bar, null, false);
 
         // title (如自定义很强可以拿出去)
-        RelativeLayout.LayoutParams titleParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams titleParams =
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         bindingTitleView.getRoot().setLayoutParams(titleParams);
         RelativeLayout mTitleContainer = (RelativeLayout) ll.findViewById(R.id.title_container);
         mTitleContainer.addView(bindingTitleView.getRoot());
         getWindow().setContentView(ll);
 
         // header
-        RelativeLayout.LayoutParams headerParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams headerParams =
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         bindingHeaderView.getRoot().setLayoutParams(headerParams);
         RelativeLayout mHeaderContainer = (RelativeLayout) ll.findViewById(R.id.header_container);
         mHeaderContainer.addView(bindingHeaderView.getRoot());
         getWindow().setContentView(ll);
 
         // content
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        RelativeLayout.LayoutParams params =
+            new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         bindingContentView.getRoot().setLayoutParams(params);
         RelativeLayout mContainer = ll.findViewById(R.id.container);
         mContainer.addView(bindingContentView.getRoot());
@@ -115,10 +113,10 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         refreshView.setVisibility(View.GONE);
 
         // 设置自定义元素共享切换动画
-//        setMotion(setHeaderPicView(), false);
+        //        setMotion(setHeaderPicView(), false);
 
         // 初始化滑动渐变
-//        initSlideShapeTheme(setHeaderImgUrl(), setHeaderImageView());
+        //        initSlideShapeTheme(setHeaderImgUrl(), setHeaderImageView());
 
         // 设置toolbar
         setToolBar();
@@ -132,16 +130,13 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         }
         // 点击加载失败布局
         refreshView.setOnClickListener(new PerfectClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
+            @Override protected void onNoDoubleClick(View v) {
                 showLoading();
                 onRefresh();
             }
         });
         bindingContentView.getRoot().setVisibility(View.GONE);
-
     }
-
 
     /**
      * a. 布局高斯透明图 header布局
@@ -168,8 +163,7 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
     /**
      * 1. 标题
      */
-    @Override
-    public void setTitle(CharSequence text) {
+    @Override public void setTitle(CharSequence text) {
         bindingTitleView.tbBaseTitle.setTitle(text);
     }
 
@@ -192,7 +186,7 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
      * 开启需要重写setHeaderPicView()，和调用此方法并将isShow值设为true
      *
      * @param imageView 共享的图片
-     * @param isShow    是否显示曲线动画
+     * @param isShow 是否显示曲线动画
      */
     protected void setMotion(ImageView imageView, boolean isShow) {
         if (!isShow) {
@@ -231,8 +225,8 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
             actionBar.setHomeAsUpIndicator(R.drawable.icon_back);
         }
         // 手动设置才有效果
-//        bindingTitleView.tbBaseTitle.setTitleTextAppearance(this, R.style.ToolBar_Title);
-//        bindingTitleView.tbBaseTitle.setSubtitleTextAppearance(this, R.style.Toolbar_SubTitle);
+        //        bindingTitleView.tbBaseTitle.setTitleTextAppearance(this, R.style.ToolBar_Title);
+        //        bindingTitleView.tbBaseTitle.setSubtitleTextAppearance(this, R.style.Toolbar_SubTitle);
         bindingTitleView.tbBaseTitle.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.actionbar_more));
         bindingTitleView.tbBaseTitle.setNavigationOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -253,8 +247,7 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.base_header_menu, menu);
         return true;
     }
@@ -262,14 +255,11 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
     /**
      * 显示popu内的图片
      */
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+    @SuppressLint("RestrictedApi") @Override protected boolean onPrepareOptionsPanel(View view, Menu menu) {
         if (menu != null) {
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
                 try {
-                    Method m = menu.getClass().getDeclaredMethod(
-                            "setOptionalIconsVisible", Boolean.TYPE);
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
                     m.setAccessible(true);
                     m.invoke(menu, true);
                 } catch (Exception e) {
@@ -283,7 +273,7 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
     /**
      * *** 初始化滑动渐变 一定要实现 ******
      *
-     * @param imgUrl    header头部的高斯背景imageUrl
+     * @param imgUrl header头部的高斯背景imageUrl
      * @param mHeaderBg header头部高斯背景ImageView控件
      */
     protected void initSlideShapeTheme(String imgUrl, ImageView mHeaderBg) {
@@ -295,7 +285,8 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
 
         // 使背景图向上移动到图片的最低端，保留（titlebar+statusbar）的高度
         ViewGroup.LayoutParams params = bindingTitleView.ivBaseTitlebarBg.getLayoutParams();
-        ViewGroup.MarginLayoutParams ivTitleHeadBgParams = (ViewGroup.MarginLayoutParams) bindingTitleView.ivBaseTitlebarBg.getLayoutParams();
+        ViewGroup.MarginLayoutParams ivTitleHeadBgParams =
+            (ViewGroup.MarginLayoutParams) bindingTitleView.ivBaseTitlebarBg.getLayoutParams();
         int marginTop = params.height - headerBgHeight;
         ivTitleHeadBgParams.setMargins(0, -marginTop, 0, 0);
 
@@ -317,7 +308,6 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         initNewSlidingParams();
     }
 
-
     /**
      * 加载titlebar背景
      */
@@ -325,40 +315,45 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         if (!TextUtils.isEmpty(imgUrl)) {
 
             // 高斯模糊背景 原来 参数：12,5  23,4
-            Glide.with(this).load(imgUrl)
-                    .error(R.drawable.stackblur_default)
-                    .bitmapTransform(new BlurTransformation(this, 23, 4)).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    return false;
-                }
+            Glide.with(this)
+                .load(imgUrl)
+                .error(R.drawable.stackblur_default)
+                .bitmapTransform(new BlurTransformation(this, 23, 4))
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override public boolean onException(Exception e, String model, Target<GlideDrawable> target,
+                        boolean isFirstResource) {
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    bindingTitleView.tbBaseTitle.setBackgroundColor(Color.TRANSPARENT);
-                    bindingTitleView.ivBaseTitlebarBg.setImageAlpha(0);
-                    bindingTitleView.ivBaseTitlebarBg.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            }).into(bindingTitleView.ivBaseTitlebarBg);
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target,
+                        boolean isFromMemoryCache, boolean isFirstResource) {
+                        bindingTitleView.tbBaseTitle.setBackgroundColor(Color.TRANSPARENT);
+                        bindingTitleView.ivBaseTitlebarBg.setImageAlpha(0);
+                        bindingTitleView.ivBaseTitlebarBg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                })
+                .into(bindingTitleView.ivBaseTitlebarBg);
         }
     }
 
-
     private void initScrollViewListener() {
         // 为了兼容23以下
-        ((MyNestedScrollView) findViewById(R.id.mns_base)).setOnScrollChangeListener(new MyNestedScrollView.ScrollInterface() {
-            @Override
-            public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                scrollChangeHeader(scrollY);
-            }
-        });
+        ((MyNestedScrollView) findViewById(R.id.mns_base)).setOnScrollChangeListener(
+            new MyNestedScrollView.ScrollInterface() {
+                @Override public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    scrollChangeHeader(scrollY);
+                }
+            });
     }
 
     private void initNewSlidingParams() {
-        int titleBarAndStatusHeight = (int) (CommonUtils.getDimens(R.dimen.nav_bar_height) + StatusBarUtil.getStatusBarHeight(this));
+        int titleBarAndStatusHeight =
+            (int) (CommonUtils.getDimens(R.dimen.nav_bar_height) + StatusBarUtil.getStatusBarHeight(this));
         // 减掉后，没到顶部就不透明了
-        slidingDistance = imageBgHeight - titleBarAndStatusHeight - (int) (CommonUtils.getDimens(R.dimen.base_header_activity_slide_more));
+        slidingDistance = imageBgHeight - titleBarAndStatusHeight - (int) (CommonUtils.getDimens(
+            R.dimen.base_header_activity_slide_more));
     }
 
     /**
@@ -447,8 +442,7 @@ public abstract class BaseHeaderActivity<HV extends ViewDataBinding, SV extends 
         this.mCompositeSubscription.add(s);
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.unsubscribe();
         }

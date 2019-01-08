@@ -1,9 +1,7 @@
 package com.example.jingbin.cloudreader.viewmodel.wan;
 
 import com.example.jingbin.cloudreader.bean.wanandroid.DuanZiBean;
-
 import java.util.List;
-
 import rx.Subscription;
 
 /**
@@ -14,14 +12,12 @@ import rx.Subscription;
 
 public interface WanNavigator {
 
-
     interface JokeModelNavigator {
         void loadSuccess(List<DuanZiBean> lists);
 
         void loadFailed();
 
         void addSubscription(Subscription subscription);
-
     }
 
     /**
@@ -32,5 +28,4 @@ public interface WanNavigator {
 
         void onFailure();
     }
-
 }

@@ -29,29 +29,24 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.mFootViews = footViews;
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
         if (manager instanceof GridLayoutManager) {
             final GridLayoutManager gridManager = ((GridLayoutManager) manager);
             gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    return (isHeader(position) || isFooter(position))
-                            ? gridManager.getSpanCount() : 1;
+                @Override public int getSpanSize(int position) {
+                    return (isHeader(position) || isFooter(position)) ? gridManager.getSpanCount() : 1;
                 }
             });
         }
     }
 
-    @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if (lp != null
-                && lp instanceof StaggeredGridLayoutManager.LayoutParams
-                && (isHeader(holder.getLayoutPosition()) || isFooter(holder.getLayoutPosition()))) {
+        if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams && (isHeader(holder.getLayoutPosition())
+            || isFooter(holder.getLayoutPosition()))) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
             p.setFullSpan(true);
         }
@@ -77,8 +72,7 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return mFootViews.size();
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_REFRESH_HEADER) {
             return new SimpleViewHolder(mHeaderViews.get(0));
         } else if (viewType == TYPE_HEADER) {
@@ -89,8 +83,7 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return adapter.onCreateViewHolder(parent, viewType);
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (isHeader(position)) {
             return;
         }
@@ -105,8 +98,7 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         if (adapter != null) {
             return getHeadersCount() + getFootersCount() + adapter.getItemCount();
         } else {
@@ -114,8 +106,7 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
+    @Override public int getItemViewType(int position) {
         if (isRefreshHeader(position)) {
             return TYPE_REFRESH_HEADER;
         }
@@ -136,8 +127,7 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return TYPE_NORMAL;
     }
 
-    @Override
-    public long getItemId(int position) {
+    @Override public long getItemId(int position) {
         if (adapter != null && position >= getHeadersCount()) {
             int adjPosition = position - getHeadersCount();
             int adapterCount = adapter.getItemCount();
@@ -148,15 +138,13 @@ public class WrapAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return -1;
     }
 
-    @Override
-    public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+    @Override public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
         if (adapter != null) {
             adapter.unregisterAdapterDataObserver(observer);
         }
     }
 
-    @Override
-    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
+    @Override public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
         if (adapter != null) {
             adapter.registerAdapterDataObserver(observer);
         }

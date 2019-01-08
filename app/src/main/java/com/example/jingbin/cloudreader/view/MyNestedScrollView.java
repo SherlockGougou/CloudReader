@@ -13,13 +13,6 @@ public class MyNestedScrollView extends NestedScrollView {
 
     private ScrollInterface scrollInterface;
 
-    /**
-     * 定义滑动接口
-     */
-    public interface ScrollInterface {
-        void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY);
-    }
-
     public MyNestedScrollView(Context context) {
         super(context);
     }
@@ -32,8 +25,7 @@ public class MyNestedScrollView extends NestedScrollView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+    @Override protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         if (scrollInterface != null) {
             scrollInterface.onScrollChange(l, t, oldl, oldt);
         }
@@ -42,5 +34,12 @@ public class MyNestedScrollView extends NestedScrollView {
 
     public void setOnScrollChangeListener(ScrollInterface t) {
         this.scrollInterface = t;
+    }
+
+    /**
+     * 定义滑动接口
+     */
+    public interface ScrollInterface {
+        void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY);
     }
 }

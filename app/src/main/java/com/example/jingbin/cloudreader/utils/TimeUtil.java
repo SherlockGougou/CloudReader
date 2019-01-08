@@ -1,7 +1,6 @@
 package com.example.jingbin.cloudreader.utils;
 
 import android.text.format.Time;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,14 +84,11 @@ public class TimeUtil {
         int yearMonth = Integer.valueOf(yearMonthDay.substring(5, 7));
         int yearDay = Integer.valueOf(yearMonthDay.substring(8, 10));
         if (yearMonth < 10 && yearDay < 10) {
-            yearMonthDay = yearMonthDay.substring(0, 5)
-                    + yearMonthDay.substring(6, 8) + yearMonthDay.substring(9);
+            yearMonthDay = yearMonthDay.substring(0, 5) + yearMonthDay.substring(6, 8) + yearMonthDay.substring(9);
         } else if (yearMonth < 10) {
-            yearMonthDay = yearMonthDay.substring(0, 5)
-                    + yearMonthDay.substring(6);
+            yearMonthDay = yearMonthDay.substring(0, 5) + yearMonthDay.substring(6);
         } else if (yearDay < 10) {
-            yearMonthDay = yearMonthDay.substring(0, 8)
-                    + yearMonthDay.substring(9);
+            yearMonthDay = yearMonthDay.substring(0, 8) + yearMonthDay.substring(9);
         }
         String str = " 00:00:00";
         float currDay = farmatTime(currDate.substring(0, 10) + str);
@@ -171,9 +167,6 @@ public class TimeUtil {
     /**
      * 如果在1分钟之内发布的显示"刚刚" 如果在1个小时之内发布的显示"XX分钟之前" 如果在1天之内发布的显示"XX小时之前"
      * 如果在今年的1天之外的只显示“月-日”，例如“05-03” 如果不是今年的显示“年-月-日”，例如“2014-03-11”
-     *
-     * @param time
-     * @return
      */
     public static String translateTime(String time) {
         // 在主页面中设置当天时间
@@ -219,13 +212,9 @@ public class TimeUtil {
         return time;
     }
 
-
     /**
      * 如果在1分钟之内发布的显示"刚刚" 如果在1个小时之内发布的显示"XX分钟之前" 如果在1天之内发布的显示"XX小时之前"
      * 如果在今年的1天之外的只显示“月-日”，例如“05-03” 如果不是今年的显示“年-月-日”，例如“2014-03-11”
-     *
-     * @param time
-     * @return
      */
     public static String getTranslateTime(String time) {
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -246,7 +235,6 @@ public class TimeUtil {
         }
 
         long timeDifferent = currentMilliseconds - timeMilliseconds;
-
 
         if (timeDifferent < 60000) {// 一分钟之内
 
@@ -325,7 +313,6 @@ public class TimeUtil {
         }
     }
 
-
     public static Date getDate() {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = sDateFormat.format(new Date());
@@ -390,7 +377,6 @@ public class TimeUtil {
         return sdf1.format(date);
     }
 
-
     public static String timeFormatStr(String time) {
         //
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -405,7 +391,6 @@ public class TimeUtil {
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf1.format(date);
     }
-
 
     public static String timeFormatYYYYMMDD(String time) {
         //

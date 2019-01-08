@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+	xmlns:tools="http://schemas.android.com/tools"
+	>
 
 
-    <data>
+	<data>
 
-        <variable
-            name="bean"
-            type="com.example.jingbin.cloudreader.bean.wanandroid.NaviJsonBean.DataBean" />
+		<variable
+			name="bean"
+			type="com.example.jingbin.cloudreader.bean.wanandroid.NaviJsonBean.DataBean"
+			/>
 
-        <import type="android.text.Html" />
-    </data>
+		<import type="android.text.Html"/>
+	</data>
 
-    <LinearLayout
-        android:id="@+id/ll_item_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/ll_item_top"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="@{Html.fromHtml(bean.name)}"
-            android:textColor="@color/colorTabText"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="网址导航" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="15dp"
+			android:text="@{Html.fromHtml(bean.name)}"
+			android:textColor="@color/colorTabText"
+			android:textSize="15sp"
+			android:textStyle="bold"
+			tools:text="网址导航"
+			/>
 
-        <com.zhy.view.flowlayout.TagFlowLayout
-            android:id="@+id/tfl_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="17dp" />
+		<com.zhy.view.flowlayout.TagFlowLayout
+			android:id="@+id/tfl_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="10dp"
+			android:layout_marginStart="17dp"
+			/>
 
-    </LinearLayout>
+	</LinearLayout>
 </layout>

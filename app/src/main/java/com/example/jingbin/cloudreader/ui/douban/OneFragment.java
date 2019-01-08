@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.example.jingbin.cloudreader.MainActivity;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.OneAdapter;
@@ -35,19 +34,16 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
     private HotMovieBean mHotMovieBean;
     private OneAdapter oneAdapter;
 
-    @Override
-    public int setContent() {
+    @Override public int setContent() {
         return R.layout.fragment_one;
     }
 
-    @Override
-    public void onAttach(Context context) {
+    @Override public void onAttach(Context context) {
         super.onAttach(context);
         activity = (MainActivity) context;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         initRecyclerView();
@@ -61,8 +57,7 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
      * 懒加载
      * 从此页面新开activity界面返回此页面 不会走这里
      */
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!isPrepared || !mIsVisible) {
             return;
         }
@@ -85,8 +80,7 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
                 postDelayLoad();
             } else {
                 bindingView.listOne.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                    @Override public void run() {
                         synchronized (this) {
                             setAdapter(mHotMovieBean);
                             showContentView();
@@ -95,7 +89,6 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
                 }, 300);
             }
         }
-
     }
 
     private void loadHotMovie() {
@@ -141,7 +134,8 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
         // 需加，不然滑动不流畅
         bindingView.listOne.setNestedScrollingEnabled(false);
         bindingView.listOne.setHasFixedSize(false);
-        HeaderItemOneBinding oneBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_item_one, null, false);
+        HeaderItemOneBinding oneBinding =
+            DataBindingUtil.inflate(getLayoutInflater(), R.layout.header_item_one, null, false);
         oneBinding.setView(this);
         bindingView.listOne.addHeaderView(oneBinding.getRoot());
         oneAdapter = new OneAdapter(activity);
@@ -157,8 +151,7 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
             if (!mIsLoading) {
                 mIsLoading = true;
                 bindingView.listOne.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                    @Override public void run() {
                         loadHotMovie();
                     }
                 }, 150);
@@ -170,16 +163,14 @@ public class OneFragment extends BaseFragment<OneViewModel, FragmentOneBinding> 
         DoubanTopActivity.start(activity);
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         loadHotMovie();
     }
 
     /**
      * 从此页面新开activity界面返回此页面 走这里
      */
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
     }
 }

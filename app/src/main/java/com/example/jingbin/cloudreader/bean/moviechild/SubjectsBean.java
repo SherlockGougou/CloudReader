@@ -2,10 +2,8 @@ package com.example.jingbin.cloudreader.bean.moviechild;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.example.http.ParamNames;
 import com.example.jingbin.cloudreader.BR;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * 豆瓣热映item详情
  */
 
-public class SubjectsBean extends BaseObservable implements Serializable{
+public class SubjectsBean extends BaseObservable implements Serializable {
     /**
      * rating : {"max":10,"average":6.9,"stars":"35","min":0}
      * genres : ["剧情","喜剧"]
@@ -29,96 +27,30 @@ public class SubjectsBean extends BaseObservable implements Serializable{
      * （更多信息）alt : https://movie.douban.com/subject/26630781/
      * id : 26630781
      */
-    @ParamNames("rating")
-    private RatingBean rating;
-    @ParamNames("title")
-    private String title;
-    @ParamNames("collect_count")
-    private int collect_count;
-    @ParamNames("original_title")
-    private String original_title;
-    @ParamNames("subtype")
-    private String subtype;
-    @ParamNames("year")
-    private String year;
-    @ParamNames("images")
-    private ImagesBean images;
-    @ParamNames("alt")
-    private String alt;
-    @ParamNames("id")
-    private String id;
-    @ParamNames("genres")
-    private List<String> genres;
-    @ParamNames("casts")
-    private List<PersonBean> casts;
-    @ParamNames("directors")
-    private List<PersonBean> directors;
+    @ParamNames("rating") private RatingBean rating;
+    @ParamNames("title") private String title;
+    @ParamNames("collect_count") private int collect_count;
+    @ParamNames("original_title") private String original_title;
+    @ParamNames("subtype") private String subtype;
+    @ParamNames("year") private String year;
+    @ParamNames("images") private ImagesBean images;
+    @ParamNames("alt") private String alt;
+    @ParamNames("id") private String id;
+    @ParamNames("genres") private List<String> genres;
+    @ParamNames("casts") private List<PersonBean> casts;
+    @ParamNames("directors") private List<PersonBean> directors;
 
-
-    @Bindable
-    public RatingBean getRating() {
+    @Bindable public RatingBean getRating() {
         return rating;
     }
-
-    @Bindable
-    public String getTitle() {
-        return this.title;
-    }
-
-    @Bindable
-    public int getCollect_count() {
-        return collect_count;
-    }
-
-    @Bindable
-    public String getOriginal_title() {
-        return original_title;
-    }
-
-    @Bindable
-    public String getSubtype() {
-        return subtype;
-    }
-
-    @Bindable
-    public String getYear() {
-        return year;
-    }
-
-    @Bindable
-    public ImagesBean getImages() {
-        return images;
-    }
-
-    @Bindable
-    public String getAlt() {
-        return alt;
-    }
-
-    @Bindable
-    public String getId() {
-        return id;
-    }
-
-    @Bindable
-    public List<String> getGenres() {
-        return genres;
-    }
-
-    @Bindable
-    public List<PersonBean> getCasts() {
-        return casts;
-    }
-
-    @Bindable
-    public List<PersonBean> getDirectors() {
-        return directors;
-    }
-
 
     public void setRating(RatingBean rating) {
         this.rating = rating;
         notifyPropertyChanged(BR.rating);
+    }
+
+    @Bindable public String getTitle() {
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -126,9 +58,17 @@ public class SubjectsBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.title);
     }
 
+    @Bindable public int getCollect_count() {
+        return collect_count;
+    }
+
     public void setCollect_count(int collect_count) {
         this.collect_count = collect_count;
         notifyPropertyChanged(BR.collect_count);
+    }
+
+    @Bindable public String getOriginal_title() {
+        return original_title;
     }
 
     public void setOriginal_title(String original_title) {
@@ -136,9 +76,17 @@ public class SubjectsBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.original_title);
     }
 
+    @Bindable public String getSubtype() {
+        return subtype;
+    }
+
     public void setSubtype(String subtype) {
         this.subtype = subtype;
         notifyPropertyChanged(BR.subtype);
+    }
+
+    @Bindable public String getYear() {
+        return year;
     }
 
     public void setYear(String year) {
@@ -146,9 +94,17 @@ public class SubjectsBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.year);
     }
 
+    @Bindable public ImagesBean getImages() {
+        return images;
+    }
+
     public void setImages(ImagesBean images) {
         this.images = images;
         notifyPropertyChanged(BR.images);
+    }
+
+    @Bindable public String getAlt() {
+        return alt;
     }
 
     public void setAlt(String alt) {
@@ -156,9 +112,17 @@ public class SubjectsBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.alt);
     }
 
+    @Bindable public String getId() {
+        return id;
+    }
+
     public void setId(String id) {
         this.id = id;
         notifyPropertyChanged(BR.id);
+    }
+
+    @Bindable public List<String> getGenres() {
+        return genres;
     }
 
     public void setGenres(List<String> genres) {
@@ -166,9 +130,17 @@ public class SubjectsBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.genres);
     }
 
+    @Bindable public List<PersonBean> getCasts() {
+        return casts;
+    }
+
     public void setCasts(List<PersonBean> casts) {
         this.casts = casts;
         notifyPropertyChanged(BR.casts);
+    }
+
+    @Bindable public List<PersonBean> getDirectors() {
+        return directors;
     }
 
     public void setDirectors(List<PersonBean> directors) {
@@ -176,21 +148,38 @@ public class SubjectsBean extends BaseObservable implements Serializable{
         notifyPropertyChanged(BR.directors);
     }
 
-    @Override
-    public String toString() {
-        return "SubjectsBean{" +
-                "directors=" + directors +
-                ", casts=" + casts +
-                ", genres=" + genres +
-                ", id='" + id + '\'' +
-                ", alt='" + alt + '\'' +
-                ", images=" + images +
-                ", year='" + year + '\'' +
-                ", subtype='" + subtype + '\'' +
-                ", original_title='" + original_title + '\'' +
-                ", collect_count=" + collect_count +
-                ", title='" + title + '\'' +
-                ", rating=" + rating +
-                '}';
+    @Override public String toString() {
+        return "SubjectsBean{"
+            + "directors="
+            + directors
+            + ", casts="
+            + casts
+            + ", genres="
+            + genres
+            + ", id='"
+            + id
+            + '\''
+            + ", alt='"
+            + alt
+            + '\''
+            + ", images="
+            + images
+            + ", year='"
+            + year
+            + '\''
+            + ", subtype='"
+            + subtype
+            + '\''
+            + ", original_title='"
+            + original_title
+            + '\''
+            + ", collect_count="
+            + collect_count
+            + ", title='"
+            + title
+            + '\''
+            + ", rating="
+            + rating
+            + '}';
     }
 }

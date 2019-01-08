@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v4.widget.DrawerLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".MainActivity">
+	<android.support.v4.widget.DrawerLayout
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/drawer_layout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true"
+		tools:context=".MainActivity"
+		>
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/app_bar_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+		<include
+			layout="@layout/app_bar_main"
+			android:id="@+id/include"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			/>
 
-        <!--去掉background，会影响4.4系统的状态栏-->
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/color_page_bg"
-            android:fitsSystemWindows="true" />
+		<!--去掉background，会影响4.4系统的状态栏-->
+		<android.support.design.widget.NavigationView
+			android:id="@+id/nav_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			android:background="@color/color_page_bg"
+			android:fitsSystemWindows="true"
+			/>
 
-        <!--app:headerLayout="@layout/nav_header_main"-->
-        <!--app:menu="@menu/activity_main_drawer"-->
-    </android.support.v4.widget.DrawerLayout>
+		<!--app:headerLayout="@layout/nav_header_main"-->
+		<!--app:menu="@menu/activity_main_drawer"-->
+	</android.support.v4.widget.DrawerLayout>
 </layout>

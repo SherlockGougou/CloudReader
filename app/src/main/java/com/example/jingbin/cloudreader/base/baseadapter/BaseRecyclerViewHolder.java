@@ -15,13 +15,14 @@ public abstract class BaseRecyclerViewHolder<T, D extends ViewDataBinding> exten
 
     public BaseRecyclerViewHolder(ViewGroup viewGroup, int layoutId) {
         // 注意要依附 viewGroup，不然显示item不全!!
-        super(DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), layoutId, viewGroup, false).getRoot());
+        super(
+            DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), layoutId, viewGroup, false).getRoot());
         // 得到这个View绑定的Binding
         binding = DataBindingUtil.getBinding(this.itemView);
     }
 
     /**
-     * @param object   the data of bind
+     * @param object the data of bind
      * @param position the item position of recyclerView
      */
     public abstract void onBindViewHolder(T object, final int position);

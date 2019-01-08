@@ -7,9 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-
 import com.example.jingbin.cloudreader.app.CloudReaderApplication;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -31,19 +29,9 @@ public class CommonUtils {
         return Color.rgb(red, green, blue);
     }
 
-    /**
-     * 得到年月日的"日"
-     */
-    private String getDate() {
-        Date date = new Date();
-        SimpleDateFormat dateFm = new SimpleDateFormat("dd");
-        return dateFm.format(date);
-    }
-
-
     public static Drawable getDrawable(int resid) {
         return ContextCompat.getDrawable(CloudReaderApplication.getInstance(), resid);
-//        return getResoure().getDrawable(resid);
+        //        return getResoure().getDrawable(resid);
     }
 
     public static int getColor(int resid) {
@@ -81,4 +69,12 @@ public class CommonUtils {
         }
     }
 
+    /**
+     * 得到年月日的"日"
+     */
+    private String getDate() {
+        Date date = new Date();
+        SimpleDateFormat dateFm = new SimpleDateFormat("dd");
+        return dateFm.format(date);
+    }
 }

@@ -2,12 +2,9 @@ package com.example.jingbin.cloudreader.ui.menu;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.BaseActivity;
 import com.example.jingbin.cloudreader.databinding.ActivityNavDeedBackBinding;
@@ -18,33 +15,17 @@ import com.example.jingbin.cloudreader.utils.ToastUtil;
 import com.example.jingbin.cloudreader.view.webview.WebViewActivity;
 import com.example.jingbin.cloudreader.viewmodel.menu.NoViewModel;
 
-import java.util.List;
-
 /**
  * @author jingbin
  */
 public class NavDeedBackActivity extends BaseActivity<NoViewModel, ActivityNavDeedBackBinding> {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nav_deed_back);
-        setTitle("问题反馈");
-        showContentView();
-
-        bindingView.tvIssues.setOnClickListener(listener);
-        bindingView.tvJianshu.setOnClickListener(listener);
-        bindingView.tvQq.setOnClickListener(listener);
-        bindingView.tvEmail.setOnClickListener(listener);
-        bindingView.tvFaq.setOnClickListener(listener);
-    }
-
     private PerfectClickListener listener = new PerfectClickListener() {
-        @Override
-        protected void onNoDoubleClick(View v) {
+        @Override protected void onNoDoubleClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_issues:
-                    WebViewActivity.loadUrl(v.getContext(), CommonUtils.getString(R.string.string_url_issues), "Issues");
+                    WebViewActivity.loadUrl(v.getContext(), CommonUtils.getString(R.string.string_url_issues),
+                        "Issues");
                     break;
                 case R.id.tv_qq:
                     if (BaseTools.isApplicationAvilible(NavDeedBackActivity.this, "com.tencent.mobileqq")) {
@@ -75,5 +56,18 @@ public class NavDeedBackActivity extends BaseActivity<NoViewModel, ActivityNavDe
     public static void start(Context mContext) {
         Intent intent = new Intent(mContext, NavDeedBackActivity.class);
         mContext.startActivity(intent);
+    }
+
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_nav_deed_back);
+        setTitle("问题反馈");
+        showContentView();
+
+        bindingView.tvIssues.setOnClickListener(listener);
+        bindingView.tvJianshu.setOnClickListener(listener);
+        bindingView.tvQq.setOnClickListener(listener);
+        bindingView.tvEmail.setOnClickListener(listener);
+        bindingView.tvFaq.setOnClickListener(listener);
     }
 }

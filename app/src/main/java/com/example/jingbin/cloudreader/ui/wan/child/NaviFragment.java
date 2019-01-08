@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.NaviAdapter;
 import com.example.jingbin.cloudreader.adapter.NaviContentAdapter;
@@ -20,7 +19,7 @@ import com.example.jingbin.cloudreader.viewmodel.wan.NaviViewModel;
  * @date 2018/10/8.
  * @description 导航数据
  */
-public class NaviFragment extends BaseFragment<NaviViewModel,FragmentNaviBinding> {
+public class NaviFragment extends BaseFragment<NaviViewModel, FragmentNaviBinding> {
 
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
@@ -29,23 +28,20 @@ public class NaviFragment extends BaseFragment<NaviViewModel,FragmentNaviBinding
     private FragmentActivity activity;
     private int oldPosition = 0;
 
-    @Override
-    public int setContent() {
-        return R.layout.fragment_navi;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = getActivity();
-    }
-
     public static NaviFragment newInstance() {
         return new NaviFragment();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override public int setContent() {
+        return R.layout.fragment_navi;
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+    }
+
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRefreshView();
 
@@ -66,14 +62,12 @@ public class NaviFragment extends BaseFragment<NaviViewModel,FragmentNaviBinding
         bindingView.xrvNaviDetail.setAdapter(mContentAdapter);
 
         mNaviAdapter.setOnSelectListener(new NaviAdapter.OnSelectListener() {
-            @Override
-            public void onSelected(int position) {
+            @Override public void onSelected(int position) {
                 layoutManager2.scrollToPositionWithOffset(position, 0);
             }
         });
         bindingView.xrvNaviDetail.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstPosition = layoutManager2.findFirstVisibleItemPosition();
                 if (oldPosition != firstPosition) {
@@ -85,8 +79,7 @@ public class NaviFragment extends BaseFragment<NaviViewModel,FragmentNaviBinding
         });
     }
 
-    @Override
-    protected void loadData() {
+    @Override protected void loadData() {
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
@@ -95,11 +88,8 @@ public class NaviFragment extends BaseFragment<NaviViewModel,FragmentNaviBinding
 
     private void loadCustomData() {
         viewModel.getNaviJson().observe(this, new android.arch.lifecycle.Observer<NaviJsonBean>() {
-            @Override
-            public void onChanged(@Nullable NaviJsonBean naviJsonBean) {
-                if (naviJsonBean != null
-                        && naviJsonBean.getData() != null
-                        && naviJsonBean.getData().size() > 0) {
+            @Override public void onChanged(@Nullable NaviJsonBean naviJsonBean) {
+                if (naviJsonBean != null && naviJsonBean.getData() != null && naviJsonBean.getData().size() > 0) {
 
                     showContentView();
                     mNaviAdapter.clear();
@@ -119,8 +109,7 @@ public class NaviFragment extends BaseFragment<NaviViewModel,FragmentNaviBinding
         });
     }
 
-    @Override
-    protected void onRefresh() {
+    @Override protected void onRefresh() {
         loadCustomData();
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
-
 import java.util.UUID;
 
 /**
@@ -47,11 +46,11 @@ class HttpHead {
         String tmDevice, tmSerial, androidId;
         tmDevice = tm.getDeviceId().toString();
         tmSerial = "ANDROID_ID";
-        androidId = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID).toString();
+        androidId = android.provider.Settings.Secure.getString(context.getContentResolver(),
+            android.provider.Settings.Secure.ANDROID_ID).toString();
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
         String uniqueId = deviceUuid.toString();
         return uniqueId;
-
     }
 
     /*

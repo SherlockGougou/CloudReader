@@ -3,7 +3,6 @@ package com.example.jingbin.cloudreader.adapter;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewAdapter;
 import com.example.jingbin.cloudreader.base.baseadapter.BaseRecyclerViewHolder;
@@ -28,8 +27,7 @@ public class DouBanTopAdapter extends BaseRecyclerViewAdapter<SubjectsBean> {
         width = (DensityUtil.getDisplayWidth() - px) / 3;
     }
 
-    @Override
-    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(parent, R.layout.item_douban_top);
     }
 
@@ -39,8 +37,7 @@ public class DouBanTopAdapter extends BaseRecyclerViewAdapter<SubjectsBean> {
             super(parent, layout);
         }
 
-        @Override
-        public void onBindViewHolder(final SubjectsBean bean, final int position) {
+        @Override public void onBindViewHolder(final SubjectsBean bean, final int position) {
             binding.setBean(bean);
             /**
              * 当数据改变时，binding会在下一帧去改变数据，如果我们需要立即改变，就去调用executePendingBindings方法。
@@ -48,8 +45,7 @@ public class DouBanTopAdapter extends BaseRecyclerViewAdapter<SubjectsBean> {
             DensityUtil.formatHeight(binding.ivTopPhoto, width, 0.758f, 1);
             binding.executePendingBindings();
             binding.cvTopMovie.setOnClickListener(new PerfectClickListener() {
-                @Override
-                protected void onNoDoubleClick(View v) {
+                @Override protected void onNoDoubleClick(View v) {
                     OneMovieDetailActivity.start(activity, bean, binding.ivTopPhoto);
                 }
             });

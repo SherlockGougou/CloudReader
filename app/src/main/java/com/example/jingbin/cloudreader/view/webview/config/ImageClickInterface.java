@@ -16,17 +16,15 @@ public class ImageClickInterface {
         this.context = context;
     }
 
-    @JavascriptInterface
-    public void imageClick(String imgUrl, String hasLink) {
-//        Toast.makeText(context, "----点击了图片", Toast.LENGTH_SHORT).show();
+    @JavascriptInterface public void imageClick(String imgUrl, String hasLink) {
+        //        Toast.makeText(context, "----点击了图片", Toast.LENGTH_SHORT).show();
         // 查看大图
-//        Intent intent = new Intent(context, ViewBigImageActivity.class);
-//        context.startActivity(intent);
+        //        Intent intent = new Intent(context, ViewBigImageActivity.class);
+        //        context.startActivity(intent);
         Log.e("----点击了图片 url: ", "" + imgUrl);
     }
 
-    @JavascriptInterface
-    public void textClick(String type, String item_pk) {
+    @JavascriptInterface public void textClick(String type, String item_pk) {
         if (!TextUtils.isEmpty(type) && !TextUtils.isEmpty(item_pk)) {
             Log.e("----点击了文字", "");
         }

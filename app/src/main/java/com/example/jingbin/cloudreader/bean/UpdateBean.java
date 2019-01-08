@@ -8,7 +8,6 @@ package com.example.jingbin.cloudreader.bean;
 
 public class UpdateBean {
 
-
     /**
      * name : 云阅
      * version : 13
