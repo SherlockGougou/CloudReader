@@ -188,9 +188,7 @@ public abstract class BaseActivity<VM extends AndroidViewModel, SV extends ViewD
 
     @Override public void onDestroy() {
         super.onDestroy();
-        if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
-            this.mCompositeSubscription.unsubscribe();
-        }
+        removeSubscription();
     }
 
     public void removeSubscription() {

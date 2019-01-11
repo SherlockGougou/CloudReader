@@ -62,7 +62,6 @@ dependencies {
   implementation 'android.arch.lifecycle:extensions:1.1.1'
   implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
 
-  // 用于Flowable的rxjava
   implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
   implementation 'com.google.zxing:core:3.3.0'
@@ -74,7 +73,7 @@ dependencies {
   implementation 'com.hyman:flowlayout-lib:1.1.2'
 
   // BigImageViewPager
-  implementation('com.github.SherlockGougou:BigImageViewPager:v4_3.2.1') {
+  implementation('com.github.SherlockGougou:BigImageViewPager:v4_3.2.2') {
     exclude group: 'com.android.support'
     exclude module: 'appcompat-v7'
     exclude module: 'support-v4'
