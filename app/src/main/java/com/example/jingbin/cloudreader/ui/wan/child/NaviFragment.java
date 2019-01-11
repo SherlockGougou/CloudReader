@@ -3,7 +3,6 @@ package com.example.jingbin.cloudreader.ui.wan.child;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.example.jingbin.cloudreader.R;
@@ -25,7 +24,6 @@ public class NaviFragment extends BaseFragment<NaviViewModel, FragmentNaviBindin
     private boolean mIsFirst = true;
     private NaviAdapter mNaviAdapter;
     private NaviContentAdapter mContentAdapter;
-    private FragmentActivity activity;
     private int oldPosition = 0;
 
     public static NaviFragment newInstance() {
@@ -38,7 +36,6 @@ public class NaviFragment extends BaseFragment<NaviViewModel, FragmentNaviBindin
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        activity = getActivity();
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -51,14 +48,14 @@ public class NaviFragment extends BaseFragment<NaviViewModel, FragmentNaviBindin
     }
 
     private void initRefreshView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(parentActivity);
         bindingView.xrvNavi.setLayoutManager(layoutManager);
         mNaviAdapter = new NaviAdapter();
         bindingView.xrvNavi.setAdapter(mNaviAdapter);
 
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(activity);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(parentActivity);
         bindingView.xrvNaviDetail.setLayoutManager(layoutManager2);
-        mContentAdapter = new NaviContentAdapter(activity);
+        mContentAdapter = new NaviContentAdapter(parentActivity);
         bindingView.xrvNaviDetail.setAdapter(mContentAdapter);
 
         mNaviAdapter.setOnSelectListener(new NaviAdapter.OnSelectListener() {

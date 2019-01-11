@@ -121,9 +121,8 @@ import static com.example.jingbin.cloudreader.view.statusbar.StatusBarUtil.getSt
             // 高斯模糊背景 原来 参数：12,5  23,4
             Glide.with(this)
                 .load(subjectsBean.getImages().getLarge())
-                .apply(new RequestOptions()
-                .error(R.drawable.stackblur_default)
-                .transform(new BlurTransformation(this, 23, 4)))
+                .apply(new RequestOptions().error(R.drawable.stackblur_default)
+                    .transform(new BlurTransformation(this, 23, 4)))
                 .addListener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target,

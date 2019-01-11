@@ -4,16 +4,15 @@
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
-		<item name="android:statusBarColor">@color/colorTheme</item>
+		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
 	</style>
-	<!--<item name="android:statusBarColor">@android:color/transparent</item>-->
 
 	<!--设置标题透明度-->
 	<style name="AppTheme.NoActionBar">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
-		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
 	</style>
 
 	<!--titleBar样式-->
@@ -42,13 +41,13 @@
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
-		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
 	</style>
 
 	<!--用于项目主页-->
 	<style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
 		<item name="android:textSize">18.0sp</item>
-		<item name="android:textColor">@android:color/transparent</item>
+		<item name="android:statusBarColor">@color/colorPrimaryDark</item>
 	</style>
 
 </resources>

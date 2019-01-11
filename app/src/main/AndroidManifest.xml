@@ -21,11 +21,11 @@
 			android:name=".MainActivity"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".ui.TransitionActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/ViewBigPicTheme">
+			android:theme="@style/FullScreenTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
@@ -35,23 +35,23 @@
 		<activity
 			android:name=".ui.douban.TestActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".ui.douban.SlideActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".ui.douban.SlideScrollViewActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".ui.douban.SlideShadeViewActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".ui.douban.MovieDetailActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".view.webview.WebViewActivity"
 			android:configChanges="orientation|screenSize"
@@ -75,7 +75,7 @@
 		<activity
 			android:name=".ui.douban.OneMovieDetailActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/MyScrollPage"/>
+			android:theme="@style/CommonTheme"/>
 		<activity
 			android:name=".ui.menu.NavHomePageActivity"
 			android:screenOrientation="portrait"

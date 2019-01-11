@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.WanAndroidAdapter;
@@ -24,7 +23,6 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
 
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
-    private FragmentActivity activity;
     private WanAndroidAdapter mAdapter;
 
     public static CollectArticleFragment newInstance() {
@@ -37,7 +35,6 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        activity = getActivity();
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -57,10 +54,10 @@ public class CollectArticleFragment extends BaseFragment<ArticleListViewModel, F
 
     private void initRefreshView() {
         bindingView.srlWan.setColorSchemeColors(CommonUtils.getColor(R.color.colorTheme));
-        bindingView.xrvWan.setLayoutManager(new LinearLayoutManager(activity));
+        bindingView.xrvWan.setLayoutManager(new LinearLayoutManager(parentActivity));
         bindingView.xrvWan.setPullRefreshEnabled(false);
         bindingView.xrvWan.clearHeader();
-        mAdapter = new WanAndroidAdapter(activity);
+        mAdapter = new WanAndroidAdapter(parentActivity);
         bindingView.xrvWan.setAdapter(mAdapter);
         bindingView.srlWan.setOnRefreshListener(() -> bindingView.srlWan.postDelayed(() -> {
             bindingView.xrvWan.reset();

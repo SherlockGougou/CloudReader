@@ -124,7 +124,7 @@ public class CustomFragment extends BaseFragment<CustomViewModel, FragmentCustom
         String gankCala = SPUtils.getString(GANK_CALA, "全部");
         txName.setText(gankCala);
         try {
-            builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog).title("选择分类")
+            builder = new BottomSheet.Builder(context, R.style.BottomSheet_StyleDialog).title("选择分类")
                 .sheet(R.menu.gank_bottomsheet)
                 .listener((dialog, which) -> {
                     switch (which) {

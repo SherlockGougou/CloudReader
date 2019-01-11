@@ -1,7 +1,9 @@
 package com.example.jingbin.cloudreader.base;
 
+import android.app.Activity;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.drawable.AnimationDrawable;
@@ -34,6 +36,8 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
     protected boolean mIsVisible = false;
     // 内容布局
     protected RelativeLayout mContainer;
+    protected Context context;
+    protected Activity parentActivity;
     // 加载中
     private View loadingView;
     // 加载失败
@@ -44,13 +48,17 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        parentActivity = getActivity();
+
         View ll = inflater.inflate(R.layout.fragment_base, null);
-        bindingView = DataBindingUtil.inflate(getActivity().getLayoutInflater(), setContent(), null, false);
+        bindingView = DataBindingUtil.inflate(parentActivity.getLayoutInflater(), setContent(), null, false);
         RelativeLayout.LayoutParams params =
             new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         bindingView.getRoot().setLayoutParams(params);
         mContainer = ll.findViewById(R.id.container);
         mContainer.addView(bindingView.getRoot());
+
+        context = ll.getContext();
         return ll;
     }
 
@@ -86,6 +94,7 @@ public abstract class BaseFragment<VM extends AndroidViewModel, SV extends ViewD
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         loadingView = ((ViewStub) getView(R.id.vs_loading)).inflate();
         ImageView img = loadingView.findViewById(R.id.img_progress);
 

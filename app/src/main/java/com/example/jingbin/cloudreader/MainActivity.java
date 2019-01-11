@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView ivTitleThree;
     private CompositeSubscription mCompositeSubscription;
     private NavHeaderMainBinding bind;
+
     private PerfectClickListener listener = new PerfectClickListener() {
         @Override protected void onNoDoubleClick(final View v) {
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.TreeAdapter;
@@ -26,7 +25,6 @@ public class TreeFragment extends BaseFragment<TreeViewModel, FragmentWanAndroid
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
     private TreeAdapter mTreeAdapter;
-    private FragmentActivity activity;
 
     public static TreeFragment newInstance() {
         return new TreeFragment();
@@ -38,7 +36,6 @@ public class TreeFragment extends BaseFragment<TreeViewModel, FragmentWanAndroid
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        activity = getActivity();
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -47,7 +44,7 @@ public class TreeFragment extends BaseFragment<TreeViewModel, FragmentWanAndroid
         initRefreshView();
         // 准备就绪
         mIsPrepared = true;
-        /**
+        /*
          * 因为启动时先走loadData()再走onActivityCreated，
          * 所以此处要额外调用load(),不然最初不会加载内容
          */
@@ -60,7 +57,7 @@ public class TreeFragment extends BaseFragment<TreeViewModel, FragmentWanAndroid
             bindingView.xrvWan.reset();
             getTree();
         }, 150));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(parentActivity);
         bindingView.xrvWan.setLayoutManager(layoutManager);
         bindingView.xrvWan.setPullRefreshEnabled(false);
         bindingView.xrvWan.setLoadingMoreEnabled(false);

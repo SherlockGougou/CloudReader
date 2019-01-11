@@ -10,6 +10,7 @@ import android.webkit.JavascriptInterface;
  * js通信接口
  */
 public class ImageClickInterface {
+
     private Context context;
 
     public ImageClickInterface(Context context) {

@@ -16,9 +16,7 @@ public class GlideImageLoader extends ImageLoader {
     @Override public void displayImage(Context context, Object url, ImageView imageView) {
         Glide.with(context)
             .load(url)
-            .apply(new RequestOptions()
-                .placeholder(R.drawable.shape_bg_loading)
-                .error(R.drawable.shape_bg_loading))
+            .apply(new RequestOptions().placeholder(R.drawable.shape_bg_loading).error(R.drawable.shape_bg_loading))
             .into(imageView);
     }
 }

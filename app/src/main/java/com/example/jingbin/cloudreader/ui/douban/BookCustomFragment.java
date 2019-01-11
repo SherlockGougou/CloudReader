@@ -89,7 +89,7 @@ import rx.schedulers.Schedulers;
 
         //        mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
-        mLayoutManager = new GridLayoutManager(getActivity(), 3);
+        mLayoutManager = new GridLayoutManager(context, 3);
         bindingView.xrvBook.setLayoutManager(mLayoutManager);
 
         //        bindingView.xrvBook.setAdapter(mBookAdapter);

@@ -293,9 +293,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
             + "var objs = document.getElementsByTagName(\"img\");"
             + "for(var i=0;i<objs.length;i++)"
             + "{"
-            +
-            //  "objs[i].onclick=function(){alert(this.getAttribute(\"has_link\"));}" +
-            "objs[i].onclick=function(){window.injectedObject.imageClick(this.getAttribute(\"src\"),this.getAttribute(\"has_link\"));}"
+            + "objs[i].onclick=function(){window.injectedObject.imageClick(this.getAttribute(\"src\"),this.getAttribute(\"has_link\"));}"
             + "}"
             + "})()");
 
@@ -304,8 +302,7 @@ public class WebViewActivity extends AppCompatActivity implements IWebPageView {
             + "var objs =document.getElementsByTagName(\"a\");"
             + "for(var i=0;i<objs.length;i++)"
             + "{"
-            + "objs[i].onclick=function(){"
-            + "window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}"
+            + "objs[i].onclick=function(){window.injectedObject.textClick(this.getAttribute(\"type\"),this.getAttribute(\"item_pk\"));}"
             + "}"
             + "})()");
     }

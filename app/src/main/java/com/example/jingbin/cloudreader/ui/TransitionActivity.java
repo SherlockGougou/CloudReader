@@ -15,6 +15,8 @@ import com.example.jingbin.cloudreader.utils.PerfectClickListener;
 import java.lang.ref.WeakReference;
 
 /**
+ * 启动页面
+ *
  * @author jingbin
  */
 public class TransitionActivity extends AppCompatActivity {
@@ -32,19 +34,11 @@ public class TransitionActivity extends AppCompatActivity {
             return;
         }
         showImage();
-        //        toMainActivity();
     }
 
     private void showImage() {
         // 先显示默认图
         mBinding.ivDefultPic.setImageDrawable(CommonUtils.getDrawable(R.drawable.img_transition_default));
-
-        //        int i = new Random().nextInt(ConstantsImageUrl.TRANSITION_URLS.length);
-        //        Glide.with(this)
-        //                .load(ConstantsImageUrl.TRANSITION_URLS[i])
-        //                .placeholder(R.drawable.img_transition_default)
-        //                .error(R.drawable.img_transition_default)
-        //                .into(mBinding.ivPic);
 
         mBinding.tvJump.setOnClickListener(new PerfectClickListener() {
             @Override protected void onNoDoubleClick(View v) {
@@ -53,8 +47,7 @@ public class TransitionActivity extends AppCompatActivity {
         });
 
         handler = new MyHandler(this);
-        handler.sendEmptyMessageDelayed(1, 300);
-        //        handler.sendEmptyMessageDelayed(1, 3500);
+        handler.sendEmptyMessageDelayed(1, 1000);
     }
 
     private void toMainActivity() {

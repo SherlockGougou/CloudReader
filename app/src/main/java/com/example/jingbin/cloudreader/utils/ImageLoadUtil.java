@@ -67,9 +67,7 @@ public class ImageLoadUtil {
         Glide.with(imageView.getContext())
             .asBitmap()
             .load(url)
-            .apply(new RequestOptions()
-            .placeholder(R.drawable.img_one_bi_one)
-            .error(R.drawable.img_one_bi_one))
+            .apply(new RequestOptions().placeholder(R.drawable.img_one_bi_one).error(R.drawable.img_one_bi_one))
             // .skipMemoryCache(true) //跳过内存缓存
             // .crossFade(1000)
             // .diskCacheStrategy(DiskCacheStrategy.SOURCE)// 缓存图片源文件（解决加载gif内存溢出问题）
@@ -123,9 +121,8 @@ public class ImageLoadUtil {
     @BindingAdapter("android:displayCircle") public static void displayCircle(ImageView imageView, String imageUrl) {
         Glide.with(imageView.getContext())
             .load(imageUrl)
-            .apply(new RequestOptions()
-            .error(R.drawable.ic_avatar_default)
-            .transform(new CropCircleTransformation(imageView.getContext())))
+            .apply(new RequestOptions().error(R.drawable.ic_avatar_default)
+                .transform(new CropCircleTransformation(imageView.getContext())))
             .into(imageView);
     }
 

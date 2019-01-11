@@ -53,6 +53,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
     private boolean mIsPrepared = false;
     private RotateAnimation animation;
     private boolean isLoadBanner;
+
     private PerfectClickListener listener = new PerfectClickListener() {
         @Override protected void onNoDoubleClick(View v) {
             switch (v.getId()) {
@@ -84,10 +85,10 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
         showContentView();
         initAnimation();
         initRecyclerView();
-        UpdateUtil.check(getActivity(), false);
+        UpdateUtil.check(parentActivity, false);
 
         mIsPrepared = true;
-        /**
+        /*
          * 因为启动时先走loadData()再走onActivityCreated，
          * 所以此处要额外调用load(),不然最初不会加载内容
          */
@@ -174,7 +175,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
         // 失去焦点，否则RecyclerView第一个item会回到顶部
         bindingView.xrvEveryday.setFocusable(false);
         // 开始图片请求
-        Glide.with(getActivity()).resumeRequests();
+        Glide.with(context).resumeRequests();
         if (isLoadBanner) {
             mHeaderBinding.banner.startAutoPlay();
         }
@@ -183,7 +184,7 @@ public class EverydayFragment extends BaseFragment<EverydayViewModel, FragmentEv
     @Override public void onPause() {
         super.onPause();
         // 停止全部图片请求 跟随着Activity
-        Glide.with(getActivity()).pauseRequests();
+        Glide.with(context).pauseRequests();
         // 不可见时轮播图停止滚动
         if (isLoadBanner) {
             mHeaderBinding.banner.stopAutoPlay();

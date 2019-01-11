@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import com.example.jingbin.cloudreader.R;
 import com.example.jingbin.cloudreader.adapter.CollectUrlAdapter;
@@ -24,7 +23,6 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
 
     private boolean mIsPrepared;
     private boolean mIsFirst = true;
-    private FragmentActivity activity;
     private CollectUrlAdapter mAdapter;
 
     public static CollectLinkFragment newInstance() {
@@ -37,7 +35,6 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
 
     @Override public void onAttach(Context context) {
         super.onAttach(context);
-        activity = getActivity();
     }
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +53,10 @@ public class CollectLinkFragment extends BaseFragment<CollectLinkModel, Fragment
 
     private void initRefreshView() {
         bindingView.srlWan.setColorSchemeColors(CommonUtils.getColor(R.color.colorTheme));
-        bindingView.xrvWan.setLayoutManager(new LinearLayoutManager(activity));
+        bindingView.xrvWan.setLayoutManager(new LinearLayoutManager(parentActivity));
         bindingView.xrvWan.setPullRefreshEnabled(false);
         bindingView.xrvWan.clearHeader();
-        mAdapter = new CollectUrlAdapter(activity);
+        mAdapter = new CollectUrlAdapter(parentActivity);
         bindingView.xrvWan.setAdapter(mAdapter);
         bindingView.srlWan.setOnRefreshListener(() -> bindingView.srlWan.postDelayed(this::getCollectUrlList, 300));
     }
